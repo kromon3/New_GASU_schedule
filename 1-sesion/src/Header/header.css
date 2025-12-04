@@ -1,0 +1,93 @@
+.main_Module {
+    background-color: #1a1a1a;
+    color: white;
+    border: 2px solid #333;
+    display: flex;
+    justify-content: space-between; /* ← ключевое изменение! */
+    align-items: center;
+    width: 90%; /* увеличим ширину */
+    max-width: 1200px; /* больше максимальная ширина */
+    margin: 20px auto;
+    border-radius: 12px;
+    padding: 25px 40px; /* больше отступов */
+    min-height: 120px;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3);
+}
+
+.Header-contener_button {
+    display: flex;
+    flex: 2;
+    gap: 20px;
+}
+
+.Header-button {
+    flex: 1;
+    min-width: 140px; /* минимальная ширина */
+    height: 60px;
+    background: black;
+    color: white;
+    border: none;
+    border-radius: 12px;
+    cursor: pointer;
+    font-size: 18px;
+    font-weight: 700; /* жирнее */
+    letter-spacing: 0.8px;
+    text-transform: uppercase; /* заглавные буквы */
+    box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.Header-button:hover {
+
+    color: #ffffff;
+    transform: translateY(-5px) scale(1.05);
+    border: 3px solid rgba(255, 255, 255, 0.8);
+    height: 65px;
+    letter-spacing: 1.2px;
+}
+
+.Header-contener_grop {
+    display: flex;
+    flex: 1; /* занимает 1/3 пространства */
+    align-items: center;
+    justify-content: flex-end; /* выравнивание справа */
+    gap: 15px;
+    background: rgba(255, 255, 255, 0.1);
+    padding: 15px 25px;
+    border-radius: 15px;
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.Header-contener_grop_Name {
+    font-size: 20px;
+    font-weight: 800;
+    color: #ffffff;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+    letter-spacing: 1px;
+    padding: 8px 15px;
+    background: rgba(0, 0, 0, 0.3);
+    border-radius: 8px;
+}
+
+.Header-contener_grop_button {
+    border-radius: 12px;
+    background: rgba(255, 255, 255, 0.15);
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    padding: 10px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.Header-contener_grop_button:hover {
+    background: rgba(255, 255, 255, 0.25);
+    transform: rotate(15deg) scale(1.1);
+    border-color: #ff6b6b;
+}
+
+.Header-contener_grop_img {
+    width: 32px;
+    height: 32px;
+    filter: invert(1) brightness(2);
+    transition: transform 0.3s ease;
+}
