@@ -91,3 +91,7 @@
     filter: invert(1) brightness(2);
     transition: transform 0.3s ease;
 }
+.link_a{
+    color: white;
+    text-decoration: none;
+}

@@ -1,0 +1,86 @@
+.schedule-page {
+    padding: 20px;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.page-title {
+    color: #333;
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.all-lessons {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.lesson-box {
+    background: white;
+    border-radius: 10px;
+    padding: 20px;
+    border: 1px solid #e0e0e0;
+}
+
+.lesson-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #eee;
+}
+
+.weekday {
+    font-weight: bold;
+    color: #2c3e50;
+    font-size: 1.1rem;
+}
+
+.time {
+    background: black;
+    color: white;
+    padding: 5px 12px;
+    border-radius: 20px;
+    font-weight: 500;
+}
+
+.lesson-main {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.subject {
+    color: #2c3e50;
+    margin: 0;
+    font-size: 1.3rem;
+}
+
+.details {
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+    color: #7f8c8d;
+}
+
+.type {
+    background: #ecf0f1;
+    padding: 4px 10px;
+    border-radius: 4px;
+    font-size: 0.9rem;
+}
+
+.teacher {
+    font-style: italic;
+}
+
+.group {
+    background: black;
+    color: white;
+    padding: 4px 10px;
+    border-radius: 4px;
+    font-weight: bold;
+    font-size: 0.9rem;
+}
