@@ -1,10 +1,13 @@
+// Header.js
 import "./header.css"
-import { useState } from 'react';
 import GroupSelection from "./GroupSelection/GroupSelection.tsx";
-import {Link} from "react-router-dom";
+import { Link } from "react-router-dom";
+import { useContext, useState } from 'react';
+import { GrupNameContext } from '../contexts/GrupNameContext.tsx'; // Импортируем контекст
 
 function Header() {
-    const [grupName, setGrupName] = useState('ИТ-201');
+    // Получаем данные из контекста
+    const { grupName, setGrupName } = useContext(GrupNameContext);
     const [showGroupSelection, setShowGroupSelection] = useState(false);
 
     const handleClearGroup = () => {
@@ -13,7 +16,7 @@ function Header() {
 
     const handleSelectGroup = (selectedGroup) => {
         setGrupName(selectedGroup);
-        setShowGroupSelection(false); // Скрываем после выбора
+        setShowGroupSelection(false);
     }
 
     return (
@@ -50,7 +53,7 @@ function Header() {
                 </div>
             )}
         </>
-    )
+    );
 }
 
 export default Header;

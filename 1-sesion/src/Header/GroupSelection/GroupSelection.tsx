@@ -1,8 +1,7 @@
 import "./GroupSelection.css";
-import { useState } from 'react';
 
 function GroupSelection({ onSelectGroup }) {
-    const groups = ['2-ПМИ-2', "1-ПМИ-2", "ПИ-1"];
+    const groups = ['2-ПМИ-2', "1-ПМИ-2", "ПИ-1","ИТ-201"];
 
     return (
         <div className="group-selection-container">
