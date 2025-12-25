@@ -21,6 +21,7 @@ function Schefule_to_day() {
 
         )
     }
+
     return (
         <>
             <div>
@@ -28,17 +29,15 @@ function Schefule_to_day() {
                 <div className="schedule-page">
                 <h1>Рассписание на {dayName}</h1>
                 {filteredSchedule_day.map(lesson => (
-                    <div key={lesson.id} className="lesson-box">
+                    <div key={lesson.id} className="lesson-box schedule_to_day ">
                         <div className="lesson-header">
-                            <span className="weekday">{lesson.time.weekday}</span>
-                            <span className="time">{lesson.time.start} - {lesson.time.end}</span>
+                            <span className="time" style={{ marginRight: "12px" }}>{lesson.time.start} - {lesson.time.end}</span>
                         </div>
                         <div className="lesson-main">
                             <h3 className="subject">{lesson.subject}</h3>
                             <div className="details">
-                                <span className="type">{lesson.type}</span>
+                                <span className="type" style={{ marginRight: "12px" }}>{lesson.type}</span>
                                 <span className="teacher">{lesson.teacher}</span>
-                                <span className="group">{lesson.group}</span>
                             </div>
                         </div>
                     </div>
