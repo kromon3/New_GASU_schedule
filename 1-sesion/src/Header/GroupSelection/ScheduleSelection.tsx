@@ -1,31 +1,23 @@
+// ScheduleSelection.jsx
 import { Link } from "react-router-dom";
-import "../header.css";
-const ScheduleSelection = () => {
+import "./GroupSelection.css";
 
-    return (
-        <div className="menu-panel">
-      <span>
-        <button className="Header-button">
-          <Link to="/schedule_to_day" className="link_a">
-            Расписание на сегодня
-          </Link>
+const ScheduleSelection = () => {
+  return (
+      <div className="group-selection-container">
+        <button className="Header-button_modile">
+          <Link to="/schedule_to_day" className="link_a">Расписание на сегодня</Link>
         </button>
-      </span>
-            <span>
-        <button className="Header-button">
-          <Link to="/schedule" className="link_a">
-            Расписание
-          </Link>
+        <br/>
+        <button className="Header-button_modile">
+          <Link to="/schedule" className="link_a">Расписание</Link>
         </button>
-      </span>
-            <span>
-        <button className="Header-button">
-          <Link to="/subject" className="link_a">
-            Предметы
-          </Link>
+        <br/>
+        <button className="Header-button_modile">
+          <Link to="/subject" className="link_a">Предметы</Link>
         </button>
-      </span>
-        </div>
-    );
-}
+      </div>
+  );
+};
+
 export default ScheduleSelection;
