@@ -69,7 +69,12 @@
     outline: none;
 }
 
-/* Эффект ripple (волны) */
+.delete-btn.none {
+    display: none;
+}
+.edit-btn.none {
+    display: none;
+}
 .btn::after {
     content: '';
     position: absolute;
@@ -90,4 +95,7 @@
     transform: scale(0, 0);
     opacity: 0.3;
     transition: 0s;
+}
+.Done{
+    text-decoration: line-through;
 }

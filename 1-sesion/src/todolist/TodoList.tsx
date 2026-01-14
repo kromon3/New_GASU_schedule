@@ -3,30 +3,34 @@ import Header from "../Header/header.tsx";
 import './todolist.css'
 
 function TodoList() {
-    const [value, setValue] = useState<string[]>(() => {
+    interface  TodoItem
+    {
+    id: number,
+    text: string,
+    isDone: boolean,
+    }
+    const [value, setValue] = useState<TodoItem[]>(() => {
         const save = localStorage.getItem("base");
         return save ? JSON.parse(save) : [];
     });
     const [inpValue, setInpValue] = useState('');
     const [inpchangeValue, setInpchangeValue] = useState('');
     const [isSelected, setIsSelected] = useState<number | null>(null);
-    const [weather, setWeather] = useState<any>(null);
-
+    const [number, setNumber] = useState<number>(0);
     useEffect(() => {
         localStorage.setItem("base", JSON.stringify(value));
     }, [value]);
 
-    useEffect(() => {
-        fetch(`https://api.weatherapi.com/v1/current.json?key=395ea47fa8a0431abea162221253112&q=Saint%20Petersburg`)
-            .then(res => res.json())
-            .then(data => setWeather(data))
-            .catch(error => console.error("Error fetching weather:", error));
-    }, []);
-
     const handleAdd = () => {
-        if (inpValue.trim()) { // добавлен trim для проверки пустых строк
-            setValue(prev => [...prev, inpValue.trim()]);
+        if (inpValue.trim()) {
+            const newItem: TodoItem = {
+                id: number,
+                text: inpValue.trim(),
+                isDone: false,
+            }
+            setValue(prev => [...prev, newItem]);
             setInpValue('');
+            setNumber(p => p + 1);
         }
     };
 
@@ -38,7 +42,10 @@ function TodoList() {
         if (newValue.trim()) {
             setValue(prev => {
                 const newArray = [...prev];
-                newArray[index] = newValue.trim();
+                newArray[index] = {
+                    ...newArray[index],
+                    text: newValue.trim(),
+                };
                 return newArray;
             });
             setInpchangeValue('');
@@ -46,28 +53,21 @@ function TodoList() {
         }
     };
 
-    const startEditing = (index: number) => {
-        setIsSelected(index);
-        setInpchangeValue(value[index]);
+    const startEditing = (id: number) => {
+        const itemToEdit = value.find(item => item.id === id);
+        if (itemToEdit) {
+            setIsSelected(id);
+            setInpchangeValue(itemToEdit.text);
+        }
     };
 
     const cancelEditing = () => {
         setIsSelected(null);
         setInpchangeValue('');
     };
-
     return (
         <>
             <Header />
-
-            {weather && weather.current && (
-                <div className="weather-container">
-                    <p>Погода в {weather.location.name}: {weather.current.temp_c}°C</p>
-                    <img src={weather.current.condition.icon} alt={weather.current.condition.text} />
-                    <p>{weather.current.condition.text}</p>
-                </div>
-            )}
-
             <div className="container">
                 <div className="input-container">
                     <input
@@ -81,20 +81,20 @@ function TodoList() {
                 </div>
 
                 <div className="main">
-                    {value.map((item, index) => (
-                        <div key={index} className="todo-item">
-                            {index === isSelected ? (
+                    {value.map((item) => (
+                        <div key={item.id} className="todo-item">
+                            {item.id === isSelected ? (
                                 <div className="item editing">
                                     <input
                                         className="search-input edit-input"
                                         value={inpchangeValue}
                                         onChange={(e) => setInpchangeValue(e.target.value)}
                                         placeholder="Редактировать задачу"
-                                        autoFocus // автофокус при редактировании
-                                        onKeyPress={(e) => e.key === 'Enter' && handleChange(index, inpchangeValue)}
+                                        autoFocus
+                                        onKeyPress={(e) => e.key === 'Enter' && handleChange(item.id, inpchangeValue)}
                                     />
                                     <div className="button-group">
-                                        <button className="btn save-btn" onClick={() => handleChange(index, inpchangeValue)}>
+                                        <button className="btn save-btn" onClick={() => handleChange(item.id, inpchangeValue)}>
                                             Сохранить
                                         </button>
                                         <button className="btn cancel-btn" onClick={cancelEditing}>
@@ -104,14 +104,20 @@ function TodoList() {
                                 </div>
                             ) : (
                                 <div className="item">
-                                    <h1 className="text-content">{item}</h1>
+                                    <input type="checkbox" checked={item.isDone} />
+                                    <h1 className = {item.isDone ? ("text-content Done"): ("text-content NoDone")}>{item.text}</h1>
                                     <div className="button-group">
-                                        <button className="btn delete-btn" onClick={() => handleRemove(index)}>
+                                        <button className={item.isDone ? "btn delete-btn none" : "btn delete-btn "} onClick={() => handleRemove(item.id)}>
                                             Удалить
                                         </button>
-                                        <button className="btn edit-btn" onClick={() => startEditing(index)}>
+                                        <button className={item.isDone ? "btn edit-btn none" : "btn edit-btn"} onClick={() => startEditing(item.id)}>
                                             Изменить
                                         </button>
+                                        {
+                                            item.isDone ? (
+                                                <h1>Выполнено</h1>
+                                            ) : ""
+                                        }
                                     </div>
                                 </div>
                             )}
