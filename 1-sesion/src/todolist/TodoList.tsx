@@ -104,7 +104,13 @@ function TodoList() {
                                 </div>
                             ) : (
                                 <div className="item">
-                                    <input type="checkbox" checked={item.isDone} />
+                                    <input type="checkbox" checked={item.isDone} onChange={() => {
+                                        setValue(prev =>
+                                            prev.map(v =>
+                                                v.id === item.id ? { ...v, isDone: !v.isDone } : v
+                                            )
+                                        );
+                                    }}/>
                                     <h1 className = {item.isDone ? ("text-content Done"): ("text-content NoDone")}>{item.text}</h1>
                                     <div className="button-group">
                                         <button className={item.isDone ? "btn delete-btn none" : "btn delete-btn "} onClick={() => handleRemove(item.id)}>
@@ -115,7 +121,7 @@ function TodoList() {
                                         </button>
                                         {
                                             item.isDone ? (
-                                                <h1>Выполнено</h1>
+                                                <h1 style={{ marginLeft: 21.44 }}>Выполнено</h1>
                                             ) : ""
                                         }
                                     </div>
