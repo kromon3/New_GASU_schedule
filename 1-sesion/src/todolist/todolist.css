@@ -69,8 +69,10 @@
     outline: none;
 }
 
-.delete-btn.none {
-    display: none;
+.input-and-button {
+    display: flex;
+    gap: 8px;
+    align-items: center;
 }
 .edit-btn.none {
     display: none;
