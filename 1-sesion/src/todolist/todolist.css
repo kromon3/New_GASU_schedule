@@ -92,7 +92,13 @@
     opacity: 0;
     transition: transform 0.5s, opacity 1s;
 }
-
+.lesson{
+    background: black;
+    color: white;
+    padding: 5px 12px;
+    border-radius: 20px;
+    font-weight: 500;
+}
 .btn:active::after {
     transform: scale(0, 0);
     opacity: 0.3;

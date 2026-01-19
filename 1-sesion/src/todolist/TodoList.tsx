@@ -8,6 +8,7 @@ function TodoList() {
     id: number,
     text: string,
     isDone: boolean,
+    lesson?: string,
     }
     const [value, setValue] = useState<TodoItem[]>(() => {
         const save = localStorage.getItem("base");
@@ -18,6 +19,7 @@ function TodoList() {
     const [isSelected, setIsSelected] = useState<number | null>(null);
     const [stateIsDone, setStateIsDone] = useState<'all' | 'active' | 'completed'>('all');
     const [optinShown, setOptinShown] = useState<boolean>(false);
+
     const filteredTasks = useMemo(() => {
         if(stateIsDone === 'active') {
             return value.filter(item => !item.isDone);
@@ -157,7 +159,9 @@ function TodoList() {
                                                     </button>
 
                                                 </div>
+                                                <div className="lesson">{item.lesson}</div>
                                             </div>
+
                                         )}
                                     </div>
                                 ))
