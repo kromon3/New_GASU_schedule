@@ -1,13 +1,12 @@
 // src/Header/header.tsx
 import "./header.css";
 import GroupSelection from "./GroupSelection/GroupSelection.tsx";
-import ScheduleSelection from "./GroupSelection/ScheduleSelection";
+import ScheduleSelection from "./GroupSelection/ScheduleSelection.tsx";
 import { Link } from "react-router-dom";
 import { useContext, useState } from "react";
-import { GrupNameContext } from "../contexts/GrupNameContext";
-
+import { ItemPortal } from "../../contexts/GrupName.tsx";
 function Header() {
-    const { grupName, setGrupName } = useContext(GrupNameContext);
+    const { grupName, setGrupName } = useContext(ItemPortal);
     const [showGroupSelection, setShowGroupSelection] = useState(false);
     const [showScheduleMenu, setShowScheduleMenu] = useState(false);
 

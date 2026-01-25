@@ -2,24 +2,24 @@
 import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
 import App from './App.tsx'
-import Schedule from "./schedule/Schedule.tsx";
-import TodoList from "./todolist/TodoList.tsx";
-import Schefule_to_day from "./schedule_to_day/Schefule_to_day.tsx";
-import Subject from "./Subject/Subject.tsx";
-import { GrupNameProvider } from './contexts/GrupNameContext';
+import Schedule from "./components/shedule/Schedule.tsx";
+import TodoList from "./components/ToDoList/TodoList.tsx";
+import ScheduleToDay from "./components/sheduleToDay/ScheduleToDay.tsx";
+import Subject from "./components/Subject/Subject.tsx";
+import  GrupName  from './contexts/GrupName';
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 const router = createBrowserRouter([
     { path: '/', element: <App /> },
     { path: "/schedule", element: <Schedule /> },
-    { path: "/schedule_to_day", element: <Schefule_to_day /> },
+    { path: "/schedule_to_day", element: <ScheduleToDay /> },
     { path: "/subject", element: <Subject/> },
     {path: "/todolist", element: <TodoList/>}
 ]);
 
 createRoot(document.getElementById('root')!).render(
     <StrictMode>
-        <GrupNameProvider>
+        <GrupName>
             <RouterProvider router={router} />
-        </GrupNameProvider>
+        </GrupName>
     </StrictMode>,
 );

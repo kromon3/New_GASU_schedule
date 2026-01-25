@@ -1,21 +1,15 @@
 import Header from "../Header/header.tsx";
-import { scheduleData } from '../db/db.ts';
-import '../schedule/schedule.css';
-import { GrupNameContext } from '../contexts/GrupNameContext.tsx';
+import { scheduleData } from '../../service/db.ts';
+import '../shedule/schedule.css';
 import React, { useContext, useEffect, useState } from "react";
+import {ItemPortal} from "../../contexts/GrupName.tsx";
+import type {TodoItem} from '../../service/TodoItem.ts'
 
-interface TodoItem {
-    id: number;
-    text: string;
-    isDone: boolean;
-    lesson?: string;
-}
-
-function Schefule_to_day() {
+function ScheduleToDay() {
     const days = ['Воскресенье', 'Понедельник', 'Вторник', 'Среда', 'Четверг', 'Пятница', 'Суббота'];
     const today = new Date();
     const dayName = days[today.getDay()];
-    const { grupName } = useContext(GrupNameContext);
+    const { grupName } = useContext(ItemPortal);
     const filteredSchedule = scheduleData.filter(lesson => lesson.time.weekday === dayName);
     const filteredSchedule_day = filteredSchedule.filter(lesson => lesson.group === grupName);
 
@@ -158,4 +152,4 @@ function Schefule_to_day() {
     );
 }
 
-export default Schefule_to_day;
+export default ScheduleToDay;

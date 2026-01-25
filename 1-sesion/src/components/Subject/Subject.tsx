@@ -1,12 +1,12 @@
 import Header from "../Header/header.tsx";
-import { scheduleData } from '../db/db.ts'
-import { GrupNameContext } from '../contexts/GrupNameContext.tsx';
+import { scheduleData } from '../../service/db.ts'
 import {useContext,useState} from "react";
-import '../schedule/schedule.css'
+import '../shedule/schedule.css'
+import {ItemPortal} from "../../contexts/GrupName.tsx";
 function Subject() {
     const [selected, setSelected] = useState<string | null>(null);
     const uniqueLessons = Array.from(new Set(scheduleData));
-    const { grupName } = useContext(GrupNameContext);
+    const { grupName } = useContext(ItemPortal);
     const filteredSchedule = uniqueLessons.filter(lesson => lesson.group === grupName);
     const selectedLesson = filteredSchedule.find((el) => el.subject === selected)
     return (
@@ -40,6 +40,7 @@ function Subject() {
                         )}
                 </div>
             </div>
+
         </>
     );
 }

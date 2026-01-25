@@ -1,13 +1,13 @@
 // Schedule.js
 import Header from "../Header/header.tsx";
 import './schedule.css'
-import { scheduleData } from '../db/db.ts'
+import { scheduleData } from '../../service/db.ts'
 import { useContext } from "react";
-import { GrupNameContext } from '../contexts/GrupNameContext.tsx';
+import {ItemPortal} from '../../contexts/GrupName.tsx';
 
 function Schedule() {
 
-    const { grupName } = useContext(GrupNameContext);
+    const { grupName } = useContext(ItemPortal);
     const filteredSchedule = scheduleData.filter(lesson => lesson.group === grupName);
     const days = ['Понедельник', 'Вторник', 'Среда', 'Четверг', 'Пятница', 'Суббота', 'Воскресенье'];
     if (filteredSchedule.length === 0) {

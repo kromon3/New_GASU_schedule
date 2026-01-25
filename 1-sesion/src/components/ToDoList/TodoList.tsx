@@ -1,24 +1,22 @@
-import React, {useEffect, useState,useMemo} from "react";
+import {useEffect, useState, useMemo, useCallback, useContext} from "react";
 import Header from "../Header/header.tsx";
 import './todolist.css'
 import TodolistCounter from "./todolist_counter.tsx";
+import {ItemPortal} from "../../contexts/GrupName.tsx";
+import { scheduleData } from '../../service/db.ts'
+import type {TodoItem} from '../../service/TodoItem.ts'
 function TodoList() {
-    interface  TodoItem
-    {
-    id: number,
-    text: string,
-    isDone: boolean,
-    lesson?: string,
-    }
+
+    const { grupName } = useContext(ItemPortal);
     const [value, setValue] = useState<TodoItem[]>(() => {
         const save = localStorage.getItem("base");
         return save ? JSON.parse(save) : [];
-    }); // получение заданий или создание если нету в localstor
+    }); // получение заданий или создание если нет в localstor
     const [inpValue, setInpValue] = useState('');
     const [inpchangeValue, setInpchangeValue] = useState('');
     const [isSelected, setIsSelected] = useState<number | null>(null);
     const [stateIsDone, setStateIsDone] = useState<'all' | 'active' | 'completed'>('all');
-    const [optinShown, setOptinShown] = useState<boolean>(false);
+    const [optinShow, setOptinShow] = useState<boolean>(false);
 
     const filteredTasks = useMemo(() => {
         if(stateIsDone === 'active') {
@@ -34,7 +32,7 @@ function TodoList() {
         localStorage.setItem("base", JSON.stringify(value));
     }, [value]); //сохранение в localStorage
 
-    const handleAdd = () => {
+    const handleAdd = useCallback(() => {
         if (inpValue.trim()) {
             const newItem: TodoItem = {
                 id: Date.now(),
@@ -44,13 +42,13 @@ function TodoList() {
             setValue(prev => [...prev, newItem]);
             setInpValue('');
         }
-    }; //добавление элемента
+    },[setValue,inpValue]); //добавление элемента
 
-    const handleRemove = (id: number) => {
+    const handleRemove = useCallback((id: number) => {
         setValue(prev => prev.filter(item => item.id !== id));
-    }; // удаление элемента
+    },[setValue]); // удаление элемента
 
-    const handleChange = (id: number, newValue: string) => {
+    const handleChange = useCallback((id: number, newValue: string) => {
         if (newValue.trim()) {
             setValue(prev =>
                 prev.map(item =>
@@ -60,23 +58,40 @@ function TodoList() {
             setInpchangeValue('');
             setIsSelected(null);
         }
-    }; // изменение элемента
+    },[setValue]); // изменение элемента
 
-    const startEditing = (id: number) => {
+    const startEditing = useCallback((id: number) => {
         const itemToEdit = value.find(item => item.id === id);
         if (itemToEdit) {
             setIsSelected(id);
             setInpchangeValue(itemToEdit.text);
         }
-    };
+    }, [value]); // начало изменения
 
-    const cancelEditing = () => {
+    const cancelEditing = useCallback(() => {
         setIsSelected(null);
         setInpchangeValue('');
-    };
-    const isDoneValue = value.filter(item => item.isDone).length;
-    const allValues = value.length;
-    const remainingValue = allValues - isDoneValue;
+    },[]);//отмена изменения
+
+    const { isDoneValue, allValues, remainingValue } = useMemo(() => {
+        const doneCount = value.filter(item => item.isDone).length;
+        const total = value.length;
+        return {
+            isDoneValue: doneCount,
+            allValues: total,
+            remainingValue: total - doneCount,
+        };
+    }, [value]);//Мониторинг данных
+
+    const handleLessonChange = useCallback((taskId: number, lesson: string) => {
+        setValue(prev =>
+            prev.map(item =>
+                item.id === taskId ? { ...item, lesson } : item
+            )
+        );
+    }, [setValue]);
+
+    const filteredArray = useMemo(() => scheduleData.filter((i) => i.group === grupName), [grupName]);
     return (
         <>
             <Header />
@@ -93,22 +108,21 @@ function TodoList() {
                             value={inpValue}
                             onChange={(e) => setInpValue(e.target.value)}
                             placeholder="Введите задачу"
-                            onKeyPress={(e) => e.key === 'Enter' && handleAdd()}
                         />
                     </div>
                     <button className="btn" onClick={handleAdd}>Добавить</button>
-                    <button className="btn" onClick={()=>setOptinShown(!optinShown)}>
+                    <button className="btn" onClick={()=>setOptinShow(!optinShow)}>
                         <span className="material-symbols-outlined">more_vert</span>
                     </button>
                 </div>
                 {
-                optinShown ? (                <div className="input-and-button">
+                optinShow ? (
+                    <div className="input-and-button">
                     <button className="btn" onClick={()=>setStateIsDone('active')}>активные</button>
                     <button className="btn" onClick={() => setStateIsDone('completed')}>выполненные</button>
                     <button className="btn" onClick={()=>setStateIsDone('all')}>все</button>
                 </div>) : ('')
                 }
-
                 <div className="main">
                     {
                         filteredTasks.length===0 ? (
@@ -124,7 +138,6 @@ function TodoList() {
                                                     onChange={(e) => setInpchangeValue(e.target.value)}
                                                     placeholder="Редактировать задачу"
                                                     autoFocus
-                                                    onKeyPress={(e) => e.key === 'Enter' && handleChange(item.id, inpchangeValue)}
                                                 />
                                                 <div className="button-group">
                                                     <button className="btn save-btn" onClick={() => handleChange(item.id, inpchangeValue)}>
@@ -157,17 +170,29 @@ function TodoList() {
                                                     <button className={item.isDone ? "btn edit-btn none" : "btn edit-btn"} onClick={() => startEditing(item.id)}>
                                                         <img src="/free-icon-edit-button-84380.png" alt="Редактирование" style={{ width:25  }}/>
                                                     </button>
-
+                                                    {
+                                                        item.lesson ? (
+                                                            <div className="lesson">{item.lesson}</div>
+                                                        ) : (
+                                                            <select className={item.isDone ? "btn edit-btn none" : "btn edit-btn"} value={item.lesson || ""}
+                                                                onChange={(e) => handleLessonChange(item.id, e.target.value)}
+                                                            >
+                                                                <option value="">— Предмет —</option>
+                                                                {filteredArray.map((subjectItem) => (
+                                                                    <option key={subjectItem.subject} value={subjectItem.subject}>
+                                                                        {subjectItem.subject}
+                                                                    </option>
+                                                                ))}
+                                                            </select>
+                                                        )
+                                                    }
                                                 </div>
-                                                <div className="lesson">{item.lesson}</div>
                                             </div>
-
                                         )}
                                     </div>
                                 ))
                         )
                     }
-
                 </div>
             </div>
         </>
