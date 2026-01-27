@@ -75,14 +75,17 @@ function ScheduleToDay() {
                                         <div className="details">
                                             <span className="type" style={{ marginRight: "12px" }}>{lesson.type}</span>
                                             <span className="teacher">{lesson.teacher}</span>
+
                                         </div>
                                     </div>
                                 </div>
+                                <span className="time">{lesson.auditorium}</span>
                                 <div style={{display: 'flex', alignItems: 'center', marginLeft: '16px'}}>
                                     <button onClick={() => {setSelectedSubject(lesson.subject);setStartHome(!startHome);}}>
                                         <img src="/free-icon-article-8173239.png" alt="" style={{ height: "40px" }} />
                                     </button>
                                 </div>
+
                             </div>
                         ))}
                     </div>

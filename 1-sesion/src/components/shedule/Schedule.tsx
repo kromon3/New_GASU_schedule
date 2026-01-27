@@ -105,19 +105,26 @@ function Schedule() {
                             if (lessonsForDay.length === 0) return null;
 
                             return (
-                                <div key={dayName} className="day-section">
-                                    <h2>{dayName}</h2>
-                                    {lessonsForDay.map(lesson => (
-                                        <div key={lesson.id} className="lesson-box schedule">
-                                            <span className="time" style={{ marginRight: "12px" }}>
-                                                {lesson.time.start} – {lesson.time.end}
-                                            </span>
-                                            <h3 className="subject">{lesson.subject}</h3>
-                                            <span className="type" style={{ marginRight: "12px" }}>{lesson.type}</span>
-                                            <span className="teacher">{lesson.teacher}</span>
-                                        </div>
-                                    ))}
-                                </div>
+                                    <div key={dayName} className="day-section">
+                                        <h2>{dayName}</h2>
+                                        {lessonsForDay.map(lesson => (
+                                            <div>
+                                                <div key={lesson.id} className="lesson-box schedule">
+                                                <span className="time" style={{ marginRight: "12px" }}>
+                                                    {lesson.time.start} – {lesson.time.end}
+                                                </span>
+                                                    <h3 className="subject">{lesson.subject}</h3>
+                                                    <span className="type" style={{ marginRight: "12px" }}>{lesson.type}</span>
+                                                    <span className="teacher">{lesson.teacher}</span>
+                                                    <span className="time" style={{ marginLeft: "12px" }}>{lesson.auditorium}</span>
+                                                </div>
+
+                                            </div>
+
+                                        ))}
+                                    </div>
+
+
                             );
                         })}
                     </div>
@@ -142,6 +149,7 @@ function Schedule() {
                                             <h3 className="subject">{lesson.subject}</h3>
                                             <span className="type" style={{ marginRight: "12px" }}>{lesson.type}</span>
                                             <span className="teacher">{lesson.teacher}</span>
+                                            <span className="time" style={{ marginLeft: "12px" }}>{lesson.auditorium}</span>
                                         </div>
                                     ))}
                                 </div>

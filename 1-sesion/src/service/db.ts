@@ -10,10 +10,11 @@ export interface ScheduleLesson {
     type?: 'Лекция' | 'Практика' | 'Лабораторная';
     group?: string;
     weekType?: 'Четная' | 'НеЧетная'
+    auditorium?: string;
 }
 
 export const scheduleData: ScheduleLesson[] = [
-    // Существующие занятия для ИТ-201 (id 1-15) - добавлен weekType
+    // Существующие занятия для ИТ-201 (id 1-15) - добавлен weekType и аудитория
     {
         id: 1,
         subject: 'Матанализ',
@@ -25,7 +26,8 @@ export const scheduleData: ScheduleLesson[] = [
         teacher: 'Якунина',
         type: "Лекция",
         group: '2-ПМИ-2',
-        weekType: 'Четная'
+        weekType: 'Четная',
+        auditorium: '310'
     },
     {
         id: 2,
@@ -38,7 +40,8 @@ export const scheduleData: ScheduleLesson[] = [
         teacher: 'Петров И.С.',
         type: "Лекция",
         group: 'ИТ-201',
-        weekType: 'НеЧетная'
+        weekType: 'НеЧетная',
+        auditorium: '215'
     },
     {
         id: 3,
@@ -51,7 +54,8 @@ export const scheduleData: ScheduleLesson[] = [
         teacher: 'Сидорова А.В.',
         type: "Лабораторная",
         group: 'ИТ-201',
-        weekType: 'Четная'
+        weekType: 'Четная',
+        auditorium: '405'
     },
     {
         id: 4,
@@ -64,7 +68,8 @@ export const scheduleData: ScheduleLesson[] = [
         teacher: 'Козлов Д.М.',
         type: "Лекция",
         group: 'ИТ-201',
-        weekType: 'НеЧетная'
+        weekType: 'НеЧетная',
+        auditorium: '101'
     },
     {
         id: 5,
@@ -77,7 +82,8 @@ export const scheduleData: ScheduleLesson[] = [
         teacher: 'Сидорова А.В.',
         type: "Практика",
         group: 'ИТ-201',
-        weekType: 'Четная'
+        weekType: 'Четная',
+        auditorium: '208'
     },
     {
         id: 6,
@@ -90,7 +96,8 @@ export const scheduleData: ScheduleLesson[] = [
         teacher: 'Иванова Е.П.',
         type: "Практика",
         group: 'ИТ-201',
-        weekType: 'НеЧетная'
+        weekType: 'НеЧетная',
+        auditorium: '315'
     },
     {
         id: 7,
@@ -103,7 +110,8 @@ export const scheduleData: ScheduleLesson[] = [
         teacher: 'Федоров К.Л.',
         type: "Лекция",
         group: 'ИТ-201',
-        weekType: 'Четная'
+        weekType: 'Четная',
+        auditorium: '412'
     },
     {
         id: 8,
@@ -116,7 +124,8 @@ export const scheduleData: ScheduleLesson[] = [
         teacher: 'Николаев Р.В.',
         type: "Практика",
         group: 'ИТ-201',
-        weekType: 'НеЧетная'
+        weekType: 'НеЧетная',
+        auditorium: '107'
     },
     {
         id: 9,
@@ -129,7 +138,8 @@ export const scheduleData: ScheduleLesson[] = [
         teacher: 'Смирнов А.А.',
         type: "Практика",
         group: 'ИТ-201',
-        weekType: 'Четная'
+        weekType: 'Четная',
+        auditorium: 'Спортзал 1'
     },
     {
         id: 10,
@@ -142,7 +152,8 @@ export const scheduleData: ScheduleLesson[] = [
         teacher: 'Якунина',
         type: "Практика",
         group: 'ИТ-201',
-        weekType: 'НеЧетная'
+        weekType: 'НеЧетная',
+        auditorium: '209'
     },
     {
         id: 11,
@@ -155,7 +166,8 @@ export const scheduleData: ScheduleLesson[] = [
         teacher: 'Кузнецов М.С.',
         type: "Лабораторная",
         group: 'ИТ-201',
-        weekType: 'Четная'
+        weekType: 'Четная',
+        auditorium: '506'
     },
     {
         id: 12,
@@ -168,7 +180,8 @@ export const scheduleData: ScheduleLesson[] = [
         teacher: 'Орлова Т.К.',
         type: "Лекция",
         group: 'ИТ-201',
-        weekType: 'НеЧетная'
+        weekType: 'НеЧетная',
+        auditorium: '301'
     },
     {
         id: 13,
@@ -181,7 +194,8 @@ export const scheduleData: ScheduleLesson[] = [
         teacher: 'Орлова Т.К.',
         type: "Лабораторная",
         group: 'ИТ-201',
-        weekType: 'Четная'
+        weekType: 'Четная',
+        auditorium: '404'
     },
     {
         id: 14,
@@ -194,7 +208,8 @@ export const scheduleData: ScheduleLesson[] = [
         teacher: 'Белова С.М.',
         type: "Лекция",
         group: 'ИТ-201',
-        weekType: 'НеЧетная'
+        weekType: 'НеЧетная',
+        auditorium: '112'
     },
     {
         id: 15,
@@ -207,9 +222,10 @@ export const scheduleData: ScheduleLesson[] = [
         teacher: 'Николаев Р.В.',
         type: "Лекция",
         group: 'ИТ-201',
-        weekType: 'Четная'
+        weekType: 'Четная',
+        auditorium: '308'
     },
-    // Существующие занятия для 2-ПМИ-2 (id 16-18) - добавлен weekType
+    // Существующие занятия для 2-ПМИ-2 (id 16-18) - добавлен weekType и аудитория
     {
         id: 16,
         subject: 'Линейная алгебра',
@@ -221,7 +237,8 @@ export const scheduleData: ScheduleLesson[] = [
         teacher: 'Петров И.С.',
         type: "Практика",
         group: '2-ПМИ-2',
-        weekType: 'НеЧетная'
+        weekType: 'НеЧетная',
+        auditorium: '214'
     },
     {
         id: 17,
@@ -234,7 +251,8 @@ export const scheduleData: ScheduleLesson[] = [
         teacher: 'Козлов Д.М.',
         type: "Лабораторная",
         group: '2-ПМИ-2',
-        weekType: 'Четная'
+        weekType: 'Четная',
+        auditorium: '403'
     },
     {
         id: 18,
@@ -247,9 +265,10 @@ export const scheduleData: ScheduleLesson[] = [
         teacher: 'Федоров К.Л.',
         type: "Практика",
         group: '2-ПМИ-2',
-        weekType: 'НеЧетная'
+        weekType: 'НеЧетная',
+        auditorium: '109'
     },
-    // Новые занятия для 2-ПМИ-2 (продолжение) - добавлен weekType
+    // Новые занятия для 2-ПМИ-2 (продолжение) - добавлен weekType и аудитория
     {
         id: 19,
         subject: 'Программирование на Python',
@@ -261,7 +280,8 @@ export const scheduleData: ScheduleLesson[] = [
         teacher: 'Сидорова А.В.',
         type: "Лекция",
         group: '2-ПМИ-2',
-        weekType: 'Четная'
+        weekType: 'Четная',
+        auditorium: '312'
     },
     {
         id: 20,
@@ -274,7 +294,8 @@ export const scheduleData: ScheduleLesson[] = [
         teacher: 'Якунина',
         type: "Практика",
         group: '2-ПМИ-2',
-        weekType: 'НеЧетная'
+        weekType: 'НеЧетная',
+        auditorium: '207'
     },
     {
         id: 21,
@@ -287,7 +308,8 @@ export const scheduleData: ScheduleLesson[] = [
         teacher: 'Федоров К.Л.',
         type: "Лекция",
         group: '2-ПМИ-2',
-        weekType: 'Четная'
+        weekType: 'Четная',
+        auditorium: '410'
     },
     {
         id: 22,
@@ -300,9 +322,10 @@ export const scheduleData: ScheduleLesson[] = [
         teacher: 'Иванова Е.П.',
         type: "Практика",
         group: '2-ПМИ-2',
-        weekType: 'НеЧетная'
+        weekType: 'НеЧетная',
+        auditorium: '105'
     },
-    // Занятия для 1-ПМИ-2 - добавлен weekType
+    // Занятия для 1-ПМИ-2 - добавлен weekType и аудитория
     {
         id: 23,
         subject: 'Введение в математику',
@@ -314,7 +337,8 @@ export const scheduleData: ScheduleLesson[] = [
         teacher: 'Якунина',
         type: "Лекция",
         group: '1-ПМИ-2',
-        weekType: 'Четная'
+        weekType: 'Четная',
+        auditorium: '201'
     },
     {
         id: 24,
@@ -327,7 +351,8 @@ export const scheduleData: ScheduleLesson[] = [
         teacher: 'Петров И.С.',
         type: "Практика",
         group: '1-ПМИ-2',
-        weekType: 'НеЧетная'
+        weekType: 'НеЧетная',
+        auditorium: '306'
     },
     {
         id: 25,
@@ -340,7 +365,8 @@ export const scheduleData: ScheduleLesson[] = [
         teacher: 'Сидорова А.В.',
         type: "Лекция",
         group: '1-ПМИ-2',
-        weekType: 'Четная'
+        weekType: 'Четная',
+        auditorium: '508'
     },
     {
         id: 26,
@@ -353,7 +379,8 @@ export const scheduleData: ScheduleLesson[] = [
         teacher: 'Кузнецов М.С.',
         type: "Лабораторная",
         group: '1-ПМИ-2',
-        weekType: 'НеЧетная'
+        weekType: 'НеЧетная',
+        auditorium: '413'
     },
     {
         id: 27,
@@ -366,7 +393,8 @@ export const scheduleData: ScheduleLesson[] = [
         teacher: 'Иванова Е.П.',
         type: "Практика",
         group: '1-ПМИ-2',
-        weekType: 'Четная'
+        weekType: 'Четная',
+        auditorium: '210'
     },
     {
         id: 28,
@@ -379,9 +407,10 @@ export const scheduleData: ScheduleLesson[] = [
         teacher: 'Смирнов А.А.',
         type: "Практика",
         group: '1-ПМИ-2',
-        weekType: 'НеЧетная'
+        weekType: 'НеЧетная',
+        auditorium: 'Спортзал 2'
     },
-    // Занятия для ПИ-1 - добавлен weekType
+    // Занятия для ПИ-1 - добавлен weekType и аудитория
     {
         id: 29,
         subject: 'Программирование на Java',
@@ -393,7 +422,8 @@ export const scheduleData: ScheduleLesson[] = [
         teacher: 'Кузнецов М.С.',
         type: "Лекция",
         group: 'ПИ-1',
-        weekType: 'Четная'
+        weekType: 'Четная',
+        auditorium: '309'
     },
     {
         id: 30,
@@ -406,7 +436,8 @@ export const scheduleData: ScheduleLesson[] = [
         teacher: 'Орлова Т.К.',
         type: "Практика",
         group: 'ПИ-1',
-        weekType: 'НеЧетная'
+        weekType: 'НеЧетная',
+        auditorium: '205'
     },
     {
         id: 31,
@@ -419,7 +450,8 @@ export const scheduleData: ScheduleLesson[] = [
         teacher: 'Кузнецов М.С.',
         type: "Лабораторная",
         group: 'ПИ-1',
-        weekType: 'Четная'
+        weekType: 'Четная',
+        auditorium: '507'
     },
     {
         id: 32,
@@ -432,7 +464,8 @@ export const scheduleData: ScheduleLesson[] = [
         teacher: 'Орлова Т.К.',
         type: "Лекция",
         group: 'ПИ-1',
-        weekType: 'НеЧетная'
+        weekType: 'НеЧетная',
+        auditorium: '102'
     },
     {
         id: 33,
@@ -445,7 +478,8 @@ export const scheduleData: ScheduleLesson[] = [
         teacher: 'Сидорова А.В.',
         type: "Лекция",
         group: 'ПИ-1',
-        weekType: 'Четная'
+        weekType: 'Четная',
+        auditorium: '411'
     },
     {
         id: 34,
@@ -458,7 +492,8 @@ export const scheduleData: ScheduleLesson[] = [
         teacher: 'Николаев Р.В.',
         type: "Практика",
         group: 'ПИ-1',
-        weekType: 'НеЧетная'
+        weekType: 'НеЧетная',
+        auditorium: '304'
     },
     {
         id: 35,
@@ -471,10 +506,11 @@ export const scheduleData: ScheduleLesson[] = [
         teacher: 'Белова С.М.',
         type: "Лекция",
         group: 'ПИ-1',
-        weekType: 'Четная'
+        weekType: 'Четная',
+        auditorium: '108'
     },
 
-    // Дополнения с чередующимися неделями (оставлены без изменений)
+    // Дополнения с чередующимися неделями (оставлены без изменений) - добавлена аудитория
 
     // Чередующиеся занятия для ИТ-201
     {
@@ -488,7 +524,8 @@ export const scheduleData: ScheduleLesson[] = [
         teacher: 'Сидорова А.В.',
         type: "Практика",
         group: 'ИТ-201',
-        weekType: 'Четная'
+        weekType: 'Четная',
+        auditorium: '313'
     },
     {
         id: 37,
@@ -501,7 +538,8 @@ export const scheduleData: ScheduleLesson[] = [
         teacher: 'Орлова Т.К.',
         type: "Лабораторная",
         group: 'ИТ-201',
-        weekType: 'НеЧетная'
+        weekType: 'НеЧетная',
+        auditorium: '406'
     },
     {
         id: 38,
@@ -514,7 +552,8 @@ export const scheduleData: ScheduleLesson[] = [
         teacher: 'Николаев Р.В.',
         type: "Лабораторная",
         group: 'ИТ-201',
-        weekType: 'Четная'
+        weekType: 'Четная',
+        auditorium: '509'
     },
     {
         id: 39,
@@ -527,7 +566,8 @@ export const scheduleData: ScheduleLesson[] = [
         teacher: 'Федоров К.Л.',
         type: "Практика",
         group: 'ИТ-201',
-        weekType: 'НеЧетная'
+        weekType: 'НеЧетная',
+        auditorium: '203'
     },
 
     // Чередующиеся занятия для 2-ПМИ-2
@@ -542,7 +582,8 @@ export const scheduleData: ScheduleLesson[] = [
         teacher: 'Петров И.С.',
         type: "Лекция",
         group: '2-ПМИ-2',
-        weekType: 'Четная'
+        weekType: 'Четная',
+        auditorium: '302'
     },
     {
         id: 41,
@@ -555,7 +596,8 @@ export const scheduleData: ScheduleLesson[] = [
         teacher: 'Козлов Д.М.',
         type: "Практика",
         group: '2-ПМИ-2',
-        weekType: 'НеЧетная'
+        weekType: 'НеЧетная',
+        auditorium: '104'
     },
     {
         id: 42,
@@ -568,7 +610,8 @@ export const scheduleData: ScheduleLesson[] = [
         teacher: 'Якунина',
         type: "Лекция",
         group: '2-ПМИ-2',
-        weekType: 'Четная'
+        weekType: 'Четная',
+        auditorium: '307'
     },
     {
         id: 43,
@@ -581,7 +624,8 @@ export const scheduleData: ScheduleLesson[] = [
         teacher: 'Сидорова А.В.',
         type: "Практика",
         group: '2-ПМИ-2',
-        weekType: 'НеЧетная'
+        weekType: 'НеЧетная',
+        auditorium: '204'
     },
 
     // Чередующиеся занятия для 1-ПМИ-2
@@ -596,7 +640,8 @@ export const scheduleData: ScheduleLesson[] = [
         teacher: 'Кузнецов М.С.',
         type: "Практика",
         group: '1-ПМИ-2',
-        weekType: 'Четная'
+        weekType: 'Четная',
+        auditorium: '408'
     },
     {
         id: 45,
@@ -609,7 +654,8 @@ export const scheduleData: ScheduleLesson[] = [
         teacher: 'Якунина',
         type: "Практика",
         group: '1-ПМИ-2',
-        weekType: 'НеЧетная'
+        weekType: 'НеЧетная',
+        auditorium: '111'
     },
     {
         id: 46,
@@ -622,7 +668,8 @@ export const scheduleData: ScheduleLesson[] = [
         teacher: 'Петров И.С.',
         type: "Лекция",
         group: '1-ПМИ-2',
-        weekType: 'Четная'
+        weekType: 'Четная',
+        auditorium: '212'
     },
     {
         id: 47,
@@ -635,7 +682,8 @@ export const scheduleData: ScheduleLesson[] = [
         teacher: 'Сидорова А.В.',
         type: "Практика",
         group: '1-ПМИ-2',
-        weekType: 'НеЧетная'
+        weekType: 'НеЧетная',
+        auditorium: '505'
     },
 
     // Чередующиеся занятия для ПИ-1
@@ -650,7 +698,8 @@ export const scheduleData: ScheduleLesson[] = [
         teacher: 'Кузнецов М.С.',
         type: "Практика",
         group: 'ПИ-1',
-        weekType: 'Четная'
+        weekType: 'Четная',
+        auditorium: '303'
     },
     {
         id: 49,
@@ -663,7 +712,8 @@ export const scheduleData: ScheduleLesson[] = [
         teacher: 'Сидорова А.В.',
         type: "Лабораторная",
         group: 'ПИ-1',
-        weekType: 'НеЧетная'
+        weekType: 'НеЧетная',
+        auditorium: '409'
     },
     {
         id: 50,
@@ -676,7 +726,8 @@ export const scheduleData: ScheduleLesson[] = [
         teacher: 'Орлова Т.К.',
         type: "Практика",
         group: 'ПИ-1',
-        weekType: 'Четная'
+        weekType: 'Четная',
+        auditorium: '106'
     },
     {
         id: 51,
@@ -689,7 +740,8 @@ export const scheduleData: ScheduleLesson[] = [
         teacher: 'Николаев Р.В.',
         type: "Лекция",
         group: 'ПИ-1',
-        weekType: 'НеЧетная'
+        weekType: 'НеЧетная',
+        auditorium: '311'
     },
     {
         id: 52,
@@ -702,7 +754,8 @@ export const scheduleData: ScheduleLesson[] = [
         teacher: 'Белова С.М.',
         type: "Практика",
         group: 'ПИ-1',
-        weekType: 'Четная'
+        weekType: 'Четная',
+        auditorium: '202'
     },
     {
         id: 53,
@@ -715,6 +768,7 @@ export const scheduleData: ScheduleLesson[] = [
         teacher: 'Кузнецов М.С.',
         type: "Лабораторная",
         group: 'ПИ-1',
-        weekType: 'НеЧетная'
+        weekType: 'НеЧетная',
+        auditorium: '504'
     }
 ];
