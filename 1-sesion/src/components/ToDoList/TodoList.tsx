@@ -65,12 +65,12 @@ function TodoList() {
                     </button>
                 </div>
                 {
-                optinShow ? (
-                    <div className="input-and-button">
-                    <button className="btn" onClick={()=>setStateIsDone('active')}>активные</button>
-                    <button className="btn" onClick={() => setStateIsDone('completed')}>выполненные</button>
-                    <button className="btn" onClick={()=>setStateIsDone('all')}>все</button>
-                </div>) : ('')
+                    optinShow ? (
+                        <div className="input-and-button">
+                            <button className="btn" onClick={()=>setStateIsDone('active')}>активные</button>
+                            <button className="btn" onClick={() => setStateIsDone('completed')}>выполненные</button>
+                            <button className="btn" onClick={()=>setStateIsDone('all')}>все</button>
+                        </div>) : ('')
                 }
                 <div className="main">
                     {
@@ -78,68 +78,68 @@ function TodoList() {
                             <h1>Введите задачу</h1>
                         ) : (
                             filteredTasks.map((item) => (
-                                    <div key={item.id} className="todo-item">
-                                        {item.id === isSelected ? (
-                                            <div className="item editing">
-                                                <input
-                                                    className="search-input edit-input"
-                                                    value={inpchangeValue}
-                                                    onChange={(e) => setInpchangeValue(e.target.value)}
-                                                    placeholder="Редактировать задачу"
-                                                    autoFocus
-                                                />
-                                                <div className="button-group">
-                                                    <button className="btn save-btn" onClick={() => handleChange(item.id, inpchangeValue)}>
-                                                        Сохранить
-                                                    </button>
-                                                    <button className="btn cancel-btn" onClick={cancelEditing}>
-                                                        Отмена
-                                                    </button>
-                                                </div>
+                                <div key={item.id} className="todo-item">
+                                    {item.id === isSelected ? (
+                                        <div className="item editing">
+                                            <input
+                                                className="search-input edit-input"
+                                                value={inpchangeValue}
+                                                onChange={(e) => setInpchangeValue(e.target.value)}
+                                                placeholder="Редактировать задачу"
+                                                autoFocus
+                                            />
+                                            <div className="button-group">
+                                                <button className="btn save-btn" onClick={() => handleChange(item.id, inpchangeValue)}>
+                                                    Сохранить
+                                                </button>
+                                                <button className="btn cancel-btn" onClick={cancelEditing}>
+                                                    Отмена
+                                                </button>
                                             </div>
-                                        ) : (
-                                            <div className="item">
-                                                <input type="checkbox" checked={item.isDone} onChange={() => {
-                                                    setValue(prev =>
-                                                        prev.map(v =>
-                                                            v.id === item.id ? { ...v, isDone: !v.isDone } : v
-                                                        )
-                                                    );
-                                                }}/>
-                                                <h1 className = {item.isDone ? ("text-content Done"): ("text-content NoDone")} style={{marginRight: 20}}>{item.text}</h1>
-                                                <div className="button-group">
-                                                    {
-                                                        item.isDone ? (
-                                                            <h1 style={{ marginLeft: 21.44 }}>Выполнено</h1>
-                                                        ) : ""
-                                                    }
-                                                    <button className={"btn delete-btn "} onClick={() => handleRemove(item.id)}>
-                                                        <img src="/free-icon-close-151882.png" alt="Удаление" style={{ width:25   }}/>
-                                                    </button>
-                                                    <button className={item.isDone ? "btn edit-btn none" : "btn edit-btn"} onClick={() => startEditing(item.id)}>
-                                                        <img src="/free-icon-edit-button-84380.png" alt="Редактирование" style={{ width:25  }}/>
-                                                    </button>
-                                                    {
-                                                        item.lesson ? (
-                                                            <div className="lesson">{item.lesson}</div>
-                                                        ) : (
-                                                            <select className={item.isDone ? "btn edit-btn none" : "btn edit-btn"} value={item.lesson || ""}
+                                        </div>
+                                    ) : (
+                                        <div className="item">
+                                            <input type="checkbox" checked={item.isDone} onChange={() => {
+                                                setValue(prev =>
+                                                    prev.map(v =>
+                                                        v.id === item.id ? { ...v, isDone: !v.isDone } : v
+                                                    )
+                                                );
+                                            }}/>
+                                            <h1 className = {item.isDone ? ("text-content Done"): ("text-content NoDone")} style={{marginRight: 20}}>{item.text}</h1>
+                                            <div className="button-group">
+                                                {
+                                                    item.isDone ? (
+                                                        <h1 style={{ marginLeft: 21.44 }}>Выполнено</h1>
+                                                    ) : ""
+                                                }
+                                                <button className={"btn delete-btn "} onClick={() => handleRemove(item.id)}>
+                                                    <img src="/free-icon-close-151882.png" alt="Удаление" style={{ width:25   }}/>
+                                                </button>
+                                                <button className={item.isDone ? "btn edit-btn none" : "btn edit-btn"} onClick={() => startEditing(item.id)}>
+                                                    <img src="/free-icon-edit-button-84380.png" alt="Редактирование" style={{ width:25  }}/>
+                                                </button>
+                                                {
+                                                    item.lesson ? (
+                                                        <div className="lesson">{item.lesson}</div>
+                                                    ) : (
+                                                        <select className={item.isDone ? "btn edit-btn none" : "btn edit-btn"} value={item.lesson || ""}
                                                                 onChange={(e) => handleLessonChange(item.id, e.target.value)}
-                                                            >
-                                                                <option value="">— Предмет —</option>
-                                                                {filteredArray.map((subjectItem) => (
-                                                                    <option key={subjectItem.subject} value={subjectItem.subject}>
-                                                                        {subjectItem.subject}
-                                                                    </option>
-                                                                ))}
-                                                            </select>
-                                                        )
-                                                    }
-                                                </div>
+                                                        >
+                                                            <option value="">— Предмет —</option>
+                                                            {filteredArray.map((subjectItem) => (
+                                                                <option key={subjectItem.subject} value={subjectItem.subject}>
+                                                                    {subjectItem.subject}
+                                                                </option>
+                                                            ))}
+                                                        </select>
+                                                    )
+                                                }
                                             </div>
-                                        )}
-                                    </div>
-                                ))
+                                        </div>
+                                    )}
+                                </div>
+                            ))
                         )
                     }
                 </div>
