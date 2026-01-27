@@ -1,23 +1,18 @@
-import {useEffect, useState, useMemo, useCallback, useContext} from "react";
+import {useState, useMemo, useCallback, useContext} from "react";
 import Header from "../Header/header.tsx";
-import './todolist.css'
+import '../../style/todolist.css'
 import TodolistCounter from "./todolist_counter.tsx";
 import {ItemPortal} from "../../contexts/GrupName.tsx";
 import { scheduleData } from '../../service/db.ts'
 import type {TodoItem} from '../../service/TodoItem.ts'
+import {useLocalStorage} from "../../hooks/useLocalStorage.ts";
+import {useTodo} from "../../hooks/useTodo.ts";
 function TodoList() {
-
     const { grupName } = useContext(ItemPortal);
-    const [value, setValue] = useState<TodoItem[]>(() => {
-        const save = localStorage.getItem("base");
-        return save ? JSON.parse(save) : [];
-    }); // получение заданий или создание если нет в localstor
-    const [inpValue, setInpValue] = useState('');
-    const [inpchangeValue, setInpchangeValue] = useState('');
-    const [isSelected, setIsSelected] = useState<number | null>(null);
+    const [value, setValue] = useLocalStorage('base', []);
     const [stateIsDone, setStateIsDone] = useState<'all' | 'active' | 'completed'>('all');
     const [optinShow, setOptinShow] = useState<boolean>(false);
-
+    const {inpValue, setInpValue, inpchangeValue, setInpchangeValue, isSelected, handleAdd, handleRemove, handleChange, startEditing, cancelEditing,} = useTodo(value, setValue);
     const filteredTasks = useMemo(() => {
         if(stateIsDone === 'active') {
             return value.filter(item => !item.isDone);
@@ -27,52 +22,6 @@ function TodoList() {
         }
         return value;
     }, [value, stateIsDone]); // memo для фильтра задач чтобы было круче
-
-    useEffect(() => {
-        localStorage.setItem("base", JSON.stringify(value));
-    }, [value]); //сохранение в localStorage
-
-    const handleAdd = useCallback(() => {
-        if (inpValue.trim()) {
-            const newItem: TodoItem = {
-                id: Date.now(),
-                text: inpValue.trim(),
-                isDone: false,
-            }
-            setValue(prev => [...prev, newItem]);
-            setInpValue('');
-        }
-    },[setValue,inpValue]); //добавление элемента
-
-    const handleRemove = useCallback((id: number) => {
-        setValue(prev => prev.filter(item => item.id !== id));
-    },[setValue]); // удаление элемента
-
-    const handleChange = useCallback((id: number, newValue: string) => {
-        if (newValue.trim()) {
-            setValue(prev =>
-                prev.map(item =>
-                    item.id === id ? { ...item, text: newValue.trim() } : item
-                )
-            );
-            setInpchangeValue('');
-            setIsSelected(null);
-        }
-    },[setValue]); // изменение элемента
-
-    const startEditing = useCallback((id: number) => {
-        const itemToEdit = value.find(item => item.id === id);
-        if (itemToEdit) {
-            setIsSelected(id);
-            setInpchangeValue(itemToEdit.text);
-        }
-    }, [value]); // начало изменения
-
-    const cancelEditing = useCallback(() => {
-        setIsSelected(null);
-        setInpchangeValue('');
-    },[]);//отмена изменения
-
     const { isDoneValue, allValues, remainingValue } = useMemo(() => {
         const doneCount = value.filter(item => item.isDone).length;
         const total = value.length;

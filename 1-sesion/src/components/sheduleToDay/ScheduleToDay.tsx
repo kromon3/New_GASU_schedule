@@ -1,10 +1,30 @@
 import Header from "../Header/header.tsx";
 import { scheduleData } from '../../service/db.ts';
-import '../shedule/schedule.css';
-import React, { useContext, useEffect, useState } from "react";
+import '../../style/schedule.css';
+import  { useContext, useState,useEffect } from "react";
 import {ItemPortal} from "../../contexts/GrupName.tsx";
 import type {TodoItem} from '../../service/TodoItem.ts'
+import {useLocalStorage} from "../../hooks/useLocalStorage.ts";
+import {useTodo} from "../../hooks/useTodo.ts";
+function getCurrentWeekType() {
+    const referenceDate = new Date(2025, 0, 27);
 
+    const now = new Date();
+
+    const refStart = new Date(referenceDate);
+    refStart.setHours(0, 0, 0, 0);
+
+    const nowStart = new Date(now);
+    nowStart.setHours(0, 0, 0, 0);
+
+    const diffMs = nowStart - refStart;
+
+    const msInWeek = 1000 * 60 * 60 * 24 * 7;
+
+    const weeksPassed = Math.floor(diffMs / msInWeek);
+
+    return weeksPassed % 2 === 0 ? 'Четная' : 'НеЧетная';
+}
 function ScheduleToDay() {
     const days = ['Воскресенье', 'Понедельник', 'Вторник', 'Среда', 'Четверг', 'Пятница', 'Суббота'];
     const today = new Date();
@@ -12,42 +32,11 @@ function ScheduleToDay() {
     const { grupName } = useContext(ItemPortal);
     const filteredSchedule = scheduleData.filter(lesson => lesson.time.weekday === dayName);
     const filteredSchedule_day = filteredSchedule.filter(lesson => lesson.group === grupName);
-
-    const [value, setValue] = useState<TodoItem[]>(() => {
-        const save = localStorage.getItem("base");
-        if (!save) return [];
-        try {
-            return JSON.parse(save);
-        } catch (e) {
-            console.error("Failed to parse todos from localStorage", e);
-            return [];
-        }
-    });
-
-    useEffect(() => {
-        localStorage.setItem("base", JSON.stringify(value));
-    }, [value]);
-
-    const [inputValue, setInputValue] = useState<string>('');
+    const [value, setValue] = useLocalStorage('base');
+    const {inpValue, setInpValue,handleAdd, handleRemove} = useTodo(value, setValue);
     const [startHome, setStartHome] = useState<boolean>(false);
     const [selectedSubject, setSelectedSubject] = useState<string | null>(null);
-    const handleRemove = (id: number) => {
-        setValue(prev => prev.filter(item => item.id !== id));
-    };
-    const addHomeWork = () => {
-        if (inputValue.trim() === '' || !selectedSubject) return;
-
-        const newItem: TodoItem = {
-            id: Date.now(),
-            text: inputValue,
-            isDone: false,
-            lesson: selectedSubject,
-        };
-
-        setValue(prev => [...prev, newItem]);
-        setInputValue('');
-    };
-
+    const [currentWeekType, setCurrentWeekType] = useState('Четная');
     if (filteredSchedule_day.length === 0) {
         return (
             <>
@@ -59,6 +48,11 @@ function ScheduleToDay() {
             </>
         );
     }
+    useEffect(() => {
+        const weekType = getCurrentWeekType();
+        setCurrentWeekType(weekType);},[])
+
+    const filteredSchedule_day_type =  filteredSchedule_day.filter(lesson => lesson.weekType === currentWeekType);
 
     return (
         <>
@@ -66,8 +60,9 @@ function ScheduleToDay() {
             <div className="page-layout">
                 <div className="main-content">
                     <div className="schedule-page">
-                        <h1>Расписание на {dayName}</h1>
-                        {filteredSchedule_day.map(lesson => (
+                        <h1>Расписание на {dayName} ({currentWeekType} Неделя)</h1>
+
+                        {filteredSchedule_day_type.map(lesson => (
                             <div key={lesson.id} className="lesson-box schedule_to_day">
                                 <div style={{ flex: 1 }}>
                                     <div className="lesson-header">
@@ -99,18 +94,14 @@ function ScheduleToDay() {
                         <div className="input-container">
                             <input
                                 className="search-input"
-                                value={inputValue}
-                                onChange={(e) => setInputValue(e.target.value)}
+                                value={inpValue}
+                                onChange={(e) => setInpValue(e.target.value)}
                                 placeholder="Введите задачу"
                             />
-                            <button
-                                onClick={addHomeWork}
-                                className={"btn"}
-                            >
+                            <button onClick={() => handleAdd(inpValue, selectedSubject) }className={'btn'}>
                                 Добавить
                             </button>
                         </div>
-
                         <div style={{ marginTop: '16px' }}>
                             {startHome && (
                                 <>

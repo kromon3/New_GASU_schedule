@@ -1,5 +1,5 @@
 // src/Header/header.tsx
-import "./header.css";
+import "../../style/header.css";
 import GroupSelection from "./GroupSelection/GroupSelection.tsx";
 import ScheduleSelection from "./GroupSelection/ScheduleSelection.tsx";
 import { Link } from "react-router-dom";
@@ -7,8 +7,8 @@ import { useContext, useState } from "react";
 import { ItemPortal } from "../../contexts/GrupName.tsx";
 function Header() {
     const { grupName, setGrupName } = useContext(ItemPortal);
-    const [showGroupSelection, setShowGroupSelection] = useState(false);
-    const [showScheduleMenu, setShowScheduleMenu] = useState(false);
+    const [showGroupSelection, setShowGroupSelection] = useState<boolean>(false);
+    const [showScheduleMenu, setShowScheduleMenu] = useState<boolean>(false);
 
     const handleClearGroup = () => {
         setGrupName("Группа не выбрана");

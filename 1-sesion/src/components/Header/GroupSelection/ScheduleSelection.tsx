@@ -1,6 +1,6 @@
 // ScheduleSelection.jsx
 import { Link } from "react-router-dom";
-import "./GroupSelection.css";
+import "../../../style/GroupSelection.css";
 
 const ScheduleSelection = () => {
   return (

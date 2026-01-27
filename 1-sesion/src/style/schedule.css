@@ -124,13 +124,25 @@
     flex: 1;
     min-width: 0;
 }
-info-sidebar.false{
-    display: none;
+.slider{
+    display: flex;
+    overflow-x: auto;
+    scroll-snap-type:  x mandatory;
+    msOverflowStyle: 'none';
+    scrollbarWidth: 'none';
+}
+
+.slide{
+    min-width: 100vw;
+    height: 100vh;
+
 }
 .lesson-box.schedule_to_day {
     align-items: center; /* центрирует все дочерние элементы по вертикали */
 }
-
+info-sidebar.false{
+    display: none;
+}
 .lesson-content {
     flex: 1;
 }
@@ -167,6 +179,43 @@ info-sidebar.false{
     font-style: italic;
     text-align: center;
     padding: 40px 0;
+}
+.schedule-page {
+    width: 100%;
+    min-height: 100vh;
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+.slider::-webkit-scrollbar {
+    display: none;
+}
+.week-type-buttons{
+    display: flex;
+    justify-content: center;
+
+}
+.week-type-button{
+    flex: 1;
+    min-width: 140px;
+    height: 60px;
+    background: black;
+    color: white;
+    border: none;
+    border-radius: 12px;
+    cursor: pointer;
+    font-size: 18px;
+    font-weight: 700;
+    letter-spacing: 0.8px;
+    text-transform: uppercase;
+    box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    min-width: 100px;
+    max-width: 400px;
+}
+.week-type-button.active{
+    background: white;
+    color: black;
 }
 @media (max-width: 900px){
     .info-sidebar{

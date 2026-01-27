@@ -1,4 +1,4 @@
-import "./GroupSelection.css";
+import "../../../style/GroupSelection.css";
 
 function GroupSelection({ onSelectGroup }) {
     const groups = ['2-ПМИ-2', "1-ПМИ-2", "ПИ-1","ИТ-201"];

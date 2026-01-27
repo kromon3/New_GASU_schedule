@@ -1,4 +1,4 @@
-import "./todolistcounter.css"
+import "../../style/todolistcounter.css"
 function TodolistCounter(props) {
     return (
         <>

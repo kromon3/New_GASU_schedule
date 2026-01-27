@@ -1,7 +1,7 @@
 import Header from "../Header/header.tsx";
 import { scheduleData } from '../../service/db.ts'
 import {useContext,useState} from "react";
-import '../shedule/schedule.css'
+import '../../style/schedule.css'
 import {ItemPortal} from "../../contexts/GrupName.tsx";
 function Subject() {
     const [selected, setSelected] = useState<string | null>(null);

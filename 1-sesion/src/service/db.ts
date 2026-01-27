@@ -1,17 +1,19 @@
 export interface ScheduleLesson {
     id: string | number;
-    subject : string;
-    time:{
+    subject: string;
+    time: {
         start: string;
         end: string;
-        weekday: 'Понедельник'| 'Вторник'|'Среда'|'Четверг'|'Суббота'| null;
+        weekday: 'Понедельник' | 'Вторник' | 'Среда' | 'Четверг' | 'Суббота' | null;
     };
-    teacher:string;
-    type?:'Лекция' | 'Практика' | 'Лабораторная' ;
-    group?:string;
+    teacher: string;
+    type?: 'Лекция' | 'Практика' | 'Лабораторная';
+    group?: string;
+    weekType?: 'Четная' | 'НеЧетная'
 }
+
 export const scheduleData: ScheduleLesson[] = [
-    // Существующие занятия для ИТ-201 (id 1-15)
+    // Существующие занятия для ИТ-201 (id 1-15) - добавлен weekType
     {
         id: 1,
         subject: 'Матанализ',
@@ -22,7 +24,8 @@ export const scheduleData: ScheduleLesson[] = [
         },
         teacher: 'Якунина',
         type: "Лекция",
-        group: '2-ПМИ-2'
+        group: '2-ПМИ-2',
+        weekType: 'Четная'
     },
     {
         id: 2,
@@ -34,7 +37,8 @@ export const scheduleData: ScheduleLesson[] = [
         },
         teacher: 'Петров И.С.',
         type: "Лекция",
-        group: 'ИТ-201'
+        group: 'ИТ-201',
+        weekType: 'НеЧетная'
     },
     {
         id: 3,
@@ -46,7 +50,8 @@ export const scheduleData: ScheduleLesson[] = [
         },
         teacher: 'Сидорова А.В.',
         type: "Лабораторная",
-        group: 'ИТ-201'
+        group: 'ИТ-201',
+        weekType: 'Четная'
     },
     {
         id: 4,
@@ -58,7 +63,8 @@ export const scheduleData: ScheduleLesson[] = [
         },
         teacher: 'Козлов Д.М.',
         type: "Лекция",
-        group: 'ИТ-201'
+        group: 'ИТ-201',
+        weekType: 'НеЧетная'
     },
     {
         id: 5,
@@ -70,7 +76,8 @@ export const scheduleData: ScheduleLesson[] = [
         },
         teacher: 'Сидорова А.В.',
         type: "Практика",
-        group: 'ИТ-201'
+        group: 'ИТ-201',
+        weekType: 'Четная'
     },
     {
         id: 6,
@@ -82,7 +89,8 @@ export const scheduleData: ScheduleLesson[] = [
         },
         teacher: 'Иванова Е.П.',
         type: "Практика",
-        group: 'ИТ-201'
+        group: 'ИТ-201',
+        weekType: 'НеЧетная'
     },
     {
         id: 7,
@@ -94,7 +102,8 @@ export const scheduleData: ScheduleLesson[] = [
         },
         teacher: 'Федоров К.Л.',
         type: "Лекция",
-        group: 'ИТ-201'
+        group: 'ИТ-201',
+        weekType: 'Четная'
     },
     {
         id: 8,
@@ -106,7 +115,8 @@ export const scheduleData: ScheduleLesson[] = [
         },
         teacher: 'Николаев Р.В.',
         type: "Практика",
-        group: 'ИТ-201'
+        group: 'ИТ-201',
+        weekType: 'НеЧетная'
     },
     {
         id: 9,
@@ -118,7 +128,8 @@ export const scheduleData: ScheduleLesson[] = [
         },
         teacher: 'Смирнов А.А.',
         type: "Практика",
-        group: 'ИТ-201'
+        group: 'ИТ-201',
+        weekType: 'Четная'
     },
     {
         id: 10,
@@ -130,7 +141,8 @@ export const scheduleData: ScheduleLesson[] = [
         },
         teacher: 'Якунина',
         type: "Практика",
-        group: 'ИТ-201'
+        group: 'ИТ-201',
+        weekType: 'НеЧетная'
     },
     {
         id: 11,
@@ -142,7 +154,8 @@ export const scheduleData: ScheduleLesson[] = [
         },
         teacher: 'Кузнецов М.С.',
         type: "Лабораторная",
-        group: 'ИТ-201'
+        group: 'ИТ-201',
+        weekType: 'Четная'
     },
     {
         id: 12,
@@ -154,7 +167,8 @@ export const scheduleData: ScheduleLesson[] = [
         },
         teacher: 'Орлова Т.К.',
         type: "Лекция",
-        group: 'ИТ-201'
+        group: 'ИТ-201',
+        weekType: 'НеЧетная'
     },
     {
         id: 13,
@@ -166,7 +180,8 @@ export const scheduleData: ScheduleLesson[] = [
         },
         teacher: 'Орлова Т.К.',
         type: "Лабораторная",
-        group: 'ИТ-201'
+        group: 'ИТ-201',
+        weekType: 'Четная'
     },
     {
         id: 14,
@@ -178,7 +193,8 @@ export const scheduleData: ScheduleLesson[] = [
         },
         teacher: 'Белова С.М.',
         type: "Лекция",
-        group: 'ИТ-201'
+        group: 'ИТ-201',
+        weekType: 'НеЧетная'
     },
     {
         id: 15,
@@ -190,9 +206,10 @@ export const scheduleData: ScheduleLesson[] = [
         },
         teacher: 'Николаев Р.В.',
         type: "Лекция",
-        group: 'ИТ-201'
+        group: 'ИТ-201',
+        weekType: 'Четная'
     },
-    // Существующие занятия для 2-ПМИ-2 (id 16-18)
+    // Существующие занятия для 2-ПМИ-2 (id 16-18) - добавлен weekType
     {
         id: 16,
         subject: 'Линейная алгебра',
@@ -203,7 +220,8 @@ export const scheduleData: ScheduleLesson[] = [
         },
         teacher: 'Петров И.С.',
         type: "Практика",
-        group: '2-ПМИ-2'
+        group: '2-ПМИ-2',
+        weekType: 'НеЧетная'
     },
     {
         id: 17,
@@ -215,7 +233,8 @@ export const scheduleData: ScheduleLesson[] = [
         },
         teacher: 'Козлов Д.М.',
         type: "Лабораторная",
-        group: '2-ПМИ-2'
+        group: '2-ПМИ-2',
+        weekType: 'Четная'
     },
     {
         id: 18,
@@ -227,9 +246,10 @@ export const scheduleData: ScheduleLesson[] = [
         },
         teacher: 'Федоров К.Л.',
         type: "Практика",
-        group: '2-ПМИ-2'
+        group: '2-ПМИ-2',
+        weekType: 'НеЧетная'
     },
-    // Новые занятия для 2-ПМИ-2 (продолжение)
+    // Новые занятия для 2-ПМИ-2 (продолжение) - добавлен weekType
     {
         id: 19,
         subject: 'Программирование на Python',
@@ -240,7 +260,8 @@ export const scheduleData: ScheduleLesson[] = [
         },
         teacher: 'Сидорова А.В.',
         type: "Лекция",
-        group: '2-ПМИ-2'
+        group: '2-ПМИ-2',
+        weekType: 'Четная'
     },
     {
         id: 20,
@@ -252,7 +273,8 @@ export const scheduleData: ScheduleLesson[] = [
         },
         teacher: 'Якунина',
         type: "Практика",
-        group: '2-ПМИ-2'
+        group: '2-ПМИ-2',
+        weekType: 'НеЧетная'
     },
     {
         id: 21,
@@ -264,7 +286,8 @@ export const scheduleData: ScheduleLesson[] = [
         },
         teacher: 'Федоров К.Л.',
         type: "Лекция",
-        group: '2-ПМИ-2'
+        group: '2-ПМИ-2',
+        weekType: 'Четная'
     },
     {
         id: 22,
@@ -276,9 +299,10 @@ export const scheduleData: ScheduleLesson[] = [
         },
         teacher: 'Иванова Е.П.',
         type: "Практика",
-        group: '2-ПМИ-2'
+        group: '2-ПМИ-2',
+        weekType: 'НеЧетная'
     },
-    // Занятия для 1-ПМИ-2
+    // Занятия для 1-ПМИ-2 - добавлен weekType
     {
         id: 23,
         subject: 'Введение в математику',
@@ -289,7 +313,8 @@ export const scheduleData: ScheduleLesson[] = [
         },
         teacher: 'Якунина',
         type: "Лекция",
-        group: '1-ПМИ-2'
+        group: '1-ПМИ-2',
+        weekType: 'Четная'
     },
     {
         id: 24,
@@ -301,7 +326,8 @@ export const scheduleData: ScheduleLesson[] = [
         },
         teacher: 'Петров И.С.',
         type: "Практика",
-        group: '1-ПМИ-2'
+        group: '1-ПМИ-2',
+        weekType: 'НеЧетная'
     },
     {
         id: 25,
@@ -313,7 +339,8 @@ export const scheduleData: ScheduleLesson[] = [
         },
         teacher: 'Сидорова А.В.',
         type: "Лекция",
-        group: '1-ПМИ-2'
+        group: '1-ПМИ-2',
+        weekType: 'Четная'
     },
     {
         id: 26,
@@ -325,7 +352,8 @@ export const scheduleData: ScheduleLesson[] = [
         },
         teacher: 'Кузнецов М.С.',
         type: "Лабораторная",
-        group: '1-ПМИ-2'
+        group: '1-ПМИ-2',
+        weekType: 'НеЧетная'
     },
     {
         id: 27,
@@ -337,7 +365,8 @@ export const scheduleData: ScheduleLesson[] = [
         },
         teacher: 'Иванова Е.П.',
         type: "Практика",
-        group: '1-ПМИ-2'
+        group: '1-ПМИ-2',
+        weekType: 'Четная'
     },
     {
         id: 28,
@@ -349,9 +378,10 @@ export const scheduleData: ScheduleLesson[] = [
         },
         teacher: 'Смирнов А.А.',
         type: "Практика",
-        group: '1-ПМИ-2'
+        group: '1-ПМИ-2',
+        weekType: 'НеЧетная'
     },
-    // Занятия для ПИ-1
+    // Занятия для ПИ-1 - добавлен weekType
     {
         id: 29,
         subject: 'Программирование на Java',
@@ -362,7 +392,8 @@ export const scheduleData: ScheduleLesson[] = [
         },
         teacher: 'Кузнецов М.С.',
         type: "Лекция",
-        group: 'ПИ-1'
+        group: 'ПИ-1',
+        weekType: 'Четная'
     },
     {
         id: 30,
@@ -374,7 +405,8 @@ export const scheduleData: ScheduleLesson[] = [
         },
         teacher: 'Орлова Т.К.',
         type: "Практика",
-        group: 'ПИ-1'
+        group: 'ПИ-1',
+        weekType: 'НеЧетная'
     },
     {
         id: 31,
@@ -386,7 +418,8 @@ export const scheduleData: ScheduleLesson[] = [
         },
         teacher: 'Кузнецов М.С.',
         type: "Лабораторная",
-        group: 'ПИ-1'
+        group: 'ПИ-1',
+        weekType: 'Четная'
     },
     {
         id: 32,
@@ -398,7 +431,8 @@ export const scheduleData: ScheduleLesson[] = [
         },
         teacher: 'Орлова Т.К.',
         type: "Лекция",
-        group: 'ПИ-1'
+        group: 'ПИ-1',
+        weekType: 'НеЧетная'
     },
     {
         id: 33,
@@ -410,7 +444,8 @@ export const scheduleData: ScheduleLesson[] = [
         },
         teacher: 'Сидорова А.В.',
         type: "Лекция",
-        group: 'ПИ-1'
+        group: 'ПИ-1',
+        weekType: 'Четная'
     },
     {
         id: 34,
@@ -422,7 +457,8 @@ export const scheduleData: ScheduleLesson[] = [
         },
         teacher: 'Николаев Р.В.',
         type: "Практика",
-        group: 'ПИ-1'
+        group: 'ПИ-1',
+        weekType: 'НеЧетная'
     },
     {
         id: 35,
@@ -434,6 +470,251 @@ export const scheduleData: ScheduleLesson[] = [
         },
         teacher: 'Белова С.М.',
         type: "Лекция",
-        group: 'ПИ-1'
+        group: 'ПИ-1',
+        weekType: 'Четная'
+    },
+
+    // Дополнения с чередующимися неделями (оставлены без изменений)
+
+    // Чередующиеся занятия для ИТ-201
+    {
+        id: 36,
+        subject: 'Программирование',
+        time: {
+            start: "13:00",
+            end: '14:30',
+            weekday: 'Понедельник'
+        },
+        teacher: 'Сидорова А.В.',
+        type: "Практика",
+        group: 'ИТ-201',
+        weekType: 'Четная'
+    },
+    {
+        id: 37,
+        subject: 'Базы данных',
+        time: {
+            start: "13:00",
+            end: '14:30',
+            weekday: 'Понедельник'
+        },
+        teacher: 'Орлова Т.К.',
+        type: "Лабораторная",
+        group: 'ИТ-201',
+        weekType: 'НеЧетная'
+    },
+    {
+        id: 38,
+        subject: 'Архитектура компьютеров',
+        time: {
+            start: "10:45",
+            end: '12:15',
+            weekday: 'Среда'
+        },
+        teacher: 'Николаев Р.В.',
+        type: "Лабораторная",
+        group: 'ИТ-201',
+        weekType: 'Четная'
+    },
+    {
+        id: 39,
+        subject: 'Дискретная математика',
+        time: {
+            start: "10:45",
+            end: '12:15',
+            weekday: 'Среда'
+        },
+        teacher: 'Федоров К.Л.',
+        type: "Практика",
+        group: 'ИТ-201',
+        weekType: 'НеЧетная'
+    },
+
+    // Чередующиеся занятия для 2-ПМИ-2
+    {
+        id: 40,
+        subject: 'Линейная алгебра',
+        time: {
+            start: "10:45",
+            end: '12:15',
+            weekday: 'Понедельник'
+        },
+        teacher: 'Петров И.С.',
+        type: "Лекция",
+        group: '2-ПМИ-2',
+        weekType: 'Четная'
+    },
+    {
+        id: 41,
+        subject: 'Физика',
+        time: {
+            start: "10:45",
+            end: '12:15',
+            weekday: 'Понедельник'
+        },
+        teacher: 'Козлов Д.М.',
+        type: "Практика",
+        group: '2-ПМИ-2',
+        weekType: 'НеЧетная'
+    },
+    {
+        id: 42,
+        subject: 'Матанализ',
+        time: {
+            start: "13:00",
+            end: '14:30',
+            weekday: 'Среда'
+        },
+        teacher: 'Якунина',
+        type: "Лекция",
+        group: '2-ПМИ-2',
+        weekType: 'Четная'
+    },
+    {
+        id: 43,
+        subject: 'Программирование на Python',
+        time: {
+            start: "13:00",
+            end: '14:30',
+            weekday: 'Среда'
+        },
+        teacher: 'Сидорова А.В.',
+        type: "Практика",
+        group: '2-ПМИ-2',
+        weekType: 'НеЧетная'
+    },
+
+    // Чередующиеся занятия для 1-ПМИ-2
+    {
+        id: 44,
+        subject: 'Основы программирования',
+        time: {
+            start: "09:00",
+            end: '10:30',
+            weekday: 'Среда'
+        },
+        teacher: 'Кузнецов М.С.',
+        type: "Практика",
+        group: '1-ПМИ-2',
+        weekType: 'Четная'
+    },
+    {
+        id: 45,
+        subject: 'Введение в математику',
+        time: {
+            start: "09:00",
+            end: '10:30',
+            weekday: 'Среда'
+        },
+        teacher: 'Якунина',
+        type: "Практика",
+        group: '1-ПМИ-2',
+        weekType: 'НеЧетная'
+    },
+    {
+        id: 46,
+        subject: 'Алгебра и геометрия',
+        time: {
+            start: "10:45",
+            end: '12:15',
+            weekday: 'Понедельник'
+        },
+        teacher: 'Петров И.С.',
+        type: "Лекция",
+        group: '1-ПМИ-2',
+        weekType: 'Четная'
+    },
+    {
+        id: 47,
+        subject: 'Основы информатики',
+        time: {
+            start: "10:45",
+            end: '12:15',
+            weekday: 'Понедельник'
+        },
+        teacher: 'Сидорова А.В.',
+        type: "Практика",
+        group: '1-ПМИ-2',
+        weekType: 'НеЧетная'
+    },
+
+    // Чередующиеся занятия для ПИ-1
+    {
+        id: 48,
+        subject: 'Веб-разработка',
+        time: {
+            start: "13:00",
+            end: '14:30',
+            weekday: 'Вторник'
+        },
+        teacher: 'Кузнецов М.С.',
+        type: "Практика",
+        group: 'ПИ-1',
+        weekType: 'Четная'
+    },
+    {
+        id: 49,
+        subject: 'Мобильная разработка',
+        time: {
+            start: "13:00",
+            end: '14:30',
+            weekday: 'Вторник'
+        },
+        teacher: 'Сидорова А.В.',
+        type: "Лабораторная",
+        group: 'ПИ-1',
+        weekType: 'НеЧетная'
+    },
+    {
+        id: 50,
+        subject: 'Проектирование ИС',
+        time: {
+            start: "09:00",
+            end: '10:30',
+            weekday: 'Среда'
+        },
+        teacher: 'Орлова Т.К.',
+        type: "Практика",
+        group: 'ПИ-1',
+        weekType: 'Четная'
+    },
+    {
+        id: 51,
+        subject: 'Тестирование ПО',
+        time: {
+            start: "09:00",
+            end: '10:30',
+            weekday: 'Среда'
+        },
+        teacher: 'Николаев Р.В.',
+        type: "Лекция",
+        group: 'ПИ-1',
+        weekType: 'НеЧетная'
+    },
+    {
+        id: 52,
+        subject: 'Управление проектами',
+        time: {
+            start: "09:00",
+            end: '10:30',
+            weekday: 'Суббота'
+        },
+        teacher: 'Белова С.М.',
+        type: "Практика",
+        group: 'ПИ-1',
+        weekType: 'Четная'
+    },
+    {
+        id: 53,
+        subject: 'Программирование на Java',
+        time: {
+            start: "09:00",
+            end: '10:30',
+            weekday: 'Суббота'
+        },
+        teacher: 'Кузнецов М.С.',
+        type: "Лабораторная",
+        group: 'ПИ-1',
+        weekType: 'НеЧетная'
     }
 ];
