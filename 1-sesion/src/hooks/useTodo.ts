@@ -9,16 +9,17 @@ export const useTodo = (value: TodoItem[], setValue: SetState<TodoItem[]>) => {
     const [inpchangeValue, setInpchangeValue] = useState('');
     const [isSelected, setIsSelected] = useState<number | null>(null);
 
-    const handleAdd = useCallback(() => {
-        if (!inpValue.trim()) return;
+    const handleAdd = useCallback((text: string, lesson: string) => {
+        if (!text.trim()) return;
         const newItem: TodoItem = {
             id: Date.now(),
-            text: inpValue.trim(),
+            text: text.trim(),
             isDone: false,
+            lesson,
         };
         setValue(prev => [...prev, newItem]);
         setInpValue('');
-    }, [inpValue, setValue]);
+    }, [setValue]);
 
     const handleRemove = useCallback(
         (id: number) => {

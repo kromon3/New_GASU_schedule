@@ -1,14 +1,15 @@
-import {useState, useMemo, useCallback, useContext} from "react";
+import {useState, useMemo, useCallback, useContext, useEffect} from "react";
 import Header from "../Header/header.tsx";
 import '../../style/todolist.css'
 import TodolistCounter from "./todolist_counter.tsx";
 import {ItemPortal} from "../../contexts/GrupName.tsx";
-import { scheduleData } from '../../service/db.ts'
 import type {TodoItem} from '../../service/TodoItem.ts'
 import {useLocalStorage} from "../../hooks/useLocalStorage.ts";
 import {useTodo} from "../../hooks/useTodo.ts";
+import {ThemeContext} from "../../contexts/Background.tsx";
 function TodoList() {
     const { grupName } = useContext(ItemPortal);
+
     const [value, setValue] = useLocalStorage('base', []);
     const [stateIsDone, setStateIsDone] = useState<'all' | 'active' | 'completed'>('all');
     const [optinShow, setOptinShow] = useState<boolean>(false);
@@ -31,7 +32,12 @@ function TodoList() {
             remainingValue: total - doneCount,
         };
     }, [value]);//Мониторинг данных
-
+    const [scheduleData, setScheduleData] = useState([]);
+    useEffect(() => {
+        fetch('http://localhost:8000/lessons')
+            .then(res => res.json())
+            .then(data => setScheduleData(data));
+    }, []);
     const handleLessonChange = useCallback((taskId: number, lesson: string) => {
         setValue(prev =>
             prev.map(item =>
@@ -39,16 +45,28 @@ function TodoList() {
             )
         );
     }, [setValue]);
-
+    const { themeType } = useContext(ThemeContext);
     const filteredArray = useMemo(() => scheduleData.filter((i) => i.group === grupName), [grupName]);
+    const dontInvertStyle = {
+        filter: themeType ? 'invert(1)' : 'invert(0)',
+    };
     return (
         <>
-            <Header />
+            <div className="schedule-background"
+                 style={{
+                     filter: themeType ? 'invert(1)' : 'invert(0)',
+                     transition: 'filter 0.5s ease-in-out'
+                 }}
+            >
+                <div style={dontInvertStyle}>
+                    <Header />
+                </div>
+                <div style={dontInvertStyle}>
             <TodolistCounter
                 text={isDoneValue}
                 allValues={allValues}
                 remainingValue={remainingValue}
-            />
+            /></div>
             <div className="container">
                 <div className="input-and-button">
                     <div className="input-container">
@@ -59,7 +77,9 @@ function TodoList() {
                             placeholder="Введите задачу"
                         />
                     </div>
-                    <button className="btn" onClick={handleAdd}>Добавить</button>
+                    <button className="btn" onClick={() => handleAdd(inpValue, '')}>
+                        Добавить
+                    </button>
                     <button className="btn" onClick={()=>setOptinShow(!optinShow)}>
                         <span className="material-symbols-outlined">more_vert</span>
                     </button>
@@ -106,11 +126,11 @@ function TodoList() {
                                                     )
                                                 );
                                             }}/>
-                                            <h1 className = {item.isDone ? ("text-content Done"): ("text-content NoDone")} style={{marginRight: 20}}>{item.text}</h1>
+                                            <h1 className = {item.isDone ? ("text-content Done"): ("text-content NoDone")} style={{marginRight: 20 ,color:'white'}}>{item.text}</h1>
                                             <div className="button-group">
                                                 {
                                                     item.isDone ? (
-                                                        <h1 style={{ marginLeft: 21.44 }}>Выполнено</h1>
+                                                        <h1 style={{ marginLeft: 21.44 ,color:'white'}}>Выполнено</h1>
                                                     ) : ""
                                                 }
                                                 <button className={"btn delete-btn "} onClick={() => handleRemove(item.id)}>
@@ -143,6 +163,7 @@ function TodoList() {
                         )
                     }
                 </div>
+            </div>
             </div>
         </>
     );

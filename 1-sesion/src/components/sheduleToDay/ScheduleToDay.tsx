@@ -1,11 +1,11 @@
 import Header from "../Header/header.tsx";
-import { scheduleData } from '../../service/db.ts';
 import '../../style/schedule.css';
-import  { useContext, useState,useEffect } from "react";
+import  { useContext, useState,useEffect,useMemo } from "react";
 import {ItemPortal} from "../../contexts/GrupName.tsx";
 import type {TodoItem} from '../../service/TodoItem.ts'
 import {useLocalStorage} from "../../hooks/useLocalStorage.ts";
 import {useTodo} from "../../hooks/useTodo.ts";
+import {ThemeContext} from "../../contexts/Background.tsx";
 function getCurrentWeekType() {
     const referenceDate = new Date(2025, 0, 27);
 
@@ -29,14 +29,31 @@ function ScheduleToDay() {
     const days = ['Воскресенье', 'Понедельник', 'Вторник', 'Среда', 'Четверг', 'Пятница', 'Суббота'];
     const today = new Date();
     const dayName = days[today.getDay()];
+
+
     const { grupName } = useContext(ItemPortal);
-    const filteredSchedule = scheduleData.filter(lesson => lesson.time.weekday === dayName);
-    const filteredSchedule_day = filteredSchedule.filter(lesson => lesson.group === grupName);
+
     const [value, setValue] = useLocalStorage('base');
     const {inpValue, setInpValue,handleAdd, handleRemove} = useTodo(value, setValue);
     const [startHome, setStartHome] = useState<boolean>(false);
     const [selectedSubject, setSelectedSubject] = useState<string | null>(null);
     const [currentWeekType, setCurrentWeekType] = useState('Четная');
+    const [scheduleData, setScheduleData] = useState([]);
+    const { themeType } = useContext(ThemeContext);
+    useEffect(() => {
+        fetch('http://localhost:8000/lessons')
+            .then(res => res.json())
+            .then(data => setScheduleData(data));
+    }, []);
+    useEffect(() => {
+        const weekType = getCurrentWeekType();
+        setCurrentWeekType(weekType);},[])
+    const filteredSchedule = scheduleData.filter(lesson => lesson.time.weekday === dayName);
+    const filteredSchedule_day = filteredSchedule.filter(lesson => lesson.group === grupName);
+    const filteredSchedule_day_type = useMemo(() =>
+            filteredSchedule_day.filter(lesson => lesson.weekType === currentWeekType),
+        [filteredSchedule_day, currentWeekType]
+    );
     if (filteredSchedule_day.length === 0) {
         return (
             <>
@@ -48,19 +65,25 @@ function ScheduleToDay() {
             </>
         );
     }
-    useEffect(() => {
-        const weekType = getCurrentWeekType();
-        setCurrentWeekType(weekType);},[])
 
-    const filteredSchedule_day_type =  filteredSchedule_day.filter(lesson => lesson.weekType === currentWeekType);
+    const dontInvertStyle = {
+        filter: themeType ? 'invert(1)' : 'invert(0)',
+    };
 
     return (
         <>
-            <Header />
+            <div className="schedule-background"
+                 style={{
+                     filter: themeType ? 'invert(1)' : 'invert(0)',
+                     transition: 'filter 0.5s ease-in-out'
+                 }}
+            >
+                <div style={dontInvertStyle}><Header /></div>
+
             <div className="page-layout">
                 <div className="main-content">
                     <div className="schedule-page">
-                        <h1>Расписание на {dayName} ({currentWeekType} Неделя)</h1>
+                        <h1 style={{color:'white'}}>Расписание на {dayName} ({currentWeekType} Неделя)</h1>
 
                         {filteredSchedule_day_type.map(lesson => (
                             <div key={lesson.id} className="lesson-box schedule_to_day">
@@ -142,6 +165,7 @@ function ScheduleToDay() {
                     </div>
                 )}
             </div>
+                </div>
         </>
     );
 }

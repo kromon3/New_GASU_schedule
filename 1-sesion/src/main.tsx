@@ -7,6 +7,7 @@ import TodoList from "./components/ToDoList/TodoList.tsx";
 import ScheduleToDay from "./components/sheduleToDay/ScheduleToDay.tsx";
 import Subject from "./components/Subject/Subject.tsx";
 import  GrupName  from './contexts/GrupName';
+import { ThemeProvider } from './contexts/Background.tsx';
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 const router = createBrowserRouter([
     { path: '/', element: <App /> },
@@ -19,7 +20,9 @@ const router = createBrowserRouter([
 createRoot(document.getElementById('root')!).render(
     <StrictMode>
         <GrupName>
+            <ThemeProvider>
             <RouterProvider router={router} />
+            </ThemeProvider>
         </GrupName>
     </StrictMode>,
 );

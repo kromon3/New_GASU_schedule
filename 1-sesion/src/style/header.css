@@ -1,3 +1,10 @@
+/* Сброс стандартных отступов */
+html, body {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+}
 .main_Module {
     background-color: #1a1a1a;
     color: white;
@@ -6,10 +13,13 @@
     justify-content: space-between; /* ← ключевое изменение! */
     align-items: center;
     width: 90%; /* увеличим ширину */
-    max-width: 1200px; /* больше максимальная ширина */
-    margin: 20px auto;
+    max-width: 1200px;
+    margin-top: 0;
+    margin-right: auto;
+    margin-left: auto;
+    margin-bottom: 20px;
     border-radius: 12px;
-    padding: 25px 40px; /* больше отступов */
+    padding: 25px 40px;
     min-height: 120px;
     box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3);
 }

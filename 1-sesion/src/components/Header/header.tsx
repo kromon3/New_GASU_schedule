@@ -5,10 +5,12 @@ import ScheduleSelection from "./GroupSelection/ScheduleSelection.tsx";
 import { Link } from "react-router-dom";
 import { useContext, useState } from "react";
 import { ItemPortal } from "../../contexts/GrupName.tsx";
+import {ThemeContext} from "../../contexts/Background.tsx";
 function Header() {
     const { grupName, setGrupName } = useContext(ItemPortal);
     const [showGroupSelection, setShowGroupSelection] = useState<boolean>(false);
     const [showScheduleMenu, setShowScheduleMenu] = useState<boolean>(false);
+    const {setTheme, themeType, setThemeType } = useContext(ThemeContext);
 
     const handleClearGroup = () => {
         setGrupName("Группа не выбрана");
@@ -96,7 +98,14 @@ function Header() {
                   className="Header-contener_grop_img"
               />
             </button>
-          </span>
+          </span><span>
+                    {themeType ? <button className="Header-contener_grop_button" onClick={()=>
+                    {setTheme('light');setThemeType(false)}}>
+                            <img src="/moon_stars_24dp_E3E3E3_FILL0_wght400_GRAD0_opsz24.png" alt=""/></button>
+                        :<button className="Header-contener_grop_button" onClick={()=>
+                        {setTheme('dark');setThemeType(true)}}>
+                        <img src="/sunny_24dp_E3E3E3_FILL0_wght400_GRAD0_opsz24.png" alt=""/></button>}
+                </span>
                 </div>
             </div>
         </>
