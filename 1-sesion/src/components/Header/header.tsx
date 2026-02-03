@@ -6,19 +6,23 @@ import { Link } from "react-router-dom";
 import { useContext, useState } from "react";
 import { ItemPortal } from "../../contexts/GrupName.tsx";
 import {ThemeContext} from "../../contexts/Background.tsx";
+import{useCookies} from "react-cookie";
+
 function Header() {
     const { grupName, setGrupName } = useContext(ItemPortal);
     const [showGroupSelection, setShowGroupSelection] = useState<boolean>(false);
     const [showScheduleMenu, setShowScheduleMenu] = useState<boolean>(false);
     const {setTheme, themeType, setThemeType } = useContext(ThemeContext);
+    const [cookies, setCookie, removeCookie] = useCookies(['grupName']);
+    const handleSelectGroup = (selectedGroup: string) => {
+        setGrupName(selectedGroup);
+        setCookie('grupName', selectedGroup, { path: '/' }); // Сохраняем
+        setShowGroupSelection(false);
+    };
 
     const handleClearGroup = () => {
         setGrupName("Группа не выбрана");
-    };
-
-    const handleSelectGroup = (selectedGroup: string) => {
-        setGrupName(selectedGroup);
-        setShowGroupSelection(false);
+        removeCookie('grupName', { path: '/' });
     };
 
     return (
@@ -81,8 +85,9 @@ function Header() {
               onClick={() => {
                   if (grupName === "Группа не выбрана") {
                       setShowGroupSelection(true);
-                  }
-              }}
+                  };
+                  {}
+              } }
               style={{
                   cursor: grupName === "Группа не выбрана" ? "pointer" : "default",
               }}
