@@ -71,7 +71,7 @@ function Header() {
           </span>
 
                     <span>
-            <button className="Header-button">
+            <button className="Header-button todo" style={{height:60}} onClick={handleClearGroup}>
               <Link to="/todolist" className="link_a">
                 <img src="/format_list_bulleted_24dp_E3E3E3_FILL0_wght400_GRAD0_opsz24.png" alt="" style={{ width: 50 }} />
               </Link>

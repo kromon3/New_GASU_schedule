@@ -10,9 +10,9 @@ html, body {
     color: white;
     border: 2px solid #333;
     display: flex;
-    justify-content: space-between; /* ← ключевое изменение! */
+    justify-content: space-between;
     align-items: center;
-    width: 90%; /* увеличим ширину */
+    width: 90%;
     max-width: 1200px;
     margin-top: 0;
     margin-right: auto;
@@ -43,7 +43,7 @@ html, body {
     font-weight: 700;
     letter-spacing: 0.8px;
     text-transform: uppercase;
-    box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+    box-shadow: 0 4px 15px rgb(255, 255, 255);
     transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
 .Header-button.list{
@@ -62,7 +62,9 @@ html, body {
     height: 65px;
     letter-spacing: 1.2px;
 }
-
+.Header-button.todo{
+    min-width: 100px;
+}
 .Header-contener_grop {
     display: flex;
     flex: 1; /* занимает 1/3 пространства */

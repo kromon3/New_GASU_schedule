@@ -16,7 +16,7 @@ function GrupName({ children }: { children: ReactNode }) {
     const [cookies, setCookie, removeCookie] = useCookies(['grupName']);
     useEffect(() => {
         const savedGroup = cookies.grupName;
-        if (typeof savedGroup === 'string' && savedGroup !== 'Группа не выбрана') {
+        if (savedGroup !== 'Группа не выбрана') {
             _setGrupName(savedGroup);
         }
     }, []);
