@@ -9,6 +9,7 @@ import Subject from "./components/Subject/Subject.tsx";
 import  GrupName  from './contexts/GrupName';
 import { ThemeProvider } from './contexts/Background.tsx';
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import { CookiesProvider } from 'react-cookie';
 const router = createBrowserRouter([
     { path: '/', element: <App /> },
     { path: "/schedule", element: <Schedule /> },
@@ -19,10 +20,12 @@ const router = createBrowserRouter([
 
 createRoot(document.getElementById('root')!).render(
     <StrictMode>
+        <CookiesProvider>
         <GrupName>
             <ThemeProvider>
             <RouterProvider router={router} />
             </ThemeProvider>
         </GrupName>
+        </CookiesProvider>
     </StrictMode>,
 );
