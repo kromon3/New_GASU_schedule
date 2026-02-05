@@ -53,21 +53,6 @@ function Schedule() {
     const { themeType } = useContext(ThemeContext);
     const filteredSchedule = scheduleData.filter(lesson => lesson.group === grupName);
     const days = ['Понедельник', 'Вторник', 'Среда', 'Четверг', 'Пятница', 'Суббота', 'Воскресенье'];
-
-    const today = new Date();
-    const dayName = days[today.getDay()];
-
-    if (filteredSchedule.length === 0) {
-        return (
-            <div>
-                <Header />
-                <div className="schedule-page">
-                    <h2>Предметы группы Группа не выбрана</h2>
-                </div>
-            </div>
-        )
-    }
-
     const handleScroll = (slideIndex) => {
         if (!sliderRef.current) return;
         const slideWidth = sliderRef.current.children[0]?.offsetWidth || 0;
@@ -76,12 +61,37 @@ function Schedule() {
             behavior: 'smooth'
         });
     };
-
     const dontInvertStyle = {
         filter: themeType ? 'invert(1)' : 'invert(0)',
     };
 
-
+    if (grupName === ' не выбрана') {
+        return (
+            <div>
+                <div className="schedule-background"
+                     style={{
+                         filter: themeType ? 'invert(1)' : 'invert(0)',
+                         transition: 'filter 0.5s ease-in-out'
+                     }}
+                >
+                    <div style={dontInvertStyle}><Header /></div>
+                <div className="schedule-page">
+                    <h2 style={{color:'white' }}>Выберите группу</h2>
+                </div>
+                    </div>
+                </div>
+        )
+    }
+    if (filteredSchedule.length === 0) {
+        return (
+            <div>
+                <div style={dontInvertStyle}><Header /></div>
+                <div className="schedule-page">
+                    <h2>Предметы группы отсутствуют</h2>
+                </div>
+            </div>
+        )
+    }
     return (<>
 
             <div className="schedule-background"

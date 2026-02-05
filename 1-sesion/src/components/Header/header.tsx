@@ -13,7 +13,7 @@ function Header() {
     const {setTheme, themeType, setThemeType } = useContext(ThemeContext);
 
     const handleClearGroup = () => {
-        setGrupName("Группа не выбрана");
+        setGrupName(" не выбрана");
     };
 
     const handleSelectGroup = (selectedGroup: string) => {
@@ -65,9 +65,8 @@ function Header() {
               </Link>
             </button>
           </span>
-
                     <span>
-            <button className="Header-button">
+            <button className="Header-button todo" style={{marginRight:5}}>
               <Link to="/todolist" className="link_a">
                 <img src="/format_list_bulleted_24dp_E3E3E3_FILL0_wght400_GRAD0_opsz24.png" alt="" style={{ width: 50 }} />
               </Link>
@@ -79,12 +78,12 @@ function Header() {
           <span
               className="Header-contener_grop_Name"
               onClick={() => {
-                  if (grupName === "Группа не выбрана") {
+                  if (grupName === " не выбрана") {
                       setShowGroupSelection(true);
                   }
               }}
               style={{
-                  cursor: grupName === "Группа не выбрана" ? "pointer" : "default",
+                  cursor: grupName === " не выбрана" ? "pointer" : "default",
               }}
           >
             Группа: <strong>{grupName}</strong>

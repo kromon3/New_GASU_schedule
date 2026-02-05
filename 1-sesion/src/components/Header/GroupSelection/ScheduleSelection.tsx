@@ -16,6 +16,11 @@ const ScheduleSelection = () => {
         <button className="Header-button_modile">
           <Link to="/subject" className="link_a">Предметы</Link>
         </button>
+          <br/>
+          <button className="Header-button_modile">
+          <Link to="/todolist" className="link_a">todolist</Link>
+      </button>
+
       </div>
   );
 };

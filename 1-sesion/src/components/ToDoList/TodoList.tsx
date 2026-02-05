@@ -9,7 +9,7 @@ import {useTodo} from "../../hooks/useTodo.ts";
 import {ThemeContext} from "../../contexts/Background.tsx";
 function TodoList() {
     const { grupName } = useContext(ItemPortal);
-
+console.log(grupName);
     const [value, setValue] = useLocalStorage('base', []);
     const [stateIsDone, setStateIsDone] = useState<'all' | 'active' | 'completed'>('all');
     const [optinShow, setOptinShow] = useState<boolean>(false);
@@ -46,7 +46,10 @@ function TodoList() {
         );
     }, [setValue]);
     const { themeType } = useContext(ThemeContext);
-    const filteredArray = useMemo(() => scheduleData.filter((i) => i.group === grupName), [grupName]);
+    const filteredArray = useMemo(() =>
+            scheduleData.filter((i) => i.group === grupName),
+        [scheduleData, grupName]
+    );
     const dontInvertStyle = {
         filter: themeType ? 'invert(1)' : 'invert(0)',
     };
@@ -119,7 +122,11 @@ function TodoList() {
                                         </div>
                                     ) : (
                                         <div className="item">
-                                            <input type="checkbox" checked={item.isDone} onChange={() => {
+                                            <input type="checkbox"   style={{
+                                                width: '40px',
+                                                height: '30px',
+                                                borderRadius: '50%', // или '50%' для идеального овала/круга
+                                            }} checked={item.isDone} onChange={() => {
                                                 setValue(prev =>
                                                     prev.map(v =>
                                                         v.id === item.id ? { ...v, isDone: !v.isDone } : v
@@ -130,7 +137,7 @@ function TodoList() {
                                             <div className="button-group">
                                                 {
                                                     item.isDone ? (
-                                                        <h1 style={{ marginLeft: 21.44 ,color:'white'}}>Выполнено</h1>
+                                                         <div style={{ marginLeft: 21.44 ,color:'white',fontSize:30}}><strong>Выполнено</strong></div>
                                                     ) : ""
                                                 }
                                                 <button className={"btn delete-btn "} onClick={() => handleRemove(item.id)}>
@@ -139,22 +146,26 @@ function TodoList() {
                                                 <button className={item.isDone ? "btn edit-btn none" : "btn edit-btn"} onClick={() => startEditing(item.id)}>
                                                     <img src="/free-icon-edit-button-84380.png" alt="Редактирование" style={{ width:25  }}/>
                                                 </button>
-                                                {
-                                                    item.lesson ? (
-                                                        <div className="lesson">{item.lesson}</div>
-                                                    ) : (
-                                                        <select className={item.isDone ? "btn edit-btn none" : "btn edit-btn"} value={item.lesson || ""}
-                                                                onChange={(e) => handleLessonChange(item.id, e.target.value)}
-                                                        >
-                                                            <option value="">— Предмет —</option>
-                                                            {filteredArray.map((subjectItem) => (
-                                                                <option key={subjectItem.subject} value={subjectItem.subject}>
-                                                                    {subjectItem.subject}
-                                                                </option>
-                                                            ))}
-                                                        </select>
-                                                    )
-                                                }
+                                                <div>
+                                                    {
+                                                        item.lesson ? (
+                                                            <div className={item.isDone ? "btn edit-btn none" : "lesson"}>{item.lesson}</div>
+                                                        ) : (
+
+                                                            <select className={item.isDone ? "btn edit-btn none" : "btn edit-btn"} value={item.lesson || ""}
+                                                                    onChange={(e) => handleLessonChange(item.id, e.target.value)}
+                                                            >
+                                                                <option value="">— Предмет —</option>
+                                                                {filteredArray.map((subjectItem) => (
+                                                                    <option key={subjectItem.subject} value={subjectItem.subject}>
+                                                                        {subjectItem.subject}
+                                                                    </option>
+                                                                ))}
+                                                            </select>
+                                                        )
+                                                    }):('')
+                                                </div>
+
                                             </div>
                                         </div>
                                     )}

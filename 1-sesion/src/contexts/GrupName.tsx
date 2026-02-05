@@ -4,7 +4,7 @@ export const ItemPortal = createContext({
 });
 
 function GrupName({ children }: { children: ReactNode }) {
-    const [grupName, setGrupName] = useState('Группа не выбрана');
+    const [grupName, setGrupName] = useState(' не выбрана');
 
     return (
         <ItemPortal.Provider value={{ grupName, setGrupName }}>

@@ -1,8 +1,14 @@
 import "../../../style/GroupSelection.css";
+import {useEffect, useState} from "react";
 
 function GroupSelection({ onSelectGroup }) {
-    const groups = ['2-ПМИ-2', "1-ПМИ-2", "ПИ-1","ИТ-201"];
-
+    const [groups, setGroups] = useState([])
+    useEffect(() => {
+        fetch('http://localhost:8000/lessons')
+            .then(res => res.json())
+            .then(data => setGroups(data));
+    }, []);
+    const uniqueGroupNames = [...new Set(groups.map(item => item.group))];
     return (
         <div className="group-selection-container">
             <div className="group-selection-header">
@@ -11,9 +17,9 @@ function GroupSelection({ onSelectGroup }) {
                 </button>
             </div>
             <div className="groups-list">
-                {groups.map((group, index) => (
-                    <div key={index} className="group-item" onClick={() => onSelectGroup(group)}>
-                        {group}
+                {uniqueGroupNames.map((groupName) => (
+                    <div className="group-item" onClick={() => onSelectGroup(groupName)}>
+                        {groupName}
                     </div>
                 ))}
             </div>

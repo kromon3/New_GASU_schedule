@@ -43,8 +43,12 @@ html, body {
     font-weight: 700;
     letter-spacing: 0.8px;
     text-transform: uppercase;
-    box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+    box-shadow: 0 4px 15px rgb(253, 253, 253);
     transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+.Header-button.todo{
+
+    min-width: 80px;
 }
 .Header-button.list{
     width: 100%;

@@ -49,7 +49,7 @@ html, body {
     width: 60%;
 }
 .lesson-box.selected {
-    border: 2px solid #9d4edd;
+    border: 2px solid #ece5f1;
     box-shadow: 0 0 12px rgba(157, 78, 221, 0.7);
 }
 .lesson-header {
@@ -226,7 +226,7 @@ info-sidebar.false{
     font-weight: 700;
     letter-spacing: 0.8px;
     text-transform: uppercase;
-    box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+    box-shadow: 0 4px 15px rgb(255, 255, 255);
     transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
     min-width: 100px;
     max-width: 400px;

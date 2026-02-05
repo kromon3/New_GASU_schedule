@@ -54,22 +54,32 @@ function ScheduleToDay() {
             filteredSchedule_day.filter(lesson => lesson.weekType === currentWeekType),
         [filteredSchedule_day, currentWeekType]
     );
-    if (filteredSchedule_day.length === 0) {
-        return (
-            <>
-                <Header />
-                <div className="schedule-page">
-                    <h1>Расписание на {dayName}</h1>
-                    <h2>Сегодня нет занятий</h2>
-                </div>
-            </>
-        );
-    }
 
     const dontInvertStyle = {
         filter: themeType ? 'invert(1)' : 'invert(0)',
     };
+    if (filteredSchedule_day_type.length === 0) {
+        return (
+            <>
+                <div className="schedule-background"
+                     style={{
+                         filter: themeType ? 'invert(1)' : 'invert(0)',
+                         transition: 'filter 0.5s ease-in-out'
+                     }}
+                >
+                    <div style={dontInvertStyle}>
+                        <Header />
+                    </div>
 
+                <div className="schedule-page">
+                    <div style={{color:'white',fontSize:40}}><strong>Расписание на {dayName}</strong></div>
+                    <p></p>
+                    <div style={{color:'white',fontSize:30}}><strong>Сегодня нет занятий</strong></div>
+                </div>
+                </div>
+            </>
+        );
+    }
     return (
         <>
             <div className="schedule-background"
