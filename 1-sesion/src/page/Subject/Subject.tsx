@@ -1,4 +1,4 @@
-import Header from "../Header/header.tsx";
+import Header from "../../components/Header/header.tsx";
 import {useContext, useEffect, useState, useRef} from "react";
 import '../../style/schedule.css'
 import {ItemPortal} from "../../contexts/GrupName.tsx";
@@ -21,7 +21,11 @@ function Subject() {
         filter: themeType ? 'invert(1)' : 'invert(0)',
     };
 
-    const uniqueLessons = Array.from(new Set(scheduleData));
+    const filteredByGroup = scheduleData.filter(lesson => lesson.group === grupName);
+    const uniqueLessons = Array.from(
+        new Map(filteredByGroup.map(item => [item.subject, item])).values()
+    );
+
     const filteredSchedule = uniqueLessons.filter(lesson => lesson.group === grupName);
     const selectedLesson = filteredSchedule.find((el) => el.subject === selected);
 

@@ -1,5 +1,5 @@
 import {useState, useMemo, useCallback, useContext, useEffect} from "react";
-import Header from "../Header/header.tsx";
+import Header from "../../components/Header/header.tsx";
 import '../../style/todolist.css'
 import TodolistCounter from "./todolist_counter.tsx";
 import {ItemPortal} from "../../contexts/GrupName.tsx";
@@ -46,10 +46,12 @@ console.log(grupName);
         );
     }, [setValue]);
     const { themeType } = useContext(ThemeContext);
-    const filteredArray = useMemo(() =>
-            scheduleData.filter((i) => i.group === grupName),
-        [scheduleData, grupName]
-    );
+    const filteredArray = useMemo(() => {
+        const byGroup = scheduleData.filter((i) => i.group === grupName);
+        return Array.from(
+            new Map(byGroup.map(item => [item.subject, item])).values()
+        );
+    }, [scheduleData, grupName]);
     const dontInvertStyle = {
         filter: themeType ? 'invert(1)' : 'invert(0)',
     };
@@ -156,6 +158,7 @@ console.log(grupName);
                                                                     onChange={(e) => handleLessonChange(item.id, e.target.value)}
                                                             >
                                                                 <option value="">— Предмет —</option>
+                                                                <option value="-">Отсутствует</option>
                                                                 {filteredArray.map((subjectItem) => (
                                                                     <option key={subjectItem.subject} value={subjectItem.subject}>
                                                                         {subjectItem.subject}

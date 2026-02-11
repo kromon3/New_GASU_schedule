@@ -2,30 +2,29 @@
 import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
 import App from './App.tsx'
-import Schedule from "./components/shedule/Schedule.tsx";
-import TodoList from "./components/ToDoList/TodoList.tsx";
-import ScheduleToDay from "./components/sheduleToDay/ScheduleToDay.tsx";
-import Subject from "./components/Subject/Subject.tsx";
+import Schedule from "./page/shedule/Schedule.tsx";
+import TodoList from "./page/ToDoList/TodoList.tsx";
+import ScheduleToDay from "./page/sheduleToDay/ScheduleToDay.tsx";
+import Subject from "./page/Subject/Subject.tsx";
 import  GrupName  from './contexts/GrupName';
 import { ThemeProvider } from './contexts/Background.tsx';
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
-import { CookiesProvider } from 'react-cookie';
+import NotFound from "./page/NotFound/NotFound.tsx";
 const router = createBrowserRouter([
     { path: '/', element: <App /> },
     { path: "/schedule", element: <Schedule /> },
     { path: "/schedule_to_day", element: <ScheduleToDay /> },
     { path: "/subject", element: <Subject/> },
-    {path: "/todolist", element: <TodoList/>}
+    {path: "/todolist", element: <TodoList/>},
+    {path: "*", element: <NotFound/>}
 ]);
 
 createRoot(document.getElementById('root')!).render(
     <StrictMode>
-        <CookiesProvider>
         <GrupName>
             <ThemeProvider>
             <RouterProvider router={router} />
             </ThemeProvider>
         </GrupName>
-        </CookiesProvider>
     </StrictMode>,
 );

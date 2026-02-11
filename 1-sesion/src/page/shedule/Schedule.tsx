@@ -1,5 +1,5 @@
 // Schedule.js
-import Header from "../Header/header.tsx";
+import Header from "../../components/Header/header.tsx";
 import '../../style/schedule.css'
 import { useContext, useRef, useEffect, useState } from "react";
 import { ItemPortal } from '../../contexts/GrupName.tsx';
@@ -67,7 +67,7 @@ function Schedule() {
 
     if (grupName === ' не выбрана') {
         return (
-            <div>
+            <>
                 <div className="schedule-background"
                      style={{
                          filter: themeType ? 'invert(1)' : 'invert(0)',
@@ -79,7 +79,7 @@ function Schedule() {
                     <h2 style={{color:'white' }}>Выберите группу</h2>
                 </div>
                     </div>
-                </div>
+                </>
         )
     }
     if (filteredSchedule.length === 0) {

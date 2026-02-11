@@ -1,4 +1,4 @@
-import Header from "../Header/header.tsx";
+import Header from "../../components/Header/header.tsx";
 import '../../style/schedule.css';
 import  { useContext, useState,useEffect,useMemo } from "react";
 import {ItemPortal} from "../../contexts/GrupName.tsx";
