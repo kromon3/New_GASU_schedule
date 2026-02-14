@@ -1,7 +1,6 @@
 import Header from "../../components/Header/header.tsx";
 import {useContext} from "react";
 import {ThemeContext} from "../../contexts/Background.tsx";
-
 function NotFound (){
     const { themeType } = useContext(ThemeContext);
 

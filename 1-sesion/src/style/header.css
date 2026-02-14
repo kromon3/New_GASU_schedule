@@ -139,7 +139,25 @@ html, body {
     min-width: 180px;
     box-shadow: 0 4px 6px rgba(0,0,0,0.1);
 }
-
+.chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 6px 12px;
+    border-radius: 16px;
+    background-color: #e0e0e0;
+    color: #333;
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 1.4;
+    white-space: nowrap;
+    cursor: default;
+    transition: all 0.2s ease;
+    text-decoration: none;
+}
+.chip:hover {
+    background-color: #fff;
+}
 .menu-panel span {
     display: block;
     margin: 4px 0;
