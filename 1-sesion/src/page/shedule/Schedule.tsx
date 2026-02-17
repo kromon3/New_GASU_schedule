@@ -92,6 +92,7 @@ function Schedule() {
             </div>
         )
     }
+    console.log(currentWeekType)
     return (<>
 
             <div className="schedule-background"
@@ -109,7 +110,7 @@ function Schedule() {
                 <div className="week-type-buttons">
                     <button
                         onClick={() => handleScroll(0)}
-                        className={currentWeekType === 'Четная' ? 'week-type-button active' : 'week-type-button'}
+                        className={currentWeekType === 'Четная' ? 'week-type-button' : 'week-type-button active '}
                         style={{ marginRight: 5 }}
                     >
                         Четная неделя
@@ -117,7 +118,7 @@ function Schedule() {
 
                     <button
                         onClick={() => handleScroll(1)}
-                        className={currentWeekType === 'Нечетная' ? 'week-type-button active' : 'week-type-button'}
+                        className={currentWeekType === 'НеЧетная' ? 'week-type-button' : 'week-type-button active '}
                     >
                         Нечетная неделя
                     </button>

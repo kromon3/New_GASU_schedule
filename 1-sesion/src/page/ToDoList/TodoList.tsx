@@ -9,7 +9,6 @@ import {useTodo} from "../../hooks/useTodo.ts";
 import {ThemeContext} from "../../contexts/Background.tsx";
 function TodoList() {
     const { grupName } = useContext(ItemPortal);
-console.log(grupName);
     const [value, setValue] = useLocalStorage('base', []);
     const [stateIsDone, setStateIsDone] = useState<'all' | 'active' | 'completed'>('all');
     const [optinShow, setOptinShow] = useState<boolean>(false);

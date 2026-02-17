@@ -10,12 +10,14 @@ import  GrupName  from './contexts/GrupName';
 import { ThemeProvider } from './contexts/Background.tsx';
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import NotFound from "./page/NotFound/NotFound.tsx";
+import CreateLesson from "./page/CreateLesson/createLesson.tsx";
 const router = createBrowserRouter([
     { path: '/', element: <App /> },
     { path: "/schedule", element: <Schedule /> },
     { path: "/schedule_to_day", element: <ScheduleToDay /> },
     { path: "/subject", element: <Subject/> },
     {path: "/todolist", element: <TodoList/>},
+    {path: "/create",element:<CreateLesson/>},
     {path: "*", element: <NotFound/>}
 ]);
 
