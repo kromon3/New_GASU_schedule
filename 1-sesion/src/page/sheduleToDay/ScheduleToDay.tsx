@@ -7,8 +7,8 @@ import { useLocalStorage } from '../../hooks/useLocalStorage.ts';
 import { useTodo } from '../../hooks/useTodo.ts';
 import { ThemeContext } from '../../contexts/Background.tsx';
 import TodoInput from '../../components/Todo/TodoInput.tsx';
-import ScheduleToDayLesson from "../../components/ScheduleToDay/ScheduleToDayLesson.tsx";
-import ToDoToDay from "../../components/ScheduleToDay/ToDoToDay.tsx";
+import ScheduleToDayLesson from '../../components/ScheduleToDay/ScheduleToDayLesson.tsx';
+import ToDoToDay from '../../components/ScheduleToDay/ToDoToDay.tsx';
 function getCurrentWeekType() {
   const referenceDate = new Date(2025, 0, 27);
 
@@ -109,12 +109,12 @@ function ScheduleToDay() {
               </h1>
 
               {filteredSchedule_day_type.map((lesson) => (
-                  <ScheduleToDayLesson
+                <ScheduleToDayLesson
                   lesson={lesson}
                   setSelectedSubject={setSelectedSubject}
                   setStartHome={setStartHome}
                   startHome={startHome}
-                  />
+                />
               ))}
             </div>
           </div>
@@ -135,11 +135,7 @@ function ScheduleToDay() {
                     {value
                       .filter((item) => item.lesson === selectedSubject)
                       .map((day) => (
-                          <ToDoToDay
-                          day={day}
-                          setValue={setValue}
-                          handleRemove={handleRemove}
-                          />
+                        <ToDoToDay day={day} setValue={setValue} handleRemove={handleRemove} />
                       ))}
                   </>
                 )}

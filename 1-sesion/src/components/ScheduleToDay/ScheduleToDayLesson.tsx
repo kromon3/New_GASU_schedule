@@ -1,4 +1,4 @@
-function ScheduleToDayLesson({lesson,setSelectedSubject,setStartHome,startHome}) {
+function ScheduleToDayLesson({ lesson, setSelectedSubject, setStartHome, startHome }) {
   return (
     <div key={lesson.id} className="lesson-box schedule_to_day">
       <div style={{ flex: 1 }}>
