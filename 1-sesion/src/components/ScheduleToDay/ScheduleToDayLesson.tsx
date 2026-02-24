@@ -22,7 +22,7 @@ function ScheduleToDayLesson({ lesson, setSelectedSubject, setStartHome, startHo
         <button
           onClick={() => {
             setSelectedSubject(lesson.subject);
-            setStartHome(!startHome);
+              setStartHome(true);
           }}
         >
           <img src="/free-icon-article-8173239.png" alt="" style={{ height: '40px' }} />

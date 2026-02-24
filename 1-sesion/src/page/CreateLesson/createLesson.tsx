@@ -1,6 +1,9 @@
 import Header from '../../components/Header/header.tsx';
 import React from 'react';
-
+import Slider from "react-slick";
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
+import '../../style/header.css';
 function CreateLesson() {
   const [inpValueGroup, setInpValueGroup] = React.useState('');
   const [inpValueName, setInpValueName] = React.useState('');
@@ -24,7 +27,6 @@ function CreateLesson() {
     weekType: string;
     auditorium: string;
   }
-
   const addLesson = () => {
     const newLesson: Lesson = {
       id: Date.now(),
@@ -52,14 +54,18 @@ function CreateLesson() {
       body: JSON.stringify(Lesson),
     });
   };
-  const options = [
-    { value: 'chocolate', label: 'Chocolate' },
-    { value: 'strawberry', label: 'Strawberry' },
-    { value: 'vanilla', label: 'Vanilla' },
-  ];
+    const settings = {
+        dots: true,
+        infinite: true,
+        speed: 500,
+        slidesToShow: 1,
+        slidesToScroll: 1,
+        adaptiveHeight: true,
+    };
   return (
     <>
       <Header />
+        <Slider {...settings}>
       <input
         className="search-input"
         value={inpValueName}
@@ -98,10 +104,10 @@ function CreateLesson() {
         onChange={(e) => setInpValueAuditori(e.target.value)}
         placeholder="Введите аудиторию"
       />
+        </Slider>
+      <button onClick={() => addLesson()} className="Header-button" >Создать урок</button>
 
-      <button onClick={() => addLesson()}>Создать урок</button>
-
-      <button onClick={sendPostRequest}>Отправить на сервер</button>
+      <button onClick={sendPostRequest} className="Header-button">Отправить на сервер</button>
     </>
   );
 }

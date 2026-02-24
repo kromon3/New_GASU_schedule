@@ -1,7 +1,7 @@
 // Schedule.js
 import Header from '../../components/Header/header.tsx';
 import '../../style/schedule.css';
-import { useContext, useRef, useEffect, useState ,useMemo} from 'react';
+import { useContext, useRef ,useMemo} from 'react';
 import { ItemPortal } from '../../contexts/GrupName.tsx';
 import { ThemeContext } from '../../contexts/Background.tsx';
 import Slider from "react-slick";

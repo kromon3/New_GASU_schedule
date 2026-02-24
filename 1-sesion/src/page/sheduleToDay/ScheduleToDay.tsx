@@ -10,6 +10,7 @@ import TodoInput from '../../components/Todo/TodoInput.tsx';
 import ScheduleToDayLesson from '../../components/ScheduleToDay/ScheduleToDayLesson.tsx';
 import ToDoToDay from '../../components/ScheduleToDay/ToDoToDay.tsx';
 import {useFetch} from "../../hooks/useFetch.ts";
+import Subject from "../Subject/Subject.tsx";
 function getCurrentWeekType() {
   const referenceDate = new Date(2025, 0, 27);
 
@@ -171,7 +172,7 @@ function ScheduleToDay() {
 
           {startHome && (
             <div className="sidebar">
-              <h1>Домашняя работа</h1>
+              <h1>Домашняя работа {selectedSubject}</h1>
               <div className="input-container">
                 <TodoInput
                   inpValue={inpValue}
