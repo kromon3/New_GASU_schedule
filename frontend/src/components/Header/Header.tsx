@@ -2,7 +2,6 @@
 import '../../style/header.css';
 import { Link } from 'react-router-dom';
 import { useContext, useEffect, useState } from 'react';
-import { ItemPortal } from '../../contexts/GroupNameProvider.tsx';
 import { ThemeContext } from '../../contexts/Background.tsx';
 import {useStore} from "../../../store/useTestStore.ts";
 import ReactModal from 'react-modal';
@@ -11,17 +10,7 @@ import ReactModal from 'react-modal';
 ReactModal.setAppElement('#root');
 
 function Header() {
-  // Получаем контексты с проверкой
-  const grupContext = useContext(ItemPortal);
   const themeContext = useContext(ThemeContext);
-
-  // Проверяем, что контексты существуют
-  if (!grupContext || !themeContext) {
-    console.error('Контексты не найдены! Проверьте Providers в App.tsx');
-    return <div>Загрузка...</div>; // Временная заглушка
-  }
-
-  // Теперь безопасно деструктурируем
   const { groupName, setGroupName } = useStore()
   const { setTheme, themeType, setThemeType } = themeContext;
 
