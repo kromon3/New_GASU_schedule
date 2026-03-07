@@ -53,13 +53,15 @@ function Subject() {
     )
   }
   if(error){
-    <>
-      <Header />
-      <FetchError
-          error={error}
-          loading={loading}
-      />
-    </>
+    return (
+        <>
+          <Header />
+          <FetchError
+              error={error}
+              loading={loading}
+          />
+        </>
+    )
 
   }
   return (

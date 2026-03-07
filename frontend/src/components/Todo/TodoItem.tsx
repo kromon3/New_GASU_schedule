@@ -13,7 +13,6 @@ function TodoItem({
                       startEditing,
                       filteredArray,
                       handleLessonChange,
-                      filteredTasks,
                       setDoneValuse
                   }) {
 
@@ -24,7 +23,12 @@ function TodoItem({
 
         setValue(prev => prev.filter(t => t.id !== item.id));
     };
+    const backtoggleDone = () => {
 
+        setValue(prev => [...prev, { ...item, isDone: !item.isDone }]);
+
+        setDoneValuse(prev => prev.filter(t => t.id !== item.id));
+    };
     return (
         <div className="todo-item">
             {item.id === isSelected ? (
@@ -67,7 +71,7 @@ function TodoItem({
                             borderRadius: '50%',
                         }}
                         checked={item.isDone}
-                        onChange={toggleDone}
+                        onChange={item.isDone ? backtoggleDone : toggleDone}
                     />
                     <h1
                         className={item.isDone ? "text-content Done" : "text-content NoDone"}
