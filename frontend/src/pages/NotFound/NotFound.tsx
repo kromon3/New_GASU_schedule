@@ -1,14 +1,13 @@
 import Header from '../../components/Header/Header.tsx';
-import { useContext } from 'react';
-import { ThemeContext } from '../../contexts/Background.tsx';
+import {useTheme} from "../../../store/useTheme.ts";
 function NotFound() {
-  const { themeType } = useContext(ThemeContext);
+    const  themeType =  useTheme((s) => s.theme)
 
   return (
     <>
       <div
         style={{
-          backgroundColor: themeType ? 'white' : 'black',
+          backgroundColor: themeType==='dark'  ? 'white' : 'black',
           minHeight: '100vh',
           width: '100%',
         }}
@@ -26,7 +25,7 @@ function NotFound() {
             src="/arrow_forward_50dp_E3E3E3_FILL0_wght400_GRAD0_opsz48.png"
             alt=""
             style={{
-              filter: themeType ? 'invert(1)' : 'invert(0)',
+              filter: themeType==='dark'  ? 'invert(1)' : 'invert(0)',
               width: 75,
               transform: 'rotate(320deg)',
             }}

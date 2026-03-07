@@ -6,7 +6,6 @@ import ScheduleWeek from './pages/Schedule/ScheduleWeek';
 import TodoList from './pages/ToDoList/TodoList';
 import TodaySchedule from './pages/TodaySchedule/TodaySchedule';
 import Subject from './pages/Subject/Subject';
-import { ThemeProvider } from './contexts/Background.tsx';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import NotFound from './pages/NotFound/NotFound';
 import CreateLesson from './pages/CreateLesson/CreateLesson';
@@ -24,9 +23,7 @@ const router = createBrowserRouter([
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
     <CookiesProvider>
-      <ThemeProvider>
         <RouterProvider router={router} />
-      </ThemeProvider>
     </CookiesProvider>
   </StrictMode>
 );

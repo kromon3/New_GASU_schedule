@@ -1,4 +1,4 @@
-import {useState, useMemo, useCallback, useContext} from "react";
+import {useMemo, useCallback} from "react";
 import Header from "../../components/Header/Header.tsx";
 import '../../style/todolist.css'
 import TodoListCounter from "../../components/Todo/TodoListCounter.tsx";
@@ -6,10 +6,10 @@ import type {Todo} from '../../type/todo.ts'
 import {useLocalStorage} from "../../hooks/useLocalStorage.ts";
 import {useTodo} from "../../hooks/useTodo.ts";
 import {useFetch} from "../../hooks/useFetch.ts";
-import {ThemeContext} from "../../contexts/Background.tsx";
 import FetchError from "../../components/Error/FetchError.tsx";
 import {useStore} from "../../../store/useTestStore.ts";
 import TodoItem from "../../components/Todo/TodoItem.tsx";
+import {useTheme} from "../../../store/useTheme.ts";
 function TodoList() {
     const { groupName} = useStore()
     const [value, setValue] = useLocalStorage('base', []);
@@ -32,7 +32,7 @@ function TodoList() {
             )
         );
     }, [setValue]);
-    const { themeType } = useContext(ThemeContext);
+    const  themeType =  useTheme((s) => s.theme)
     const filteredArray = useMemo(() => {
         const byGroup = scheduleData.filter((i) => i.group === groupName);
         return Array.from(
@@ -40,7 +40,7 @@ function TodoList() {
         );
     }, [scheduleData, groupName]);
     const dontInvertStyle = {
-        filter: themeType ? 'invert(1)' : 'invert(0)',
+        filter: themeType==='dark'  ? 'invert(1)' : 'invert(0)',
     };
     if(loading){
         return (
@@ -59,7 +59,6 @@ function TodoList() {
     if(error){
         return (
                 <>
-
                     <Header />
                     <FetchError
                         error={error}
@@ -69,17 +68,17 @@ function TodoList() {
             )
 
     }
-
     return (
         <div className="schedule-background"
              style={{
-                 filter: themeType ? 'invert(1)' : 'invert(0)',
+                 filter: themeType==='dark' ? 'invert(1)' : 'invert(0)',
                  transition: 'filter 0.5s ease-in-out'
              }}
         >
             <div style={dontInvertStyle}>
                 <Header />
             </div>
+            {themeType}
             <div style={dontInvertStyle}>
                 <TodoListCounter
                     text={isDoneValue}

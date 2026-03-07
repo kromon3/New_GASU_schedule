@@ -1,16 +1,16 @@
 import Header from '../../components/Header/Header.tsx';
 import '../../style/schedule.css';
-import { useContext, useState, useEffect, useMemo } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 import type { Todo } from '../../type/todo.ts';
 import { useLocalStorage } from '../../hooks/useLocalStorage.ts';
 import { useTodo } from '../../hooks/useTodo.ts';
-import { ThemeContext } from '../../contexts/Background.tsx';
 import TodoInput from '../../components/Todo/TodoInput.tsx';
 import ScheduleTodayLesson from '../../components/TodaySchedule/ScheduleTodayLesson.tsx';
 import ToDoToday from '../../components/TodaySchedule/ToDoToday.tsx';
 import {useFetch} from "../../hooks/useFetch.ts";
 import FetchError from "../../components/Error/FetchError.tsx";
 import {useStore} from "../../../store/useTestStore.ts";
+import {useTheme} from "../../../store/useTheme.ts";
 function getCurrentWeekType() {
   const referenceDate = new Date(2025, 0, 27);
 
@@ -42,7 +42,7 @@ function TodaySchedule() {
   const [startHome, setStartHome] = useState<boolean>(false);
   const [selectedSubject, setSelectedSubject] = useState<string | null>(null);
   const [currentWeekType, setCurrentWeekType] = useState('Четная');
-  const { themeType } = useContext(ThemeContext);
+  const  themeType =  useTheme((s) => s.theme)
   const { data: scheduleData ,loading,error} = useFetch('http://localhost:8000/lessons');
   useEffect(() => {
     const weekType = getCurrentWeekType();
@@ -56,7 +56,7 @@ function TodaySchedule() {
   );
 
   const dontInvertStyle = {
-    filter: themeType ? 'invert(1)' : 'invert(0)',
+    filter: themeType==='dark'  ? 'invert(1)' : 'invert(0)',
   }
   console.log(loading)
   if(loading){
@@ -90,7 +90,7 @@ function TodaySchedule() {
         <div
           className="schedule-background"
           style={{
-            filter: themeType ? 'invert(1)' : 'invert(0)',
+            filter: themeType==='dark'  ? 'invert(1)' : 'invert(0)',
             transition: 'filter 0.5s ease-in-out',
           }}
         >
@@ -116,7 +116,7 @@ function TodaySchedule() {
       <div
         className="schedule-background"
         style={{
-          filter: themeType ? 'invert(1)' : 'invert(0)',
+          filter: themeType==='dark'  ? 'invert(1)' : 'invert(0)',
           transition: 'filter 0.5s ease-in-out',
         }}
       >

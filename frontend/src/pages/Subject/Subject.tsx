@@ -1,10 +1,10 @@
 import Header from '../../components/Header/Header.tsx';
-import { useContext, useEffect, useState, useRef } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import '../../style/schedule.css';
-import { ThemeContext } from '../../contexts/Background.tsx';
 import {useFetch} from "../../hooks/useFetch.ts";
 import FetchError from "../../components/Error/FetchError.tsx";
 import {useStore} from "../../../store/useTestStore.ts";
+import {useTheme} from "../../../store/useTheme.ts";
 
 function Subject() {
   const [selected, setSelected] = useState<string | null>(null);
@@ -13,9 +13,9 @@ function Subject() {
 
   const { data: scheduleData ,loading,error} = useFetch('http://localhost:8000/lessons');
 
-  const { themeType } = useContext(ThemeContext);
+    const  themeType =  useTheme((s) => s.theme)
   const dontInvertStyle = {
-    filter: themeType ? 'invert(1)' : 'invert(0)',
+    filter: themeType==='dark'  ? 'invert(1)' : 'invert(0)',
   };
 
   const filteredByGroup = scheduleData.filter((lesson) => lesson.group === groupName);
@@ -68,7 +68,7 @@ function Subject() {
       <div
         className="schedule-background"
         style={{
-          filter: themeType ? 'invert(1)' : 'invert(0)',
+          filter: themeType==='dark'  ? 'invert(1)' : 'invert(0)',
           transition: 'filter 0.5s ease-in-out',
         }}
       >

@@ -1,8 +1,7 @@
 // ScheduleWeekContent.js
 import Header from '../../components/Header/Header.tsx';
 import '../../style/schedule.css';
-import { useContext, useRef ,useMemo} from 'react';
-import { ThemeContext } from '../../contexts/Background.tsx';
+import {useRef ,useMemo} from 'react';
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
@@ -10,6 +9,7 @@ import {useFetch} from "../../hooks/useFetch.ts";
 import FetchError from "../../components/Error/FetchError.tsx";
 import ScheduleWeekContent from "../../components/Schedule/ScheduleWeekContent.tsx";
 import {useStore} from "../../../store/useTestStore.ts";
+import {useTheme} from "../../../store/useTheme.ts";
 
 function ScheduleWeek() {
     const { groupName} = useStore()
@@ -17,7 +17,7 @@ function ScheduleWeek() {
   // Загрузка данных
     const { data: scheduleData ,loading,error} = useFetch('http://localhost:8000/lessons');
 
-  const { themeType } = useContext(ThemeContext);
+    const  themeType =  useTheme((s) => s.theme)
 
   // Фильтруем расписание по выбранной группе
   const filteredSchedule = useMemo(() =>
@@ -55,7 +55,7 @@ function ScheduleWeek() {
   };
 
   const dontInvertStyle = {
-    filter: themeType ? 'invert(1)' : 'invert(0)',
+    filter: themeType==='dark'  ? 'invert(1)' : 'invert(0)',
   };
 
   // Если группа не выбрана
@@ -64,7 +64,7 @@ function ScheduleWeek() {
         <div
             className="schedule-background"
             style={{
-              filter: themeType ? 'invert(1)' : 'invert(0)',
+              filter: themeType==='dark'  ? 'invert(1)' : 'invert(0)',
               transition: 'filter 0.5s ease-in-out',
             }}
         >
@@ -107,7 +107,7 @@ function ScheduleWeek() {
         <div
             className="schedule-background"
             style={{
-              filter: themeType ? 'invert(1)' : 'invert(0)',
+              filter: themeType==='dark'  ? 'invert(1)' : 'invert(0)',
               transition: 'filter 0.5s ease-in-out',
             }}
         >
@@ -125,7 +125,7 @@ function ScheduleWeek() {
       <div
           className="schedule-background"
           style={{
-            filter: themeType ? 'invert(1)' : 'invert(0)',
+            filter: themeType==='dark'  ? 'invert(1)' : 'invert(0)',
             transition: 'filter 0.5s ease-in-out',
           }}
       >
