@@ -5,12 +5,14 @@ import {useFetch} from "../../hooks/useFetch.ts";
 import FetchError from "../../components/Error/FetchError.tsx";
 import {useStore} from "../../../store/useTestStore.ts";
 import {useTheme} from "../../../store/useTheme.ts";
+import {useLocalStorage} from "../../hooks/useLocalStorage.ts";
 
 function Subject() {
   const [selected, setSelected] = useState<string | null>(null);
   const { groupName} = useStore()
   const focusRef = useRef(null);
-
+    const [value, setValue] = useLocalStorage('base', []);
+    const ItemValue =[...value, ...DoneValuse]
   const { data: scheduleData ,loading,error} = useFetch('http://localhost:8000/lessons');
 
     const  themeType =  useTheme((s) => s.theme)
@@ -22,15 +24,12 @@ function Subject() {
   const uniqueLessons = Array.from(
     new Map(filteredByGroup.map((item) => [item.subject, item])).values()
   );
-
   const filteredSchedule = uniqueLessons.filter((lesson) => lesson.group === groupName);
   const selectedLesson = filteredSchedule.find((el) => el.subject === selected);
 
-  // Фокус на сайдбаре при выборе предмета
   useEffect(() => {
     if (selected && focusRef.current) {
       focusRef.current.focus();
-      // Прокрутка к элементу (опционально)
       focusRef.current.scrollIntoView({
         behavior: 'smooth',
         block: 'nearest',
@@ -101,21 +100,26 @@ function Subject() {
             </div>
             <div ref={focusRef} tabIndex={-1}>
               {selectedLesson && (
-                <div
-                  className={selected ? 'info-sidebar' : 'info-sidebar.false'}
-                  style={{ color: 'white' }}
-                >
-                  <img src="/avatar.png" alt="harry potter" style={{ width: '50px' }} />
-                  <h3 style={{ marginLeft: '12px', color: 'white' }}>{selectedLesson.subject}</h3>
-                  <h3 style={{ marginLeft: '12px', color: 'white' }}>
-                    {' '}
-                    Преподаватель: {selectedLesson.teacher}
-                  </h3>
-                  <h3 style={{ marginLeft: '12px', color: 'white' }}>
-                    {' '}
-                    Тип: {selectedLesson.type}
-                  </h3>
-                </div>
+                  <div>
+                      <div
+                          className={selected ? 'info-sidebar' : 'info-sidebar.false'}
+                          style={{ color: 'white' }}
+                      >
+                          <img src="/avatar.png" alt="harry potter" style={{ width: '50px' }} />
+                          <h3 style={{ marginLeft: '12px', color: 'white' }}>{selectedLesson.subject}</h3>
+                          <h3 style={{ marginLeft: '12px', color: 'white' }}>
+                              {' '}
+                              Преподаватель: {selectedLesson.teacher}
+                          </h3>
+                          <h3 style={{ marginLeft: '12px', color: 'white' }}>
+                              {' '}
+                              Тип: {selectedLesson.type}
+                          </h3>
+                      </div>
+                      <div>
+                      </div>
+                  </div>
+
               )}
             </div>
           </div>

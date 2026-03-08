@@ -58,7 +58,6 @@ function TodaySchedule() {
   const dontInvertStyle = {
     filter: themeType==='dark'  ? 'invert(1)' : 'invert(0)',
   }
-  console.log(loading)
   if(loading){
     return (
         <>

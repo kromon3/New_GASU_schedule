@@ -8,26 +8,29 @@ function TodoItem({
                       setInpchangeValue,
                       handleChange,
                       cancelEditing,
-                      setValue,
                       handleRemove,
                       startEditing,
                       filteredArray,
                       handleLessonChange,
-                      setDoneValuse
+                      onStatusChange,
+                      currentStatus,
                   }) {
 
+    const handleCheckboxChange = () => {
+        if (!onStatusChange) return;
 
-    const toggleDone = () => {
+        const nextStatus = {
+            'tasks': 'process',
+            'process': 'done',
+            'done': 'process'
+        };
 
-        setDoneValuse(prev => [...prev, { ...item, isDone: !item.isDone }]);
-
-        setValue(prev => prev.filter(t => t.id !== item.id));
+        onStatusChange(item.id, nextStatus[currentStatus]);
     };
-    const backtoggleDone = () => {
-
-        setValue(prev => [...prev, { ...item, isDone: !item.isDone }]);
-
-        setDoneValuse(prev => prev.filter(t => t.id !== item.id));
+    const moveToTasks = () => {
+        if (currentStatus === 'process' && onStatusChange) {
+            onStatusChange(item.id, 'tasks');
+        }
     };
     return (
         <div className="todo-item">
@@ -42,6 +45,7 @@ function TodoItem({
                             autoFocus
                         />
                         <div className="button-group">
+
                             <button
                                 className="btn save-btn"
                                 onClick={() => handleChange(item.id, inpchangeValue)}
@@ -63,15 +67,16 @@ function TodoItem({
                 </div>
             ) : (
                 <div className="item">
+                    {currentStatus === 'process' && (
+                        <button className="btn back-btn" onClick={moveToTasks} title="Вернуть в Задачи">
+                            ←
+                        </button>
+                    )}
                     <input
                         type="checkbox"
-                        style={{
-                            width: '40px',
-                            height: '30px',
-                            borderRadius: '50%',
-                        }}
+                        style={{ width: '40px', height: '30px', borderRadius: '50%' }}
                         checked={item.isDone}
-                        onChange={item.isDone ? backtoggleDone : toggleDone}
+                        onChange={handleCheckboxChange}
                     />
                     <h1
                         className={item.isDone ? "text-content Done" : "text-content NoDone"}
@@ -80,6 +85,7 @@ function TodoItem({
                         {item.text}
                     </h1>
                     <div className="button-group">
+
                         {item.isDone && (
                             <div style={{ marginLeft: 21.44, color: 'white', fontSize: 30,textDecoration: 'line-through' }}>
                                 <strong>Выполнено</strong>

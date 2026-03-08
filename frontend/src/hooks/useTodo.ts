@@ -17,6 +17,7 @@ export const useTodo = (value: Todo[], setValue: SetState<Todo[]>) => {
         text: text.trim(),
         isDone: false,
         lesson,
+          status: 'tasks'
       };
       setValue((prev) => [...prev, newItem]);
       setInpValue('');

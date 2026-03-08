@@ -9,7 +9,7 @@ type ThemeStore = {
     changeTheme: () => void
 }
 export const useTheme = create<ThemeStore>()((set) => ({
-    theme: 'dark',
+    theme: 'light',
     themeType: false,
     setTheme: (newTheme) => set(() => ({
         theme: newTheme,

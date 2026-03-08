@@ -13,7 +13,11 @@ import {useTheme} from "../../../store/useTheme.ts";
 function TodoList() {
     const { groupName} = useStore()
     const [value, setValue] = useLocalStorage('base', []);
-    const [DoneValuse, setDoneValuse] = useLocalStorage('Done',[]);
+
+    const tasks = useMemo(() => value.filter(t => t.status === 'tasks'), [value]);
+    const processValuse = useMemo(() => value.filter(t => t.status === 'process'), [value]);
+    const DoneValuse = useMemo(() => value.filter(t => t.status === 'done'), [value]);
+
     const {inpValue, setInpValue, inpchangeValue, setInpchangeValue, isSelected, handleAdd, handleRemove, handleChange, startEditing, cancelEditing,} = useTodo(value, setValue);
     const { isDoneValue, allValues, remainingValue } = useMemo(() => {
         const doneCount = value.filter(item => item.isDone).length;
@@ -39,6 +43,16 @@ function TodoList() {
             new Map(byGroup.map(item => [item.subject, item])).values()
         );
     }, [scheduleData, groupName]);
+    const switchStatus = useCallback((taskId: number, newStatus: string) => {
+        const status = newStatus.trim();
+        if (!status) return;
+
+        setValue(prev => prev.map(item =>
+            item.id === taskId
+                ? { ...item, status, isDone: status === 'done' }
+                : item
+        ));
+    }, [setValue]);
     const dontInvertStyle = {
         filter: themeType==='dark'  ? 'invert(1)' : 'invert(0)',
     };
@@ -79,13 +93,7 @@ function TodoList() {
                 <Header />
             </div>
             {themeType}
-            <div style={dontInvertStyle}>
-                <TodoListCounter
-                    text={isDoneValue}
-                    allValues={allValues}
-                    remainingValue={remainingValue}
-                />
-            </div>
+
             <div className="container">
                 <div className="input-and-button">
                     <div className="input-container">
@@ -110,10 +118,10 @@ function TodoList() {
                         <h2 className="kanban-column__title">Задачи</h2>
                     </div>
                     <div className="kanban-list">
-                        {value.length === 0 ? (
+                        {tasks.length === 0 ? (
                             <div className="kanban-empty">Добавьте первую задачу </div>
                         ) : (
-                            value.map((item) => (
+                            tasks.map((item) => (
                                 <TodoItem
                                     key={item.id}
                                     item={item}
@@ -127,7 +135,49 @@ function TodoList() {
                                     startEditing={startEditing}
                                     filteredArray={filteredArray}
                                     handleLessonChange={handleLessonChange}
-                                    setDoneValuse={setDoneValuse}
+                                    setDoneValuse={setValue}
+                                    onStatusChange={switchStatus}
+                                    currentStatus="tasks"
+                                />
+                            ))
+                        )}
+                    </div>
+                </div>
+                <div className="kanban-column">
+                    <div className="kanban-column__header">
+                        <h2 className="kanban-column__title">В процессе</h2>
+                    </div>
+                    <div className="kanban-list">
+                        {processValuse.length === 0 ? (
+                            <div className="kanban-empty">Добавьте первую задачу </div>
+                        ) : (
+                            processValuse.map((item) => (
+                                <TodoItem
+                                    key={item.id}
+                                    item={item}
+                                    isSelected={isSelected}
+                                    inpchangeValue={inpchangeValue}
+                                    setInpchangeValue={setInpchangeValue}
+                                    handleChange={(id, value) => {
+                                        setValue(prev => prev.map(v =>
+                                            v.id === id ? { ...v, text: value } : v
+                                        ));
+                                    }}
+                                    cancelEditing={cancelEditing}
+                                    setValue={setValue}
+                                    handleRemove={(id) => {
+                                        setValue(prev => prev.filter(v => v.id !== id));
+                                    }}
+                                    startEditing={startEditing}
+                                    filteredArray={filteredArray}
+                                    handleLessonChange={(id, lesson) => {
+                                        setValue(prev => prev.map(v =>
+                                            v.id === id ? { ...v, lesson } : v
+                                        ));
+                                    }}
+                                    setDoneValuse={setValue}
+                                    onStatusChange={switchStatus}
+                                    currentStatus="process"
                                 />
                             ))
                         )}
@@ -149,23 +199,25 @@ function TodoList() {
                                     inpchangeValue={inpchangeValue}
                                     setInpchangeValue={setInpchangeValue}
                                     handleChange={(id, value) => {
-                                        setDoneValuse(prev => prev.map(v =>
+                                        setValue(prev => prev.map(v =>
                                             v.id === id ? { ...v, text: value } : v
                                         ));
                                     }}
                                     cancelEditing={cancelEditing}
                                     setValue={setValue}
                                     handleRemove={(id) => {
-                                        setDoneValuse(prev => prev.filter(v => v.id !== id));
+                                        setValue(prev => prev.filter(v => v.id !== id));
                                     }}
                                     startEditing={startEditing}
                                     filteredArray={filteredArray}
                                     handleLessonChange={(id, lesson) => {
-                                        setDoneValuse(prev => prev.map(v =>
+                                        setValue(prev => prev.map(v =>
                                             v.id === id ? { ...v, lesson } : v
                                         ));
                                     }}
-                                    setDoneValuse={setDoneValuse}
+                                    setDoneValuse={setValue}
+                                    onStatusChange={switchStatus}
+                                    currentStatus="done"
                                 />
                             ))
                         )}
