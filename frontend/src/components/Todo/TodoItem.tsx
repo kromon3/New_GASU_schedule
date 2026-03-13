@@ -32,6 +32,11 @@ function TodoItem({
             onStatusChange(item.id, 'tasks');
         }
     };
+    const moveToProces = () => {
+        if (currentStatus === 'done' && onStatusChange) {
+            onStatusChange(item.id, 'process');
+        }
+    };
     return (
         <div className="todo-item">
             {item.id === isSelected ? (
@@ -67,29 +72,36 @@ function TodoItem({
                 </div>
             ) : (
                 <div className="item">
+
                     {currentStatus === 'process' && (
                         <button className="btn back-btn" onClick={moveToTasks} title="Вернуть в Задачи">
                             ←
                         </button>
                     )}
-                    <input
-                        type="checkbox"
-                        style={{ width: '40px', height: '30px', borderRadius: '50%' }}
-                        checked={item.isDone}
-                        onChange={handleCheckboxChange}
-                    />
+                    {item.isDone && (<button className="btn back-btn" onClick={moveToProces} title="Вернуть в Задачи">
+                        ←
+                    </button>)}
                     <h1
                         className={item.isDone ? "text-content Done" : "text-content NoDone"}
                         style={{ marginRight: 20, color: 'white' }}
                     >
-                        {item.text}
+                       <div style={{
+                           maxWidth: '10ch',
+                           whiteSpace: 'nowrap',
+                           overflow: 'hidden',
+                           textOverflow: 'ellipsis'
+                       }} title={item.text}>{item.text}</div>
                     </h1>
                     <div className="button-group">
 
                         {item.isDone && (
-                            <div style={{ marginLeft: 21.44, color: 'white', fontSize: 30,textDecoration: 'line-through' }}>
-                                <strong>Выполнено</strong>
+                            <div>
+                                <div style={{ marginLeft: 21.44, color: 'white', fontSize: 30,textDecoration: 'line-through' }}>
+                                    <strong>Выполнено</strong>
+
+                                </div>
                             </div>
+
                         )}
                         <button
                             className="btn delete-btn"
@@ -103,11 +115,17 @@ function TodoItem({
                         >
                             <img src="/free-icon-edit-button-84380.png" alt="Редактирование" style={{ width: 25 }}/>
                         </button>
+
                         <div>
                             {item.lesson ? (
-                                <div className={item.isDone ? "btn edit-btn none" : "lesson"}>
-                                    {item.lesson}
+                                <div>
+                                    <div className={item.isDone ? "btn edit-btn none" : "lesson"}>
+                                        {item.lesson}
+                                    </div>
+
                                 </div>
+
+
                             ) : (
                                 <TodoSelectSubject
                                     item={item}
@@ -116,6 +134,16 @@ function TodoItem({
                                 />
                             )}
                         </div>
+                        {!item.isDone ? <>
+                                <button onClick={handleCheckboxChange} className="btn back-btn">
+                            <img src="/arrow_forward_24dp_000_FILL0_wght400_GRAD0_opsz24.png" alt=""/>
+                        </button>
+
+                        </>
+                        :
+
+                        <></>}
+
                     </div>
                 </div>
             )}

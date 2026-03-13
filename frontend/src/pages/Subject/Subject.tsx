@@ -5,127 +5,125 @@ import {useFetch} from "../../hooks/useFetch.ts";
 import FetchError from "../../components/Error/FetchError.tsx";
 import {useStore} from "../../../store/useTestStore.ts";
 import {useTheme} from "../../../store/useTheme.ts";
-import {useLocalStorage} from "../../hooks/useLocalStorage.ts";
 
 function Subject() {
-  const [selected, setSelected] = useState<string | null>(null);
-  const { groupName} = useStore()
-  const focusRef = useRef(null);
-    const [value, setValue] = useLocalStorage('base', []);
-    const ItemValue =[...value, ...DoneValuse]
-  const { data: scheduleData ,loading,error} = useFetch('http://localhost:8000/lessons');
+    const [selected, setSelected] = useState<string | null>(null);
+    const { groupName} = useStore()
+    const focusRef = useRef(null);
+
+    const { data: scheduleData ,loading,error} = useFetch('http://localhost:8000/lessons');
 
     const  themeType =  useTheme((s) => s.theme)
-  const dontInvertStyle = {
-    filter: themeType==='dark'  ? 'invert(1)' : 'invert(0)',
-  };
+    const dontInvertStyle = {
+        filter: themeType==='dark'  ? 'invert(1)' : 'invert(0)',
+    };
 
-  const filteredByGroup = scheduleData.filter((lesson) => lesson.group === groupName);
-  const uniqueLessons = Array.from(
-    new Map(filteredByGroup.map((item) => [item.subject, item])).values()
-  );
-  const filteredSchedule = uniqueLessons.filter((lesson) => lesson.group === groupName);
-  const selectedLesson = filteredSchedule.find((el) => el.subject === selected);
+    const filteredByGroup = scheduleData.filter((lesson) => lesson.group === groupName);
+    const uniqueLessons = Array.from(
+        new Map(filteredByGroup.map((item) => [item.subject, item])).values()
+    );
+    const filteredSchedule = uniqueLessons.filter((lesson) => lesson.group === groupName);
+    const selectedLesson = filteredSchedule.find((el) => el.subject === selected);
 
-  useEffect(() => {
-    if (selected && focusRef.current) {
-      focusRef.current.focus();
-      focusRef.current.scrollIntoView({
-        behavior: 'smooth',
-        block: 'nearest',
-      });
-    }
-  }, [selected]);
+    useEffect(() => {
+        if (selected && focusRef.current) {
+            focusRef.current.focus();
+            focusRef.current.scrollIntoView({
+                behavior: 'smooth',
+                block: 'nearest',
+            });
+        }
+    }, [selected]);
 
-  if(loading){
-    return (
-        <>
-          <Header />
-          <div className="loading">
-            <img
-                src="/icons8-значок-загрузки-iphone.gif"
-                alt="loading"
-                style={{ width: '50px', height: '50px' }}
-            />
-          </div>
-        </>
-    )
-  }
-  if(error){
-    return (
-        <>
-          <Header />
-          <FetchError
-              error={error}
-              loading={loading}
-          />
-        </>
-    )
-
-  }
-  return (
-      <div
-        className="schedule-background"
-        style={{
-          filter: themeType==='dark'  ? 'invert(1)' : 'invert(0)',
-          transition: 'filter 0.5s ease-in-out',
-        }}
-      >
-        <div style={dontInvertStyle}>
-          <Header />
-        </div>
-        <div className="schedule-page">
-          <h2 style={{ color: 'white' }}>Предметы группы {groupName}</h2>
-          <div className="subject-layout">
-            <div className="subjects-list">
-              {filteredSchedule.map((lesson) => (
-                <div
-                  key={lesson.id}
-                  className={`lesson-box ${selected === lesson.subject ? 'selected' : ''}`}
-                  onClick={() => setSelected(lesson.subject)}
-                  style={{ marginBottom: '12px', marginTop: '12px' }}
-                  role="button" // Для доступности
-                  tabIndex={0} // Делаем элемент фокусируемым
-                  onKeyPress={(e) => {
-                    if (e.key === 'Enter' || e.key === ' ') {
-                      setSelected(lesson.subject);
-                    }
-                  }}
-                >
-                  <div className="lesson-main">
-                    <h3 className="subject">{lesson.subject}</h3>
-                  </div>
+    if(loading){
+        return (
+            <>
+                <Header />
+                <div className="loading">
+                    <img
+                        src="/icons8-значок-загрузки-iphone.gif"
+                        alt="loading"
+                        style={{ width: '50px', height: '50px' }}
+                    />
                 </div>
-              ))}
-            </div>
-            <div ref={focusRef} tabIndex={-1}>
-              {selectedLesson && (
-                  <div>
-                      <div
-                          className={selected ? 'info-sidebar' : 'info-sidebar.false'}
-                          style={{ color: 'white' }}
-                      >
-                          <img src="/avatar.png" alt="harry potter" style={{ width: '50px' }} />
-                          <h3 style={{ marginLeft: '12px', color: 'white' }}>{selectedLesson.subject}</h3>
-                          <h3 style={{ marginLeft: '12px', color: 'white' }}>
-                              {' '}
-                              Преподаватель: {selectedLesson.teacher}
-                          </h3>
-                          <h3 style={{ marginLeft: '12px', color: 'white' }}>
-                              {' '}
-                              Тип: {selectedLesson.type}
-                          </h3>
-                      </div>
-                      <div>
-                      </div>
-                  </div>
+            </>
+        )
+    }
+    if(error){
+        return (
+            <>
+                <Header />
+                <FetchError
+                    error={error}
+                    loading={loading}
+                />
+            </>
+        )
 
-              )}
+    }
+    return (
+        <div
+            className="schedule-background"
+            style={{
+                filter: themeType==='dark'  ? 'invert(1)' : 'invert(0)',
+                transition: 'filter 0.5s ease-in-out',
+            }}
+        >
+            <div style={dontInvertStyle}>
+                <Header />
             </div>
-          </div>
+            <div className="schedule-page">
+                <h2 style={{ color: 'white' }}>Предметы группы {groupName}</h2>
+                <div className="subject-layout">
+                    <div className="subjects-list">
+                        {filteredSchedule.map((lesson) => (
+                            <div
+                                key={lesson.id}
+                                className={`lesson-box ${selected === lesson.subject ? 'selected' : ''}`}
+                                onClick={() => setSelected(lesson.subject)}
+                                style={{ marginBottom: '12px', marginTop: '12px' }}
+                                role="button" // Для доступности
+                                tabIndex={0} // Делаем элемент фокусируемым
+                                onKeyPress={(e) => {
+                                    if (e.key === 'Enter' || e.key === ' ') {
+                                        setSelected(lesson.subject);
+                                    }
+                                }}
+                            >
+                                <div className="lesson-main">
+                                    <h3 className="subject">{lesson.subject}</h3>
+                                </div>
+                            </div>
+                        ))}
+                    </div>
+                    <div ref={focusRef} tabIndex={-1}>
+                        {selectedLesson && (
+                            <div>
+                                <div
+                                    className={selected ? 'info-sidebar' : 'info-sidebar.false'}
+                                    style={{ color: 'white' }}
+                                >
+                                    <img src="/avatar.png" alt="harry potter" style={{ width: '50px' }} />
+                                    <h3 style={{ marginLeft: '12px', color: 'white' }}>{selectedLesson.subject}</h3>
+                                    <h3 style={{ marginLeft: '12px', color: 'white' }}>
+                                        {' '}
+                                        Преподаватель: {selectedLesson.teacher}
+                                    </h3>
+                                    <h3 style={{ marginLeft: '12px', color: 'white' }}>
+                                        {' '}
+                                        Тип: {selectedLesson.type}
+                                    </h3>
+                                </div>
+                                <div>
+                                </div>
+                            </div>
+
+                        )}
+                    </div>
+                </div>
+            </div>
         </div>
-      </div>
-  );
+    );
 }
 
 export default Subject;
