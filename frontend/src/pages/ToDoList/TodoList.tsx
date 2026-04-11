@@ -1,7 +1,6 @@
 import {useMemo, useCallback} from "react";
 import Header from "../../components/Header/Header.tsx";
 import '../../style/todolist.css'
-import TodoListCounter from "../../components/Todo/TodoListCounter.tsx";
 import type {Todo} from '../../type/todo.ts'
 import {useLocalStorage} from "../../hooks/useLocalStorage.ts";
 import {useTodo} from "../../hooks/useTodo.ts";
@@ -29,6 +28,7 @@ function TodoList() {
         };
     }, [value,DoneValuse]);
     const { data: scheduleData ,loading,error} = useFetch('http://localhost:8000/lessons');
+
     const handleLessonChange = useCallback((taskId: number, lesson: string) => {
         setValue(prev =>
             prev.map(item =>

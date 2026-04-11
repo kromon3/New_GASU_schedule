@@ -53,7 +53,7 @@ function TodoItem({
 
                             <button
                                 className="btn save-btn"
-                                onClick={() => handleChange(item.id, inpchangeValue)}
+                                onClick={() => {handleChange(item.id, inpchangeValue), cancelEditing}}
                             >
                                 Сохранить
                             </button>
@@ -75,11 +75,11 @@ function TodoItem({
 
                     {currentStatus === 'process' && (
                         <button className="btn back-btn" onClick={moveToTasks} title="Вернуть в Задачи">
-                            ←
+                            <img src="/arrow_back_24dp_000_FILL0_wght400_GRAD0_opsz24.png" alt=""/>
                         </button>
                     )}
                     {item.isDone && (<button className="btn back-btn" onClick={moveToProces} title="Вернуть в Задачи">
-                        ←
+                        <img src="/arrow_back_24dp_000_FILL0_wght400_GRAD0_opsz24.png" alt=""/>
                     </button>)}
                     <h1
                         className={item.isDone ? "text-content Done" : "text-content NoDone"}
