@@ -39,7 +39,7 @@ const readLessons = async ():Promise<Lesson[]> => {
 app.get('/lessons', async (req: Request, res: Response) => {
     try {
         const lessons = await readLessons();
-        res.json(lessons);
+        res.status(200).json(lessons);
     } catch (err) {
         res.status(500).json({ message: err.message });
     }
@@ -48,8 +48,12 @@ app.get('/lessons', async (req: Request, res: Response) => {
 app.get('/lessons/:id', async (req: Request, res: Response) => {
     try{
         const id = req.params.id;
-        const lesson = await readLessons();
-        res.json(lesson.find(u => u.id === id));
+        const lessons = await readLessons();
+        const findLesson = lessons.find(lesson => lesson.id === id);
+        if (!findLesson) {
+            return res.status(404).json({ message: `Урок с ID ${id} не найден` });
+        }
+        res.status(200).json(findLesson);
     }catch (err) {
         res.status(500).json({ message: err.message });
     }
@@ -58,9 +62,8 @@ app.get('/lessons/:id', async (req: Request, res: Response) => {
 app.post('/lessons', async (req: Request, res: Response) => {
     try{
         const lesson = await readLessons();
-        const id = Date.now();
         const newLesson = {
-            id: id.toString(),
+            id: Date.now(),
             subject: req.body.subject,
             time:{
                 start: req.body.time.start,
@@ -81,19 +84,48 @@ app.post('/lessons', async (req: Request, res: Response) => {
         res.status(500).json({ message: err.message });
     }
 })
+app.patch('/lessons/:id', async (req: Request, res: Response) => {
+    try{
+        const id = req.params.id;
+        const lessons = await readLessons();
+        const lessonIndex = lessons.findIndex(u => u.id === id);
+        if ((lessonIndex === -1)){
+            return res.status(404).json({ message: `Урок с ID ${id} не найден` });
+        }
+        else {
+
+            const foundLesson = lessons[lessonIndex];
+            const updatedLesson = {
+                ...foundLesson,
+                ...req.body,
+                time: {
+                    ...foundLesson.time,
+                    ...(req.body.time || {})
+                }
+            };
+
+            lessons[lessonIndex] = updatedLesson;
+            await writeFile(DB_PATH, JSON.stringify(lessons, null, 2), 'utf-8');
+            return res.status(200).json(updatedLesson);
+        }
+    }
+    catch (err) {
+        res.status(500).json({ message: err.message });
+    }
+})
+
 app.delete('/lessons/:id', async (req: Request, res: Response) => {
     try{
         const id = req.params.id;
-        const lesson = await readLessons();
-        const lessonExists = lesson.some(u => u.id === id);
-
+        const lessons = await readLessons();
+        const lessonExists = lessons.some(u => u.id === id);
         if (!lessonExists) {
             res.status(404).json({ message: `Урок с ID ${id} не найден` });
             return;
         }
-        const updateLesson = lesson.filter(u => u.id !== id)
-        await writeFile(DB_PATH, JSON.stringify(updateLesson, null, 2), 'utf-8');
-        res.status(201).send;
+        const updateLessons = lessons.filter(u => u.id !== id)
+        await writeFile(DB_PATH, JSON.stringify(updateLessons, null, 2), 'utf-8');
+        return res.status(204).send();
     }
     catch (err) {
         res.status(500).json({ message: err.message });
