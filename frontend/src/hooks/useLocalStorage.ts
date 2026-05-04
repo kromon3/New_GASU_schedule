@@ -10,7 +10,8 @@ export const useLocalStorage = (
     if (saved === null) return initialValue;
     try {
       return JSON.parse(saved);
-    } catch (e) {
+    } catch
+    {
       return initialValue;
     }
   });

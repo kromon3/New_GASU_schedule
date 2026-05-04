@@ -1,39 +1,40 @@
 // ScheduleWeekContent.js
-import Header from '../../components/Header/Header.tsx';
+import Header from '../../components/Header/Header';
 import '../../style/schedule.css';
 import {useRef ,useMemo} from 'react';
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import {useFetch} from "../../hooks/useFetch.ts";
-import FetchError from "../../components/Error/FetchError.tsx";
-import ScheduleWeekContent from "../../components/Schedule/ScheduleWeekContent.tsx";
-import {useStore} from "../../../store/useTestStore.ts";
-import {useTheme} from "../../../store/useTheme.ts";
+import FetchError from "../../components/Error/FetchError";
+import ScheduleWeekContent from "../../components/Schedule/ScheduleWeekContent";
+import {useStore} from "../../../store/useTestStore";
+import {useTheme} from "../../../store/useTheme";
+import type {Lesson} from "../../type/lesson.ts";
 
 function ScheduleWeek() {
     const { groupName} = useStore()
-  const sliderRef = useRef(null);
+  const sliderRef = useRef<Slider | null>(null);
   // Загрузка данных
-    const { data: scheduleData ,loading,error} = useFetch('http://localhost:8000/lessons');
+    const { data: scheduleData ,loading,error} = useFetch<Lesson[]>('http://localhost:8000/lessons');
 
     const  themeType =  useTheme((s) => s.theme)
 
   // Фильтруем расписание по выбранной группе
-  const filteredSchedule = useMemo(() =>
-          scheduleData.filter((lesson) => lesson.group === groupName),
-      [scheduleData, groupName]
-  );
+    const filteredSchedule = useMemo<Lesson[]>(() => {
+        if (!scheduleData) return [];
+        return scheduleData.filter((lesson: Lesson) => lesson.group === groupName);
+    }, [scheduleData, groupName]);
 
-  const uniqueWeekTypes = useMemo(() =>
+  const uniqueWeekTypes = useMemo<string[]>(() =>
           [...new Set(filteredSchedule.map(item => item.weekType))],
       [filteredSchedule]
   );
 
   const days = ['Понедельник', 'Вторник', 'Среда', 'Четверг', 'Пятница', 'Суббота', 'Воскресенье'];
 
-  const goToSlide = (index) => {
-    sliderRef.current.slickGoTo(index);
+  const goToSlide = (index:number) => {
+    sliderRef.current?.slickGoTo(index);
   };
     if(error){
         return (
@@ -45,7 +46,6 @@ function ScheduleWeek() {
 
     }
   const settings = {
-    dots: true,
     infinite: true,
     speed: 500,
     slidesToShow: 1,
@@ -90,16 +90,6 @@ function ScheduleWeek() {
                 </div>
             </>
         )
-    }
-    if(error){
-        <>
-            <Header />
-            <FetchError
-                error={error}
-                loading={loading}
-            />
-        </>
-
     }
   // Если нет расписания для группы
   if (filteredSchedule.length === 0) {
@@ -150,7 +140,7 @@ function ScheduleWeek() {
 
           <div className="slider-container">
             <Slider ref={sliderRef} {...settings}>
-              {uniqueWeekTypes.map((weekType, index) => (
+              {uniqueWeekTypes.map((weekType:string, index: number) => (
                   <div key={index} className="slider">
                     <ScheduleWeekContent
                         days={days}

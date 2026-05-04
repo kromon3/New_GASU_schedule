@@ -1,4 +1,11 @@
-function ScheduleTodayLesson({ lesson, setSelectedSubject, setStartHome, startHome }) {
+import type {Lesson} from "../../type/lesson";
+interface ScheduleTodayLessonProps {
+    lesson: Lesson;
+    setSelectedSubject: (subject: string) => void;
+    setStartHome: (value: boolean) => void;
+}
+
+function ScheduleTodayLesson({lesson, setSelectedSubject, setStartHome}: ScheduleTodayLessonProps) {
   return (
     <div key={lesson.id} className="lesson-box schedule_to_day">
       <div style={{ flex: 1 }}>

@@ -5,25 +5,26 @@ import {useFetch} from "../../hooks/useFetch.ts";
 import FetchError from "../../components/Error/FetchError.tsx";
 import {useStore} from "../../../store/useTestStore.ts";
 import {useTheme} from "../../../store/useTheme.ts";
+import type {Lesson} from "../../type/lesson.ts";
 
 function Subject() {
     const [selected, setSelected] = useState<string | null>(null);
     const { groupName} = useStore()
-    const focusRef = useRef(null);
+    const focusRef = useRef<HTMLDivElement>(null);
 
-    const { data: scheduleData ,loading,error} = useFetch('http://localhost:8000/lessons');
+    const { data: scheduleData ,loading,error} = useFetch<Lesson[]>('http://localhost:8000/lessons');
 
-    const  themeType =  useTheme((s) => s.theme)
+    const  themeType:string =  useTheme((s) => s.theme)
     const dontInvertStyle = {
         filter: themeType==='dark'  ? 'invert(1)' : 'invert(0)',
     };
 
-    const filteredByGroup = scheduleData.filter((lesson) => lesson.group === groupName);
-    const uniqueLessons = Array.from(
-        new Map(filteredByGroup.map((item) => [item.subject, item])).values()
+    const filteredByGroup: Lesson[] | undefined = scheduleData?.filter((lesson:Lesson) => lesson.group === groupName);
+    const uniqueLessons:Lesson[] = Array.from(
+        new Map(filteredByGroup?.map((item:Lesson) => [item.subject, item])).values()
     );
-    const filteredSchedule = uniqueLessons.filter((lesson) => lesson.group === groupName);
-    const selectedLesson = filteredSchedule.find((el) => el.subject === selected);
+    const filteredSchedule:Lesson[] = uniqueLessons.filter((lesson) => lesson.group === groupName);
+    const selectedLesson:Lesson | undefined = filteredSchedule.find((el) => el.subject === selected);
 
     useEffect(() => {
         if (selected && focusRef.current) {
@@ -76,7 +77,7 @@ function Subject() {
                 <h2 style={{ color: 'white' }}>Предметы группы {groupName}</h2>
                 <div className="subject-layout">
                     <div className="subjects-list">
-                        {filteredSchedule.map((lesson) => (
+                        {filteredSchedule.map((lesson:Lesson) => (
                             <div
                                 key={lesson.id}
                                 className={`lesson-box ${selected === lesson.subject ? 'selected' : ''}`}

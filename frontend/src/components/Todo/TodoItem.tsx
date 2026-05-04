@@ -1,5 +1,22 @@
 import TodoSelectSubject from "./TodoSelectSubject.tsx";
+import type {Todo} from "../../type/todo.ts";
+import type {Lesson} from "../../type/lesson.ts";
+type TaskStatus = 'tasks' | 'process' | 'done';
 
+interface TodoItemProps {
+    item: Todo;
+    isSelected: number | string | null;
+    inpchangeValue: string;
+    setInpchangeValue: (value: string) => void;
+    handleChange: (id: string, newText: string) => void;
+    cancelEditing: () => void;
+    handleRemove: (id: string) => void;
+    startEditing: (id: string) => void;
+    filteredArray: Lesson[];
+    handleLessonChange: (itemId: string, lesson: string) => void;
+    onStatusChange: (id: string, newStatus: TaskStatus) => void;
+    currentStatus: TaskStatus;
+}
 
 function TodoItem({
                       item,
@@ -14,12 +31,12 @@ function TodoItem({
                       handleLessonChange,
                       onStatusChange,
                       currentStatus,
-                  }) {
+                  }: TodoItemProps) {
 
     const handleCheckboxChange = () => {
         if (!onStatusChange) return;
 
-        const nextStatus = {
+        const nextStatus: Record<TaskStatus, TaskStatus> = {
             'tasks': 'process',
             'process': 'done',
             'done': 'process'
@@ -53,7 +70,10 @@ function TodoItem({
 
                             <button
                                 className="btn save-btn"
-                                onClick={() => {handleChange(item.id, inpchangeValue), cancelEditing}}
+                                onClick={() => {
+                                    handleChange(item.id, inpchangeValue);
+                                    cancelEditing();
+                                }}
                             >
                                 Сохранить
                             </button>

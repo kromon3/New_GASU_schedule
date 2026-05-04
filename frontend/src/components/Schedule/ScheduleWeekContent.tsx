@@ -1,9 +1,17 @@
-function ScheduleWeekContent({days,filteredSchedule,weekType}) {
+import type {Lesson} from "../../type/lesson";
+
+interface ScheduleWeekContentProps {
+    days: string[];
+    filteredSchedule: Lesson[];
+    weekType: string;
+}
+
+function ScheduleWeekContent({days, filteredSchedule, weekType}: ScheduleWeekContentProps) {
     return(
         <div className="slide">
             {days.map((dayName) => {
                 const lessonsForDay = filteredSchedule.filter(
-                    (lesson) => lesson.time.weekday === dayName && lesson.weekType === weekType
+                    (lesson:Lesson) => lesson.time.weekday === dayName && lesson.weekType === weekType
                 );
 
                 if (lessonsForDay.length === 0) return null;
@@ -23,7 +31,7 @@ function ScheduleWeekContent({days,filteredSchedule,weekType}) {
                         >
                             {dayName}
                         </h2>
-                        {lessonsForDay.map((lesson) => (
+                        {lessonsForDay.map((lesson:Lesson) => (
                             <div key={lesson.id} className="lesson-box schedule">
                           <span className="time" style={{ marginRight: '12px' }}>
                             {lesson.time.start} – {lesson.time.end}

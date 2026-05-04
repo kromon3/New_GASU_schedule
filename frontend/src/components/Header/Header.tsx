@@ -1,10 +1,11 @@
 // src/Header/Header.tsx
 import '../../style/header.css';
 import { Link } from 'react-router-dom';
-import { useEffect, useState } from 'react'; // ✅ useContext больше не нужен
-import { useTheme } from '../../../store/useTheme.ts'; // ✅ Новый импорт
+import { useEffect, useState } from 'react';
+import { useTheme } from '../../../store/useTheme';
 import { useStore } from "../../../store/useTestStore.ts";
 import ReactModal from 'react-modal';
+import type {Lesson} from "../../type/lesson.ts";
 
 ReactModal.setAppElement('#root');
 
@@ -16,7 +17,7 @@ function Header() {
 
   const [isGroupModalOpen, setIsGroupModalOpen] = useState<boolean>(false);
   const [isMenuModalOpen, setIsMenuModalOpen] = useState<boolean>(false);
-  const [groups, setGroups] = useState<any[]>([]);
+  const [groups, setGroups] = useState<Lesson[]>([]);
 
   useEffect(() => {
     fetch('http://localhost:8000/lessons')

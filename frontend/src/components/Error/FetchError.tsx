@@ -1,6 +1,9 @@
-import Header from "../Header/Header.tsx";
-
-function FetchError({ error,loading } ) {
+import Header from "../Header/Header";
+type FetchState = {
+    error: string | null;
+    loading: boolean;
+}
+function FetchError({ error, loading }: FetchState) {
     if(loading){
         return (
             <>

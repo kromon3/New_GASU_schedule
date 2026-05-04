@@ -7,13 +7,13 @@ type SetState<T> = React.Dispatch<React.SetStateAction<T>>;
 export const useTodo = (value: Todo[], setValue: SetState<Todo[]>) => {
   const [inpValue, setInpValue] = useState('');
   const [inpchangeValue, setInpchangeValue] = useState('');
-  const [isSelected, setIsSelected] = useState<number | null>(null);
+  const [isSelected, setIsSelected] = useState<string | null>(null);
 
   const handleAdd = useCallback(
     (text: string, lesson: string) => {
       if (!text.trim()) return;
       const newItem: Todo = {
-        id: Date.now(),
+        id: Date.now().toString(),
         text: text.trim(),
         isDone: false,
         lesson,
@@ -26,14 +26,14 @@ export const useTodo = (value: Todo[], setValue: SetState<Todo[]>) => {
   );
 
   const handleRemove = useCallback(
-    (id: number) => {
+    (id: string) => {
       setValue((prev) => prev.filter((item) => item.id !== id));
     },
     [setValue]
   );
 
   const handleChange = useCallback(
-    (id: number, newValue: string) => {
+    (id: string, newValue: string) => {
       if (newValue.trim()) {
         setValue((prev) =>
           prev.map((item) => (item.id === id ? { ...item, text: newValue.trim() } : item))
@@ -46,7 +46,7 @@ export const useTodo = (value: Todo[], setValue: SetState<Todo[]>) => {
   );
 
   const startEditing = useCallback(
-    (id: number) => {
+    (id: string) => {
       const itemToEdit = value.find((item) => item.id === id);
       if (itemToEdit) {
         setIsSelected(id);

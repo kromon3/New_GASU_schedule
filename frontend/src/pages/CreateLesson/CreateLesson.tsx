@@ -1,4 +1,4 @@
-import Header from '../../components/Header/Header.tsx';
+import Header from '../../components/Header/Header';
 import React from 'react';
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
@@ -99,14 +99,6 @@ function CreateLesson() {
         }
     };
 
-    const settings = {
-        dots: true,
-        infinite: true,
-        speed: 500,
-        slidesToShow: 1,
-        slidesToScroll: 1,
-        adaptiveHeight: true,
-    };
 
     return (
         <>

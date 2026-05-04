@@ -1,5 +1,5 @@
-import Header from '../../components/Header/Header.tsx';
-import {useTheme} from "../../../store/useTheme.ts";
+import Header from '../../components/Header/Header';
+import {useTheme} from "../../../store/useTheme";
 function NotFound() {
     const  themeType =  useTheme((s) => s.theme)
 

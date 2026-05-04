@@ -12,7 +12,7 @@ export const useStore = create<Store>()((set) => ({
         try {
             const saved = cookies.get('groupName')
             return saved || ' не выбрана'
-        } catch (error) {
+        } catch {
             return ' не выбрана'
         }
     })(),
