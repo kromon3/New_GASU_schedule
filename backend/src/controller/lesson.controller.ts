@@ -47,7 +47,7 @@ export const postLesson = async (req: Request, res: Response) => {
         res.status(500).json({ message: err.message });
     }
 }
-export const patchLesson  = async (req: Request, res: Response) => {
+export const patchLessonId  = async (req: Request, res: Response) => {
     try{
         const id = req.params.id;
         const lessons = await readLessons();
