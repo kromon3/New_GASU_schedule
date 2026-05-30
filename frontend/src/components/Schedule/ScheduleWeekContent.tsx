@@ -1,4 +1,4 @@
-import type {Lesson} from "../../type/lesson";
+import type { Lesson } from "../../type/lesson";
 
 interface ScheduleWeekContentProps {
     days: string[];
@@ -6,12 +6,14 @@ interface ScheduleWeekContentProps {
     weekType: string;
 }
 
-function ScheduleWeekContent({days, filteredSchedule, weekType}: ScheduleWeekContentProps) {
-    return(
+function ScheduleWeekContent({ days, filteredSchedule, weekType }: ScheduleWeekContentProps) {
+    return (
         <div className="slide">
             {days.map((dayName) => {
                 const lessonsForDay = filteredSchedule.filter(
-                    (lesson:Lesson) => lesson.time.weekday === dayName && lesson.weekType === weekType
+                    (lesson: Lesson) =>
+                        lesson.weekday?.trim() === dayName &&
+                        lesson.weektype?.trim() === weekType  // ← weektype (маленькая t) + trim()
                 );
 
                 if (lessonsForDay.length === 0) return null;
@@ -31,29 +33,30 @@ function ScheduleWeekContent({days, filteredSchedule, weekType}: ScheduleWeekCon
                         >
                             {dayName}
                         </h2>
-                        {lessonsForDay.map((lesson:Lesson) => (
+                        {lessonsForDay.map((lesson: Lesson) => (
                             <div key={lesson.id} className="lesson-box schedule">
-                          <span className="time" style={{ marginRight: '12px' }}>
-                            {lesson.time.start} – {lesson.time.end}
-                          </span>
+                                <span className="time" style={{ marginRight: '12px' }}>
+                                    {lesson.time_start} – {lesson.time_end}
+                                </span>
                                 <h3 className="subject" style={{ marginRight: '12px' }}>
-                                    {lesson.subject}
+                                    {lesson.subject?.trim()}
                                 </h3>
                                 <span className="type" style={{ marginRight: '12px' }}>
-                            {lesson.type}
-                          </span>
+                                    {lesson.type_name?.trim()}
+                                </span>
                                 <span className="teacher" style={{ marginRight: '12px' }}>
-                            {lesson.teacher}
-                          </span>
-                                <span className="time" style={{ marginLeft: '12px' }}>
-                            {lesson.auditorium}
-                          </span>
+                                    {lesson.teacher?.trim()}
+                                </span>
+                                <span className="auditorium" style={{ marginLeft: '12px' }}>
+                                    {lesson.auditorium?.trim()}
+                                </span>
                             </div>
                         ))}
                     </div>
                 );
             })}
         </div>
-    )
+    );
 }
-export  default ScheduleWeekContent;
+
+export default ScheduleWeekContent;

@@ -18,7 +18,7 @@ function Header() {
   const [isGroupModalOpen, setIsGroupModalOpen] = useState<boolean>(false);
   const [isMenuModalOpen, setIsMenuModalOpen] = useState<boolean>(false);
   const [groups, setGroups] = useState<Lesson[]>([]);
-
+console.log(groups)
   useEffect(() => {
     fetch('http://localhost:8000/lessons')
         .then((res) => res.json())
@@ -29,8 +29,8 @@ function Header() {
     setGroupName(' не выбрана');
   };
 
-  const uniqueGroupNames = [...new Set(groups.map((item) => item.group))];
-
+  const uniqueGroupNames = [...new Set(groups.map((item) => item.group_name))];
+  console.log(uniqueGroupNames);
   return (
       <>
         <ReactModal

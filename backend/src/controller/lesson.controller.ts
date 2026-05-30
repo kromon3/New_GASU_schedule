@@ -1,5 +1,5 @@
 import type {Request, Response} from "express";
-import {readLessons, writeLessons} from "../models/lesson.model";
+import {readLessons, readLessonsToToday, readLessonsToWeek, writeLessons} from "../models/lesson.model";
 
 export const getAllLessons = async (req: Request, res: Response) => {
     try {
@@ -9,6 +9,30 @@ export const getAllLessons = async (req: Request, res: Response) => {
         res.status(500).json({ message: err.message });
     }
 }
+// Контроллер
+export const getLessonsToToday = async (req: Request, res: Response) => {
+    try {
+        const { weektype, weekday, group_name } = req.params;
+        const lessons = await readLessonsToToday(
+            weektype as string,
+            weekday as string,
+            group_name as string
+        );
+
+        res.status(200).json(lessons);
+    } catch (err: any) {
+        res.status(500).json({ message: err.message });
+    }
+};
+export const getLessonsToWeek = async (req: Request, res: Response) => {
+    try {
+        const { group_name } = req.params;
+        const lessons = await readLessonsToWeek(group_name);
+        res.status(200).json(lessons);
+    } catch (err: any) {
+        res.status(500).json({ message: err.message });
+    }
+};
 export const getLessonId = async (req: Request, res: Response) => {
     try{
         const id = req.params.id;

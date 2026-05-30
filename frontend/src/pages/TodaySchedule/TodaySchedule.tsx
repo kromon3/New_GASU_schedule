@@ -1,6 +1,6 @@
 import Header from '../../components/Header/Header';
 import '../../style/schedule.css';
-import { useState, useMemo } from 'react';
+import { useState} from 'react';
 import { useLocalStorage } from '../../hooks/useLocalStorage';
 import { useTodo } from '../../hooks/useTodo';
 import TodoInput from '../../components/Todo/TodoInput';
@@ -42,14 +42,11 @@ function TodaySchedule() {
   const [startHome, setStartHome] = useState<boolean>(false);
   const [selectedSubject, setSelectedSubject] = useState<string | null>(null);
   const  themeType =  useTheme((s) => s.theme)
-  const { data: scheduleData ,loading,error} = useFetch<Lesson[]>('http://localhost:8000/lessons');
   const currentWeekType = getCurrentWeekType();
-  const filteredSchedule = scheduleData?.filter((lesson: Lesson) => lesson.time.weekday === dayName) || [];
-  const filteredSchedule_day = filteredSchedule.filter((lesson: Lesson) => lesson.group === groupName);
-  const filteredSchedule_day_type = useMemo<Lesson[]>(
-    () => filteredSchedule_day.filter((lesson:Lesson) => lesson.weekType === currentWeekType),
-    [filteredSchedule_day, currentWeekType]
-  );
+  const { data: scheduleData ,loading,error} = useFetch<Lesson[]>(`http://localhost:8000/lessons/${currentWeekType}/${dayName}/${groupName}`);
+
+
+  const lessons = scheduleData ?? [];
 
   const dontInvertStyle = {
     filter: themeType==='dark'  ? 'invert(1)' : 'invert(0)',
@@ -78,7 +75,7 @@ function TodaySchedule() {
 
   }
 
-  if (filteredSchedule_day_type.length === 0) {
+  if (lessons.length === 0) {
     return (
       <>
 
@@ -126,7 +123,7 @@ function TodaySchedule() {
                 Расписание на {dayName} ({currentWeekType} Неделя)
               </h1>
 
-              {filteredSchedule_day_type.map((lesson:Lesson) => (
+              {lessons.map((lesson:Lesson) => (
                 <ScheduleTodayLesson
                   lesson={lesson}
                   setSelectedSubject={setSelectedSubject}

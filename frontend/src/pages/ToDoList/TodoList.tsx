@@ -32,7 +32,7 @@ const TodoList: React.FC = () => {
     }, [setValue]);
     const  themeType =  useTheme((s) => s.theme)
     const filteredArray: Lesson[] = useMemo(() => {
-        const byGroup: Lesson[] = scheduleData?.filter((i:Lesson) => i.group === groupName) || [];
+        const byGroup: Lesson[] = scheduleData?.filter((i:Lesson) => i.group_name === groupName) || [];
         const uniqueLessons = new Map<string, Lesson>();
         byGroup.forEach(item => uniqueLessons.set(item.subject, item));
         return Array.from(uniqueLessons.values());

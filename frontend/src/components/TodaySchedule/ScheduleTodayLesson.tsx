@@ -11,14 +11,14 @@ function ScheduleTodayLesson({lesson, setSelectedSubject, setStartHome}: Schedul
       <div style={{ flex: 1 }}>
         <div className="lesson-header">
           <span className="time" style={{ marginRight: '12px' }}>
-            {lesson.time.start} - {lesson.time.end}
+            {lesson.time_start} - {lesson.time_end}
           </span>
         </div>
         <div className="lesson-main">
           <h3 className="subject">{lesson.subject}</h3>
           <div className="details">
             <span className="type" style={{ marginRight: '12px' }}>
-              {lesson.type}
+              {lesson.type_name}
             </span>
             <span className="teacher">{lesson.teacher}</span>
           </div>

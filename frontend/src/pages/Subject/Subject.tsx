@@ -19,11 +19,11 @@ function Subject() {
         filter: themeType==='dark'  ? 'invert(1)' : 'invert(0)',
     };
 
-    const filteredByGroup: Lesson[] | undefined = scheduleData?.filter((lesson:Lesson) => lesson.group === groupName);
+    const filteredByGroup: Lesson[] | undefined = scheduleData?.filter((lesson:Lesson) => lesson.group_name === groupName);
     const uniqueLessons:Lesson[] = Array.from(
         new Map(filteredByGroup?.map((item:Lesson) => [item.subject, item])).values()
     );
-    const filteredSchedule:Lesson[] = uniqueLessons.filter((lesson) => lesson.group === groupName);
+    const filteredSchedule:Lesson[] = uniqueLessons.filter((lesson) => lesson.group_name === groupName);
     const selectedLesson:Lesson | undefined = filteredSchedule.find((el) => el.subject === selected);
 
     useEffect(() => {
@@ -112,7 +112,7 @@ function Subject() {
                                     </h3>
                                     <h3 style={{ marginLeft: '12px', color: 'white' }}>
                                         {' '}
-                                        Тип: {selectedLesson.type}
+                                        Тип: {selectedLesson.type_name}
                                     </h3>
                                 </div>
                                 <div>
