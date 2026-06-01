@@ -13,3 +13,7 @@ export interface Lesson {
     weekType: string;
     auditorium: string;
 }
+
+export interface GroupName {
+    group_name: string;
+}

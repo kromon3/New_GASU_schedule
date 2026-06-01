@@ -1,5 +1,5 @@
 import type {Request, Response} from "express";
-import {readLessons, readLessonsToToday, readLessonsToWeek, writeLessons} from "../models/lesson.model";
+import {readLessons, readLessonsToToday, readLessonsToWeek, writeLessons,readLessonsGroup} from "../models/lesson.model";
 
 export const getAllLessons = async (req: Request, res: Response) => {
     try {
@@ -24,6 +24,14 @@ export const getLessonsToToday = async (req: Request, res: Response) => {
         res.status(500).json({ message: err.message });
     }
 };
+export const getLessonsGroup = async (req: Request, res: Response) => {
+    try {
+        const lessons = await readLessonsGroup();
+        res.status(200).json(lessons);
+    } catch (err: any) {
+        res.status(500).json({ message: err.message });
+    }
+}
 export const getLessonsToWeek = async (req: Request, res: Response) => {
     try {
         const { group_name } = req.params;

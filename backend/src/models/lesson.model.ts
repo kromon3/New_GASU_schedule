@@ -1,6 +1,6 @@
 import {DB_PATH} from "../config";
-import {Lesson} from "../types/lesson.types";
-import {readFile, writeFile} from "fs/promises";
+import {Lesson, GroupName} from "../types/lesson.types";
+import {writeFile} from "fs/promises";
 import {pool} from "../../service/pool";
 export const readLessons = async ():Promise<Lesson[]> => {
     try {
@@ -11,6 +11,16 @@ export const readLessons = async ():Promise<Lesson[]> => {
         return [];
     }
 };
+export const readLessonsGroup = async ():Promise<GroupName[]> => {
+    try{
+        const content = await pool.query('SELECT DISTINCT group_name FROM lesson;')
+        return content.rows;
+    }
+    catch (err:any){
+        console.error(' Ошибка чтения:', err.message);
+        return [];
+    }
+}
 export const readLessonsToToday = async (
     weektype: string,
     weekday: string,

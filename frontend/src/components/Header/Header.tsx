@@ -5,9 +5,12 @@ import { useEffect, useState } from 'react';
 import { useTheme } from '../../../store/useTheme';
 import { useStore } from "../../../store/useTestStore.ts";
 import ReactModal from 'react-modal';
-import type {Lesson} from "../../type/lesson.ts";
 
 ReactModal.setAppElement('#root');
+
+interface GroupData {
+  group_name: string;
+}
 
 function Header() {
   const { groupName, setGroupName } = useStore();
@@ -17,10 +20,10 @@ function Header() {
 
   const [isGroupModalOpen, setIsGroupModalOpen] = useState<boolean>(false);
   const [isMenuModalOpen, setIsMenuModalOpen] = useState<boolean>(false);
-  const [groups, setGroups] = useState<Lesson[]>([]);
+  const [groups, setGroups] = useState<GroupData[]>([]);
 console.log(groups)
   useEffect(() => {
-    fetch('http://localhost:8000/lessons')
+    fetch('http://localhost:8000/lessons/group/group_names')
         .then((res) => res.json())
         .then((data) => setGroups(data));
   }, []);
@@ -29,7 +32,7 @@ console.log(groups)
     setGroupName(' не выбрана');
   };
 
-  const uniqueGroupNames = [...new Set(groups.map((item) => item.group_name))];
+  const uniqueGroupNames = groups.map((item) => item.group_name);
   console.log(uniqueGroupNames);
   return (
       <>
