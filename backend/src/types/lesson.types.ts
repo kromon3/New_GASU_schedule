@@ -1,16 +1,13 @@
-export interface TimeSlot {
-    start: string;
-    end: string;
-    weekday: string;
-}
 export interface Lesson {
     id: string;
     subject: string;
-    time:TimeSlot
+    time_start: string;
+    time_end: string;
+    weekday: string;
     teacher: string;
-    type: string;
-    group: string;
-    weekType: string;
+    type_name: string;
+    group_name: string;
+    weektype: string;
     auditorium: string;
 }
 

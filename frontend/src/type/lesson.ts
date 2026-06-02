@@ -7,6 +7,6 @@ export interface Lesson {
     teacher: string;
     type_name: string;
     group_name: string;
-    weekType: string;
+    weektype: string;
     auditorium: string;
 }
