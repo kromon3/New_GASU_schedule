@@ -5,14 +5,15 @@ import {useFetch} from "../../hooks/useFetch.ts";
 import FetchError from "../../components/Error/FetchError.tsx";
 import {useStore} from "../../../store/useTestStore.ts";
 import {useTheme} from "../../../store/useTheme.ts";
-import type {Lesson} from "../../type/lesson.ts";
+import type {Lesson} from '../../../../types/lesson.types.ts'
+import {API_CONFIG} from "../../../config/api.config.ts";
 
 function Subject() {
     const [selected, setSelected] = useState<string | null>(null);
     const { groupName} = useStore()
     const focusRef = useRef<HTMLDivElement>(null);
 
-    const { data: scheduleData ,loading,error} = useFetch<Lesson[]>('http://localhost:8000/lessons');
+    const { data: scheduleData ,loading,error} = useFetch<Lesson[]>(`${API_CONFIG.baseUrl}/lessons`);
 
     const  themeType:string =  useTheme((s) => s.theme)
     const dontInvertStyle = {

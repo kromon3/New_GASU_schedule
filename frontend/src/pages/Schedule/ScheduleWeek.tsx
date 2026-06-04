@@ -10,14 +10,15 @@ import FetchError from "../../components/Error/FetchError";
 import ScheduleWeekContent from "../../components/Schedule/ScheduleWeekContent";
 import { useStore } from "../../../store/useTestStore";
 import { useTheme } from "../../../store/useTheme";
-import type { Lesson } from "../../type/lesson.ts";
+import type {Lesson} from '../../../../types/lesson.types.ts'
+import {API_CONFIG} from "../../../config/api.config.ts";
 
 function ScheduleWeek() {
     const { groupName } = useStore();
     const sliderRef = useRef<Slider | null>(null);
 
     console.log('groupName:', groupName);
-    const { data: scheduleData, loading, error } = useFetch<Lesson[]>(`http://localhost:8000/lessons/schedule/${groupName}`);
+    const { data: scheduleData, loading, error } = useFetch<Lesson[]>(`${API_CONFIG.baseUrl}/lessons/schedule/${groupName}`);
     console.log('scheduleData:', scheduleData);
 
     const themeType = useTheme((s) => s.theme);

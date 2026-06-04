@@ -1,8 +1,8 @@
 
-import {Lesson, GroupName} from "../types/lesson.types";
+import type {Lesson, GroupName} from "../../../types/lesson.types";
 import {pool} from "../../service/pool";
 import type {Request, Response} from "express";
-export const readLessons = async ():Promise<Lesson[]> => {
+const readLessons = async ():Promise<Lesson[]> => {
     try {
         const content = await pool.query('SELECT * FROM lesson')
         return content.rows;
@@ -11,7 +11,7 @@ export const readLessons = async ():Promise<Lesson[]> => {
         return [];
     }
 };
-export const readLessonsGroup = async ():Promise<GroupName[]> => {
+const readLessonsGroup = async ():Promise<GroupName[]> => {
     try{
         const content = await pool.query('SELECT DISTINCT group_name FROM lesson;')
         return content.rows;
@@ -21,7 +21,7 @@ export const readLessonsGroup = async ():Promise<GroupName[]> => {
         return [];
     }
 }
-export const readLessonsToToday = async (
+const readLessonsToToday = async (
     weektype: string,
     weekday: string,
     group_name: string
@@ -40,7 +40,7 @@ export const readLessonsToToday = async (
         return [];
     }
 };
-export const readLessonsToWeek = async (
+const readLessonsToWeek = async (
     group_name: string
 ): Promise<Lesson[]> => {
     try {
@@ -57,7 +57,7 @@ export const readLessonsToWeek = async (
     }
 };
 
-export const createLesson = async (req: Request, res: Response): Promise<Lesson> => {
+const createLesson = async (req: Request, res: Response): Promise<Lesson> => {
     try {
         const newLesson = {
             id: Math.floor(Date.now() / 1000),
@@ -101,7 +101,7 @@ export const createLesson = async (req: Request, res: Response): Promise<Lesson>
         throw new Error(`Failed to create lesson: ${err.message}`);
     }
 }
-export const updateLesson = async (req: Request, res: Response): Promise<Lesson> => {
+const updateLesson = async (req: Request, res: Response): Promise<Lesson> => {
         const id_of_lessons = req.params.id;
         const map = new Map();
         const newLesson = {
@@ -145,7 +145,7 @@ export const updateLesson = async (req: Request, res: Response): Promise<Lesson>
         }
 }
 
-export const deleteLesson = async (req: Request, res: Response): Promise<any> => {
+const deleteLesson = async (req: Request, res: Response): Promise<any> => {
     const id_of_lessons = req.params.id;
     const result = await pool.query(
         'DELETE FROM lesson WHERE id = $1',
@@ -156,3 +156,12 @@ export const deleteLesson = async (req: Request, res: Response): Promise<any> =>
     }
     return res.status(204).send();
 }
+export = {
+    readLessons,
+    readLessonsGroup,
+    readLessonsToToday,
+    readLessonsToWeek,
+    createLesson,
+    updateLesson,
+    deleteLesson
+};

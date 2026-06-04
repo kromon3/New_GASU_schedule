@@ -1,8 +1,8 @@
 import {useMemo, useCallback} from "react";
 import Header from "../../components/Header/Header";
 import '../../style/todolist.css'
+import type {Lesson} from '../../../../types/lesson.types.ts'
 import type {Todo} from '../../type/todo'
-import type {Lesson} from "../../type/lesson";
 import {useLocalStorage} from "../../hooks/useLocalStorage";
 import {useTodo} from "../../hooks/useTodo";
 import {useFetch} from "../../hooks/useFetch";
@@ -10,6 +10,7 @@ import FetchError from "../../components/Error/FetchError";
 import {useStore} from "../../../store/useTestStore";
 import TodoItem from "../../components/Todo/TodoItem";
 import {useTheme} from "../../../store/useTheme";
+import {API_CONFIG} from "../../../config/api.config.ts";
 
 const TodoList: React.FC = () => {
     const { groupName} = useStore()
@@ -21,7 +22,7 @@ const TodoList: React.FC = () => {
 
     const {inpValue, setInpValue, inpchangeValue, setInpchangeValue, isSelected, handleAdd, handleRemove, handleChange, startEditing, cancelEditing,} = useTodo(value, setValue);
 
-    const { data: scheduleData ,loading,error} = useFetch<Lesson[]>('http://localhost:8000/lessons');
+    const { data: scheduleData ,loading,error} = useFetch<Lesson[]>(`${API_CONFIG.baseUrl}/lessons`);
 
     const handleLessonChange = useCallback((taskId: string, lesson: string) => {
         setValue(prev =>

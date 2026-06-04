@@ -3,21 +3,10 @@ import React from 'react';
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import '../../style/header.css';
-
-interface Lesson {
-    id: string;
-    subject: string;
-    time: {
-        start: string;
-        end: string;
-        weekday: string;
-    };
-    teacher: string;
-    type: string;
-    group: string;
-    weekType: string;
-    auditorium: string;
-}
+import type {Lesson} from '../../../../types/lesson.types.ts'
+import {useTheme} from "../../../store/useTheme.ts";
+import CRUDlesson from "../../components/CRUD_Lesson/CRUDlesson.tsx";
+import {API_CONFIG} from "../../../config/api.config.ts"
 
 function CreateLesson() {
     const [inpValueGroup, setInpValueGroup] = React.useState('');
@@ -31,7 +20,7 @@ function CreateLesson() {
     const [weekday, setWeekday] = React.useState('Понедельник');
     const [lesson, setLesson] = React.useState<Lesson | null>(null);
     const [status, setStatus] = React.useState<string>(''); // Для отображения статуса
-
+    const themeType = useTheme((s) => s.theme);
     const addLesson = () => {
         // Валидация обязательных полей
         if (!inpValueName || !inpValueTeacher || !inpValueGroup) {
@@ -42,15 +31,13 @@ function CreateLesson() {
         const newLesson: Lesson = {
             id: Date.now().toString(), // Исправлено: преобразуем в строку
             subject: inpValueName,
-            time: {
-                start: startTime,
-                end: endTime,
-                weekday: weekday,
-            },
+            time_start: startTime,
+            time_end: endTime,
+            weekday: weekday,
             teacher: inpValueTeacher,
-            type: inpValueType || 'Лекция', // Значение по умолчанию
-            group: inpValueGroup,
-            weekType: inpValueWeekType || 'Обе', // Значение по умолчанию
+            type_name: inpValueType || 'Лекция', // Значение по умолчанию
+            group_name: inpValueGroup,
+            weektype: inpValueWeekType || 'Обе', // Значение по умолчанию
             auditorium: inpValueAuditori || 'Не указана',
         };
         setLesson(newLesson);
@@ -65,7 +52,7 @@ function CreateLesson() {
         }
 
         try {
-            const response = await fetch('http://localhost:8000/lessons', {
+            const response = await fetch(`${API_CONFIG.baseUrl}/lessons`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -99,10 +86,21 @@ function CreateLesson() {
         }
     };
 
-
+    const dontInvertStyle = {
+        filter: themeType === 'dark' ? 'invert(1)' : 'invert(0)',
+    };
     return (
         <>
-            <Header />
+            <div
+                className="schedule-background"
+                style={{
+                    filter: themeType === 'dark' ? 'invert(1)' : 'invert(0)',
+                    transition: 'filter 0.5s ease-in-out',
+                }}
+            >
+                <div style={dontInvertStyle}>
+                    <Header />
+                </div>
 
             {/* Отображение статуса */}
             {status && (
@@ -117,111 +115,26 @@ function CreateLesson() {
                     {status}
                 </div>
             )}
-
-
-                <div>
-                    <h3>Название предмета</h3>
-                    <input
-                        className="search-input"
-                        value={inpValueName}
-                        onChange={(e) => setInpValueName(e.target.value)}
-                        placeholder="Введите название предмета"
-                    />
-                </div>
-
-                <div>
-                    <h3>Группа</h3>
-                    <input
-                        className="search-input"
-                        value={inpValueGroup}
-                        onChange={(e) => setInpValueGroup(e.target.value)}
-                        placeholder="Введите группу"
-                    />
-                </div>
-
-                <div>
-                    <h3>Преподаватель</h3>
-                    <input
-                        className="search-input"
-                        value={inpValueTeacher}
-                        onChange={(e) => setInpValueTeacher(e.target.value)}
-                        placeholder="Введите преподавателя"
-                    />
-                </div>
-
-                <div>
-                    <h3>Тип занятия</h3>
-                    <select
-                        className="search-input"
-                        value={inpValueType}
-                        onChange={(e) => setInpValueType(e.target.value)}
-                    >
-                        <option value="">Выберите тип</option>
-                        <option value="Лекция">Лекция</option>
-                        <option value="Практика">Практика</option>
-                        <option value="Лабораторная">Лабораторная</option>
-                    </select>
-                </div>
-
-                <div>
-                    <h3>Тип недели</h3>
-                    <select
-                        className="search-input"
-                        value={inpValueWeekType}
-                        onChange={(e) => setInpValueWeekType(e.target.value)}
-                    >
-                        <option value="">Выберите тип недели</option>
-                        <option value="Четная">Четная</option>
-                        <option value="НеЧетная">НеЧетная</option>
-                        <option value="Обе">Обе</option>
-                    </select>
-                </div>
-
-                <div>
-                    <h3>Аудитория</h3>
-                    <input
-                        className="search-input"
-                        value={inpValueAuditori}
-                        onChange={(e) => setInpValueAuditori(e.target.value)}
-                        placeholder="Введите аудиторию"
-                    />
-                </div>
-
-                <div>
-                    <h3>Время начала</h3>
-                    <input
-                        type="time"
-                        className="search-input"
-                        value={startTime}
-                        onChange={(e) => setStartTime(e.target.value)}
-                    />
-                </div>
-
-                <div>
-                    <h3>Время окончания</h3>
-                    <input
-                        type="time"
-                        className="search-input"
-                        value={endTime}
-                        onChange={(e) => setEndTime(e.target.value)}
-                    />
-                </div>
-
-                <div>
-                    <h3>День недели</h3>
-                    <select
-                        className="search-input"
-                        value={weekday}
-                        onChange={(e) => setWeekday(e.target.value)}
-                    >
-                        <option value="Понедельник">Понедельник</option>
-                        <option value="Вторник">Вторник</option>
-                        <option value="Среда">Среда</option>
-                        <option value="Четверг">Четверг</option>
-                        <option value="Пятница">Пятница</option>
-                        <option value="Суббота">Суббота</option>
-                    </select>
-                </div>
+                <CRUDlesson
+                    inpValueName={inpValueName}
+                    setInpValueName={setInpValueName}
+                    inpValueGroup={inpValueGroup}
+                    setInpValueGroup={setInpValueGroup}
+                    inpValueTeacher={inpValueTeacher}
+                    setInpValueTeacher={setInpValueTeacher}
+                    inpValueType={inpValueType}
+                    setInpValueType={setInpValueType}
+                    inpValueWeekType={inpValueWeekType}
+                    setInpValueWeekType={setInpValueWeekType}
+                    inpValueAuditori={inpValueAuditori}
+                    setInpValueAuditori={setInpValueAuditori}
+                    startTime={startTime}
+                    setStartTime={setStartTime}
+                    endTime={endTime}
+                    setEndTime={setEndTime}
+                    weekday={weekday}
+                    setWeekday={setWeekday}
+                />
 
 
             <button onClick={addLesson} className="Header-button">
@@ -231,6 +144,7 @@ function CreateLesson() {
             <button onClick={sendPostRequest} className="Header-button" disabled={!lesson}>
                 Отправить на сервер
             </button>
+                </div>
         </>
     );
 }

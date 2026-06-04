@@ -10,7 +10,8 @@ import {useFetch} from "../../hooks/useFetch";
 import FetchError from "../../components/Error/FetchError";
 import {useStore} from "../../../store/useTestStore";
 import {useTheme} from "../../../store/useTheme";
-import type {Lesson} from "../../type/lesson.ts";
+import type {Lesson} from '../../../../types/lesson.types.ts'
+import {API_CONFIG} from "../../../config/api.config.ts";
 function getCurrentWeekType() {
   const referenceDate = new Date(2025, 0, 27);
 
@@ -43,7 +44,7 @@ function TodaySchedule() {
   const [selectedSubject, setSelectedSubject] = useState<string | null>(null);
   const  themeType =  useTheme((s) => s.theme)
   const currentWeekType = getCurrentWeekType();
-  const { data: scheduleData ,loading,error} = useFetch<Lesson[]>(`http://localhost:8000/lessons/${currentWeekType}/${dayName}/${groupName}`);
+  const { data: scheduleData ,loading,error} = useFetch<Lesson[]>(`${API_CONFIG.baseUrl}/lessons/${currentWeekType}/${dayName}/${groupName}`);
 
 
   const lessons = scheduleData ?? [];

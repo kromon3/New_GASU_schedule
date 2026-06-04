@@ -5,6 +5,7 @@ import { useEffect, useState } from 'react';
 import { useTheme } from '../../../store/useTheme';
 import { useStore } from "../../../store/useTestStore.ts";
 import ReactModal from 'react-modal';
+import {API_CONFIG} from "../../../config/api.config.ts";
 
 ReactModal.setAppElement('#root');
 
@@ -23,7 +24,7 @@ function Header() {
   const [groups, setGroups] = useState<GroupData[]>([]);
 console.log(groups)
   useEffect(() => {
-    fetch('http://localhost:8000/lessons/group/group_names')
+    fetch(`${API_CONFIG.baseUrl}/lessons/group/group_names`)
         .then((res) => res.json())
         .then((data) => setGroups(data));
   }, []);

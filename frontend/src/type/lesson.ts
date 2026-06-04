@@ -10,3 +10,5 @@ export interface Lesson {
     weektype: string;
     auditorium: string;
 }
+
+
