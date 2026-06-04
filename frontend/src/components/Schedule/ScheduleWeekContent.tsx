@@ -13,7 +13,7 @@ function ScheduleWeekContent({ days, filteredSchedule, weekType }: ScheduleWeekC
                 const lessonsForDay = filteredSchedule.filter(
                     (lesson: Lesson) =>
                         lesson.weekday?.trim() === dayName &&
-                        lesson.weektype?.trim() === weekType  // ← weektype (маленькая t) + trim()
+                        lesson.weektype?.trim() === weekType
                 );
 
                 if (lessonsForDay.length === 0) return null;

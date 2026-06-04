@@ -93,6 +93,16 @@ console.log(groups)
                   </div>
                 </div>
             ))}
+            <div className="group-item"
+                 style={{
+                   padding: '12px',
+                   border: '1px solid #ccc',
+                   borderRadius: '8px',
+                   cursor: 'pointer',
+                   textAlign: 'center',
+                 }}>
+              <Link to={'/create'}><div className="chip">Добавить группу</div></Link>
+            </div>
           </div>
         </ReactModal>
         <ReactModal
