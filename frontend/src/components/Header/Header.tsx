@@ -34,7 +34,6 @@ console.log(groups)
   };
 
   const uniqueGroupNames = groups.map((item) => item.group_name);
-  console.log(uniqueGroupNames);
   return (
       <>
         <ReactModal

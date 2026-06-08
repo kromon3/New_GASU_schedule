@@ -66,7 +66,7 @@ const createLesson = async (req: Request, res: Response): Promise<Lesson> => {
             time_end: req.body.time_end,
             weekday: req.body.weekday,
             teacher: req.body.teacher,
-            type_name: req.body.type,
+            type_name: req.body.type_name,
             group_name: req.body.group_name,
             weektype: req.body.weektype,
             auditorium: req.body.auditorium,

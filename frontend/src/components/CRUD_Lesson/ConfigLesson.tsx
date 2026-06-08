@@ -1,26 +1,20 @@
+import React from "react";
+import type {Lesson} from "../../type/lesson.ts";
+
 interface ConfigLessonProps {
-    inpValueGroup: string;
-    setInpValueGroup: (value: string) => void;
-    inpValueWeekType: string;
-    setInpValueWeekType: (value: string) => void;
-    weekday: string;
-    setWeekday: (value: string) => void;
+    test:Lesson
+    handleChage: (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => void;
 }
-function ConfigLesson({
-                        inpValueGroup,setInpValueGroup,
-                        inpValueWeekType,setInpValueWeekType,
-                        weekday,setWeekday,
-                    }:ConfigLessonProps){
+function ConfigLesson({test,handleChage}:ConfigLessonProps){
     return (
         <>
-
-
             <div>
                 <h3 style={{color:'white'}}>Группа</h3>
                 <input
                     className="search-input"
-                    value={inpValueGroup}
-                    onChange={(e) => setInpValueGroup(e.target.value)}
+                    name="group_name"
+                    value={test.group_name}
+                    onChange={handleChage}
                     placeholder="Введите группу"
                 />
             </div>
@@ -28,9 +22,10 @@ function ConfigLesson({
             <div>
                 <h3 style={{color:'white'}}>Тип недели</h3>
                 <select
+                    name="weektype"
                     className="search-input"
-                    value={inpValueWeekType}
-                    onChange={(e) => setInpValueWeekType(e.target.value)}
+                    value={test.weektype}
+                    onChange={handleChage}
                 >
                     <option value="">Выберите тип недели</option>
                     <option value="Четная">Четная</option>
@@ -42,9 +37,10 @@ function ConfigLesson({
             <div>
                 <h3 style={{color:'white'}}>День недели</h3>
                 <select
+                    name="weekday"
                     className="search-input"
-                    value={weekday}
-                    onChange={(e) => setWeekday(e.target.value)}
+                    value={test.weekday}
+                    onChange={handleChage}
                 >
                     <option value="Понедельник">Понедельник</option>
                     <option value="Вторник">Вторник</option>
@@ -54,6 +50,7 @@ function ConfigLesson({
                     <option value="Суббота">Суббота</option>
                 </select>
             </div>
+
         </>
     )
 }

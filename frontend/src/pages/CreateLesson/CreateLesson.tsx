@@ -1,30 +1,19 @@
 import Header from '../../components/Header/Header';
-import React from 'react';
+import React, {useState} from 'react';
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import '../../style/header.css';
 import type { Lesson } from '../../../../types/lesson.types.ts'
 import { useTheme } from "../../../store/useTheme.ts";
 import { API_CONFIG } from "../../../config/api.config.ts"
-import Lesson from "../../components/CRUD_Lesson/Lesson.tsx";
+import LessonCard from "../../components/CRUD_Lesson/LessonCard.tsx";
 import ConfigLesson from "../../components/CRUD_Lesson/ConfigLesson.tsx";
 
 function CreateLesson() {
-    const [inpValueGroup, setInpValueGroup] = React.useState('');
-    const [inpValueName, setInpValueName] = React.useState('');
-    const [inpValueTeacher, setInpValueTeacher] = React.useState('');
-    const [inpValueType, setInpValueType] = React.useState('');
-    const [inpValueWeekType, setInpValueWeekType] = React.useState('');
-    const [inpValueAuditori, setInpValueAuditori] = React.useState('');
-    const [startTime, setStartTime] = React.useState('09:00');
-    const [endTime, setEndTime] = React.useState('10:30');
-    const [weekday, setWeekday] = React.useState('Понедельник');
     const [lesson, setLesson] = React.useState<Lesson | null>(null);
     const [status, setStatus] = React.useState<string>('');
-    const themeType = useTheme((s) => s.theme);
-
-    const lesson_test = {
-        id: 1242363,
+    const [test , setTest] = useState({
+        id: '1242363',
         subject: 'aaa',
         time_start: '12:23',
         time_end: '14:24',
@@ -34,25 +23,31 @@ function CreateLesson() {
         group_name: 'string',
         weektype: 'string',
         auditorium: 'string'
+    })
+    const handleChage= (e)=>{
+        setTest({
+            ...test,
+            [e.target.name]: e.target.value
+        })
+        console.log(test)
     }
+    const themeType = useTheme((s) => s.theme);
+
 
     const addLesson = () => {
-        if (!inpValueName || !inpValueTeacher || !inpValueGroup) {
-            setStatus('❌ Заполните обязательные поля (предмет, преподаватель, группа)');
-            return;
-        }
+
 
         const newLesson: Lesson = {
             id: Date.now().toString(),
-            subject: inpValueName,
-            time_start: startTime,
-            time_end: endTime,
-            weekday: weekday,
-            teacher: inpValueTeacher,
-            type_name: inpValueType || 'Лекция',
-            group_name: inpValueGroup,
-            weektype: inpValueWeekType || 'Обе',
-            auditorium: inpValueAuditori || 'Не указана',
+            subject: test.subject,
+            time_start: test.time_start,
+            time_end: test.time_end,
+            weekday: test.weekday,
+            teacher: test.teacher,
+            type_name: test.type_name || 'Лекция',
+            group_name: test.group_name,
+            weektype: test.weektype || 'Обе',
+            auditorium: test.auditorium || 'Не указана',
         };
         setLesson(newLesson);
         setStatus('✅ Урок создан, можно отправлять');
@@ -80,12 +75,18 @@ function CreateLesson() {
                 console.log('Ответ сервера:', data);
 
                 setTimeout(() => {
-                    setInpValueName('');
-                    setInpValueTeacher('');
-                    setInpValueGroup('');
-                    setInpValueType('');
-                    setInpValueWeekType('');
-                    setInpValueAuditori('');
+                    setTest({
+                        id: Math.floor(Date.now() / 1000).toString(),
+                        subject: '',
+                        time_start: '09:00',
+                        time_end: '10:30',
+                        weekday: '',
+                        teacher: '',
+                        type_name: '',
+                        group_name: '',
+                        weektype: '',
+                        auditorium: '',
+                    });
                     setLesson(null);
                     setStatus('');
                 }, 2000);
@@ -129,52 +130,13 @@ function CreateLesson() {
                         {status}
                     </div>
                 )}
-
-                <ConfigLesson
-                    inpValueName={inpValueName}
-                    setInpValueName={setInpValueName}
-                    inpValueGroup={inpValueGroup}
-                    setInpValueGroup={setInpValueGroup}
-                    inpValueTeacher={inpValueTeacher}
-                    setInpValueTeacher={setInpValueTeacher}
-                    inpValueType={inpValueType}
-                    setInpValueType={setInpValueType}
-                    inpValueWeekType={inpValueWeekType}
-                    setInpValueWeekType={setInpValueWeekType}
-                    inpValueAuditori={inpValueAuditori}
-                    setInpValueAuditori={setInpValueAuditori}
-                    startTime={startTime}
-                    setStartTime={setStartTime}
-                    endTime={endTime}
-                    setEndTime={setEndTime}
-                    weekday={weekday}
-                    setWeekday={setWeekday}
-                />
+                <ConfigLesson test={test} handleChage={handleChage}/>
+                <br/>
+                <LessonCard test={test} handleChage={handleChage} />
 
                 <br/>
 
-                <Lesson
-                    inpValueName={inpValueName}
-                    setInpValueName={setInpValueName}
-                    inpValueGroup={inpValueGroup}
-                    setInpValueGroup={setInpValueGroup}
-                    inpValueTeacher={inpValueTeacher}
-                    setInpValueTeacher={setInpValueTeacher}
-                    inpValueType={inpValueType}
-                    setInpValueType={setInpValueType}
-                    inpValueWeekType={inpValueWeekType}
-                    setInpValueWeekType={setInpValueWeekType}
-                    inpValueAuditori={inpValueAuditori}
-                    setInpValueAuditori={setInpValueAuditori}
-                    startTime={startTime}
-                    setStartTime={setStartTime}
-                    endTime={endTime}
-                    setEndTime={setEndTime}
-                    weekday={weekday}
-                    setWeekday={setWeekday}
-                    lesson_test={lesson_test}
-                />
-                <br/>
+
 
                 <button onClick={addLesson} className="Header-button">
                 Создать урок
