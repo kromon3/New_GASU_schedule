@@ -56,7 +56,17 @@ const readLessonsToWeek = async (
         return [];
     }
 };
-
+const createManyLesson = async (req: Request, res: Response): Promise<Lesson[]> => {
+    try{
+        const lessons: Lesson[] = req.body;
+        console.log('Полученные уроки:', lessons);
+        return lessons
+    }
+    catch (err: any) {
+        console.error('Ошибка чтения:', err.message);
+        return [];
+    }
+}
 const createLesson = async (req: Request, res: Response): Promise<Lesson> => {
     try {
         const newLesson = {
@@ -163,5 +173,6 @@ export = {
     readLessonsToWeek,
     createLesson,
     updateLesson,
-    deleteLesson
+    deleteLesson,
+    createManyLesson
 };

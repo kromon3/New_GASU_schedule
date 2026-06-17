@@ -6,7 +6,7 @@ import {
     getLessonsToToday,
     getLessonsToWeek,
     patchLessonId,
-    postLesson
+    postLesson, postManyLesson
 } from "../controller/lesson.controller";
 import express from 'express';
 
@@ -22,6 +22,7 @@ router.get('/lessons/:id', getLessonId)
 
 router.get('/lessons', getAllLessons);
 router.post('/lessons', postLesson)
+router.post('/lessons/many',postManyLesson)
 router.patch('/lessons/:id', patchLessonId)
 router.delete('/lessons/:id', deleteLessonId)
 

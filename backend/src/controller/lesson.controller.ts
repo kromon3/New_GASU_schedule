@@ -6,7 +6,8 @@ import {
     readLessonsGroup,
     updateLesson,
     createLesson,
-    deleteLesson
+    deleteLesson,
+    createManyLesson
 } from "../models/lesson.model";
 
 export const getAllLessons = async (req: Request, res: Response) => {
@@ -73,7 +74,15 @@ export const postLesson = async (req: Request, res: Response) => {
         res.status(500).json({ message: err.message });
     }
 };
-
+export const postManyLesson = async (req: Request, res: Response) => {
+    try {
+        const lessons = await createManyLesson(req);
+        res.status(200).json(lessons);
+    }
+    catch (err) {
+        res.status(500).json({ message: err.message });
+    }
+}
 export const patchLessonId = async (req: Request, res: Response) => {
     try {
         const result = await updateLesson(req);

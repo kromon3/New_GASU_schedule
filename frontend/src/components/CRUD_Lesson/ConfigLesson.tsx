@@ -1,46 +1,51 @@
 import React from "react";
-import type {Lesson} from "../../type/lesson.ts";
 
 interface ConfigLessonProps {
-    test:Lesson
-    handleChage: (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => void;
+    lessonData: {
+        group_name: string;
+        weektype: string;
+        weekday: string;
+    };
+    handleChange: (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => void;
 }
-function ConfigLesson({test,handleChage}:ConfigLessonProps){
+
+function ConfigLesson({ lessonData, handleChange }: ConfigLessonProps) {
     return (
-        <>
+        <div style={{ padding: '20px', background: 'rgba(0,0,0,0.3)', borderRadius: '10px', marginBottom: '20px' }}>
+            <h3 style={{ color: 'white', marginBottom: '15px' }}> Настройки нового урока:</h3>
+
             <div>
-                <h3 style={{color:'white'}}>Группа</h3>
+                <h4 style={{ color: 'white' }}>Группа</h4>
                 <input
                     className="search-input"
                     name="group_name"
-                    value={test.group_name}
-                    onChange={handleChage}
+                    value={lessonData.group_name}
+                    onChange={handleChange}
                     placeholder="Введите группу"
                 />
             </div>
 
             <div>
-                <h3 style={{color:'white'}}>Тип недели</h3>
+                <h4 style={{ color: 'white' }}>Тип недели</h4>
                 <select
                     name="weektype"
                     className="search-input"
-                    value={test.weektype}
-                    onChange={handleChage}
+                    value={lessonData.weektype}
+                    onChange={handleChange}
                 >
-                    <option value="">Выберите тип недели</option>
                     <option value="Четная">Четная</option>
-                    <option value="НеЧетная">НеЧетная</option>
+                    <option value="Нечетная">Нечетная</option>
                     <option value="Обе">Обе</option>
                 </select>
             </div>
 
             <div>
-                <h3 style={{color:'white'}}>День недели</h3>
+                <h4 style={{ color: 'white' }}>День недели</h4>
                 <select
                     name="weekday"
                     className="search-input"
-                    value={test.weekday}
-                    onChange={handleChage}
+                    value={lessonData.weekday}
+                    onChange={handleChange}
                 >
                     <option value="Понедельник">Понедельник</option>
                     <option value="Вторник">Вторник</option>
@@ -50,8 +55,8 @@ function ConfigLesson({test,handleChage}:ConfigLessonProps){
                     <option value="Суббота">Суббота</option>
                 </select>
             </div>
-
-        </>
-    )
+        </div>
+    );
 }
+
 export default ConfigLesson;
